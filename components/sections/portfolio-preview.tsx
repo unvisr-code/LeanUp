@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { api } from "@/lib/trpc/provider";
 
@@ -40,9 +41,11 @@ export function PortfolioPreview() {
               >
                 <div className="aspect-video bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden">
                   {item.thumbnail && (
-                    <img
+                    <Image
                       src={item.thumbnail}
                       alt={item.name}
+                      width={400}
+                      height={225}
                       className="w-full h-full object-cover"
                     />
                   )}

@@ -61,7 +61,7 @@ export default function AboutPage() {
               <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 p-8 text-white md:p-12">
                 <h2 className="mb-4 text-3xl font-bold">우리의 미션</h2>
                 <p className="mb-6 text-lg text-blue-100">
-                  "웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지 한 번에"
+                  &ldquo;웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지 한 번에&rdquo;
                 </p>
                 <p className="text-white/90">
                   LeanUp은 단순한 웹 개발 회사가 아닙니다. 우리는 고객의 비즈니스 성장을 위한

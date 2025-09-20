@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ExternalLink, Globe, Smartphone, Layout } from "lucide-react";
@@ -89,9 +90,11 @@ export default function PortfolioPage() {
                     {/* Thumbnail */}
                     <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden">
                       {item.thumbnail ? (
-                        <img
+                        <Image
                           src={item.thumbnail}
                           alt={item.name}
+                          width={400}
+                          height={225}
                           className="w-full h-full object-cover"
                         />
                       ) : (
