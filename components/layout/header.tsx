@@ -1,0 +1,95 @@
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const navItems = [
+  { label: "홈", href: "/" },
+  { label: "서비스", href: "/services" },
+  { label: "포트폴리오", href: "/portfolio" },
+  { label: "팀 소개", href: "/about" },
+  { label: "가격", href: "/pricing" },
+  { label: "문의", href: "/contact" },
+];
+
+export function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center">
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/assets/main.png"
+            alt="LeanUp"
+            width={120}
+            height={40}
+            className="h-8 w-auto"
+          />
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav className="ml-auto hidden md:flex items-center space-x-6">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact"
+            className="ml-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+          >
+            견적 문의
+          </Link>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="ml-auto inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={cn(
+          "md:hidden",
+          isMobileMenuOpen ? "block" : "hidden"
+        )}
+      >
+        <nav className="space-y-1 px-2 pb-3 pt-2">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact"
+            className="block w-full rounded-md bg-primary px-3 py-2 text-center text-base font-medium text-primary-foreground hover:bg-primary/90"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            견적 문의
+          </Link>
+        </nav>
+      </div>
+    </header>
+  );
+}
