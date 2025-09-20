@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { FeaturesSection } from "@/components/sections/features";
 import { ProcessSection } from "@/components/sections/process";
-import { PortfolioPreview } from "@/components/sections/portfolio-preview";
+import { PortfolioAutoScroll } from "@/components/sections/portfolio-auto-scroll";
 import { CTASection } from "@/components/sections/cta";
 
 export default function HomePage() {
@@ -14,7 +14,7 @@ export default function HomePage() {
         <HeroSection />
         <FeaturesSection />
         <ProcessSection />
-        <PortfolioPreview />
+        <PortfolioAutoScroll />
         <CTASection />
       </main>
       <Footer />
