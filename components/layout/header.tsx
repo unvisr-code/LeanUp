@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ArrowRight, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -194,6 +194,47 @@ function QuoteModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     includeMaintenanceModule: false,
   });
 
+  useEffect(() => {
+    if (isOpen) {
+      // 모달이 열릴 때 body 스크롤 방지
+      document.body.style.overflow = 'hidden';
+    } else {
+      // 모달이 닫힐 때 body 스크롤 복원
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const projectTypes = [
+    '웹사이트 개발',
+    '랜딩페이지',
+    '쇼핑몰',
+    '포트폴리오 사이트',
+    '기업 사이트',
+    '기타'
+  ];
+
+  const budgetRanges = [
+    '100만원 미만',
+    '100-300만원',
+    '300-500만원',
+    '500-1000만원',
+    '1000만원 이상',
+    '협의 후 결정'
+  ];
+
+  const timelines = [
+    '1주일 이내',
+    '2-4주',
+    '1-2개월',
+    '2-3개월',
+    '3개월 이상',
+    '협의 후 결정'
+  ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // 여기서 폼 데이터를 처리 (API 호출 등)
@@ -227,15 +268,17 @@ function QuoteModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center">
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-md"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
-      <div className="relative w-full max-w-4xl max-h-[95vh] bg-white rounded-3xl shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-2xl max-h-[90vh] mx-4 bg-white rounded-2xl shadow-2xl overflow-hidden z-[10000]">
+      
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6">
           <div className="flex items-center justify-between">
