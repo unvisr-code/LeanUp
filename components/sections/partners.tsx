@@ -11,7 +11,7 @@ export function PartnersSection() {
   // src 폴더에 있는 실제 파트너 회사들
   const partners: Partner[] = [
     { name: "KDMHS", logo: "/src/KDMHS.webp" },
-    { name: "Myutex", logo: "/src/Myutex 로고.png" },
+    { name: "Myutex", logo: encodeURI("/src/Myutex 로고.png") },
     { name: "Sejong", logo: "/src/Sejong.png" },
     { name: "WEAGE", logo: "/src/WEAGE.png" },
   ];
@@ -43,20 +43,21 @@ export function PartnersSection() {
 
         {/* Scrolling Container */}
         <div className="flex">
-          <div className="flex items-center gap-12 md:gap-16 animate-scroll">
+          <div className="flex items-center gap-6 md:gap-8 animate-scroll">
             {duplicatedPartners.map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="group flex items-center justify-center w-48 md:w-56 h-24 md:h-28 px-6 md:px-8 py-4 md:py-6 bg-gray-50 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
-                  <div className="relative w-full h-full">
+                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-gray-50 rounded-xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
+                  <div className="relative w-32 md:w-36 h-14 md:h-16">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
                       className="object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                      sizes="(max-width: 768px) 192px, 224px"
+                      sizes="(max-width: 768px) 128px, 144px"
+                      style={{ objectFit: 'contain' }}
                     />
                   </div>
                 </div>
@@ -65,20 +66,21 @@ export function PartnersSection() {
           </div>
 
           {/* Duplicate for seamless loop */}
-          <div className="flex items-center gap-12 md:gap-16 animate-scroll" aria-hidden="true">
+          <div className="flex items-center gap-6 md:gap-8 animate-scroll" aria-hidden="true">
             {duplicatedPartners.map((partner, index) => (
               <div
                 key={`${partner.name}-duplicate-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="group flex items-center justify-center w-48 md:w-56 h-24 md:h-28 px-6 md:px-8 py-4 md:py-6 bg-gray-50 rounded-2xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
-                  <div className="relative w-full h-full">
+                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-gray-50 rounded-xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
+                  <div className="relative w-32 md:w-36 h-14 md:h-16">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
                       className="object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                      sizes="(max-width: 768px) 192px, 224px"
+                      sizes="(max-width: 768px) 128px, 144px"
+                      style={{ objectFit: 'contain' }}
                     />
                   </div>
                 </div>
