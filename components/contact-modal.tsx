@@ -76,24 +76,24 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-          {/* Header - 개선된 디자인 */}
-          <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-5 rounded-t-2xl z-10">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">견적 문의</h2>
-                <p className="mt-1 text-sm text-gray-600">
-                  프로젝트 정보를 입력해주시면 빠르게 견적을 안내해드립니다
-                </p>
+            {/* Header - 개선된 디자인 */}
+            <div className="bg-white border-b border-gray-200 px-6 py-5 rounded-t-2xl">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">견적 문의</h2>
+                  <p className="mt-1 text-sm text-gray-600">
+                    프로젝트 정보를 입력해주시면 빠르게 견적을 안내해드립니다
+                  </p>
+                </div>
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full hover:bg-gray-100 transition-colors group"
+                  aria-label="닫기"
+                >
+                  <X className="h-6 w-6 text-gray-400 group-hover:text-gray-600" />
+                </button>
               </div>
-              <button
-                onClick={onClose}
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors group"
-                aria-label="닫기"
-              >
-                <X className="h-6 w-6 text-gray-400 group-hover:text-gray-600" />
-              </button>
             </div>
-          </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
@@ -279,7 +279,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 견적 요청하기
               </button>
             </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </>
