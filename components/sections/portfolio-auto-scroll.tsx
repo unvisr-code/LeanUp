@@ -37,18 +37,7 @@ export function PortfolioAutoScroll() {
   }
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-white to-gray-50">
-      {/* Header */}
-      <div className="container mb-8">
-        <div className="text-center">
-          <h2 className="mb-3 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            포트폴리오
-          </h2>
-          <p className="text-base text-gray-600">
-            다양한 산업군의 성공적인 프로젝트들
-          </p>
-        </div>
-      </div>
+    <section className="py-12 md:py-16 bg-gradient-to-b from-blue-50 to-white">
 
       {/* First Row - Scrolling Left */}
       <div className="relative mb-3 overflow-hidden">
@@ -90,18 +79,6 @@ export function PortfolioAutoScroll() {
         </div>
       </div>
 
-      {/* View All Button */}
-      <div className="container mt-8">
-        <div className="text-center">
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary/90 hover:shadow-md hover:scale-105 transform"
-          >
-            전체 포트폴리오 보기
-            <ArrowRight className="ml-1.5 h-4 w-4" />
-          </Link>
-        </div>
-      </div>
     </section>
   );
 }

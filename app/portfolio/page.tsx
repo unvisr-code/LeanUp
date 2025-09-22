@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { PortfolioAutoScroll } from "@/components/sections/portfolio-auto-scroll";
 import { ExternalLink, Globe, Smartphone, Layout } from "lucide-react";
 import { api } from "@/lib/trpc/provider";
 import { cn } from "@/lib/utils";
@@ -38,6 +39,9 @@ export default function PortfolioPage() {
               </p>
             </div>
           </div>
+
+          {/* Portfolio Auto Scroll Section */}
+          <PortfolioAutoScroll />
         </section>
 
         {/* Filter Tabs */}

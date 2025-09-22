@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-export function CTASection() {
+interface CTASectionProps {
+  onQuoteClick?: () => void;
+}
+
+export function CTASection({ onQuoteClick }: CTASectionProps) {
   return (
-    <section className="bg-primary py-20 md:py-24">
+    <section className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 py-20 md:py-24">
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -15,13 +21,13 @@ export function CTASection() {
             데이터 기반 의사결정을 시작하세요
           </p>
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-primary shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl"
+            <button
+              onClick={onQuoteClick}
+              className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-blue-600 shadow-lg transition-all hover:bg-gray-50 hover:shadow-xl"
             >
               무료 견적 받기
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
+            </button>
             <a
               href="https://channel.io/leanup"
               target="_blank"

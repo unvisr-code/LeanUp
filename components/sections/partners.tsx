@@ -20,7 +20,7 @@ export function PartnersSection() {
   const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
 
   return (
-    <section className="py-16 md:py-24 bg-white overflow-hidden">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-white overflow-hidden">
       <div className="container mb-12">
         <div className="text-center">
           <span className="inline-block mb-4 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold">
