@@ -3,33 +3,33 @@ import { FileText, Layout, Code, Rocket, HeartHandshake } from "lucide-react";
 const steps = [
   {
     icon: FileText,
-    day: "D0~D2",
+    day: "step1",
     title: "자료 수령 & 킥오프",
     description: "프로젝트 요구사항 파악 및 자료 수집",
   },
   {
     icon: Layout,
-    day: "D3~D5",
+    day: "step2",
     title: "골격 & 카피 반영",
     description: "와이어프레임 구성 및 콘텐츠 배치",
   },
   {
     icon: Code,
-    day: "D6~D7",
+    day: "step3",
     title: "스테이징 & 추적 설정",
     description: "개발 완료 및 데이터 추적 코드 설치",
   },
   {
     icon: Rocket,
-    day: "D8~D10",
+    day: "step4",
     title: "QA & 런칭",
     description: "품질 검증 및 실제 서비스 배포",
   },
   {
     icon: HeartHandshake,
-    day: "+7일",
-    title: "하이퍼케어",
-    description: "런칭 후 7일간 즉시 대응 서비스",
+    day: "+n일",
+    title: "유지보수",
+    description: "런칭 후 n일간 즉시 대응 서비스",
   },
 ];
 
@@ -39,7 +39,7 @@ export function ProcessSection() {
       <div className="container">
         <div className="text-center">
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            10일 완성 프로세스
+            30일 완성 프로세스
           </h2>
           <p className="mb-12 text-lg text-gray-600">
             체계적인 프로세스로 빠르고 정확하게 완성합니다

@@ -9,22 +9,93 @@ export default function WebsitePage() {
       <Header />
       <main>
         {/* Hero Section */}
-        <section className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 to-purple-700 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-black/20" />
+        <section className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white overflow-hidden">
+          {/* 3D Background Icons */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* 3D Code Icon */}
+            <div className="absolute top-20 left-10 opacity-10">
+              <svg viewBox="0 0 120 120" className="w-32 h-32 md:w-40 md:h-40">
+                <defs>
+                  <linearGradient id="code3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#DBEAFE" />
+                    <stop offset="50%" stopColor="#93C5FD" />
+                    <stop offset="100%" stopColor="#60A5FA" />
+                  </linearGradient>
+                </defs>
+                <rect x="20" y="30" width="80" height="60" fill="url(#code3d)" rx="8" />
+                <path d="M35 45 L50 55 L35 65" stroke="#1E40AF" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M85 45 L70 55 L85 65" stroke="#1E40AF" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                <line x1="55" y1="40" x2="65" y2="70" stroke="#1E40AF" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </div>
+            
+            {/* 3D Globe Icon */}
+            <div className="absolute top-32 right-16 opacity-15">
+              <svg viewBox="0 0 120 120" className="w-28 h-28 md:w-36 md:h-36">
+                <defs>
+                  <radialGradient id="globe3d">
+                    <stop offset="0%" stopColor="#DBEAFE" />
+                    <stop offset="70%" stopColor="#93C5FD" />
+                    <stop offset="100%" stopColor="#3B82F6" />
+                  </radialGradient>
+                </defs>
+                <circle cx="60" cy="60" r="35" fill="url(#globe3d)" />
+                <ellipse cx="60" cy="60" rx="35" ry="15" fill="none" stroke="#1E40AF" strokeWidth="1.5" />
+                <ellipse cx="60" cy="60" rx="15" ry="35" fill="none" stroke="#1E40AF" strokeWidth="1.5" />
+                <line x1="25" y1="60" x2="95" y2="60" stroke="#1E40AF" strokeWidth="1.5" />
+              </svg>
+            </div>
+            
+            {/* 3D Rocket Icon */}
+            <div className="absolute bottom-20 left-20 opacity-12">
+              <svg viewBox="0 0 120 120" className="w-24 h-24 md:w-32 md:h-32">
+                <defs>
+                  <linearGradient id="rocket3dBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#DBEAFE" />
+                    <stop offset="100%" stopColor="#60A5FA" />
+                  </linearGradient>
+                </defs>
+                <path d="M60 20 C55 20 50 25 50 35 L50 70 L70 70 L70 35 C70 25 65 20 60 20 Z" fill="url(#rocket3dBg)" />
+                <circle cx="60" cy="40" r="8" fill="#3B82F6" opacity="0.8" />
+                <path d="M50 70 L45 85 L55 80 L50 70 Z" fill="#60A5FA" />
+                <path d="M70 70 L75 85 L65 80 L70 70 Z" fill="#60A5FA" />
+              </svg>
+            </div>
+            
+            {/* 3D Gear Icon */}
+            <div className="absolute bottom-32 right-10 opacity-10">
+              <svg viewBox="0 0 120 120" className="w-20 h-20 md:w-28 md:h-28">
+                <defs>
+                  <radialGradient id="gear3dBg">
+                    <stop offset="0%" stopColor="#DBEAFE" />
+                    <stop offset="100%" stopColor="#93C5FD" />
+                  </radialGradient>
+                </defs>
+                <circle cx="60" cy="60" r="25" fill="url(#gear3dBg)" />
+                <circle cx="60" cy="60" r="12" fill="#3B82F6" />
+                <rect x="57" y="35" width="6" height="12" fill="#60A5FA" />
+                <rect x="57" y="73" width="6" height="12" fill="#60A5FA" />
+                <rect x="35" y="57" width="12" height="6" fill="#60A5FA" />
+                <rect x="73" y="57" width="12" height="6" fill="#60A5FA" />
+              </svg>
+            </div>
+          </div>
+          
           <div className="container relative z-10">
-            <div className="max-w-3xl">
+            <div className="max-w-4xl mx-auto text-center">
               <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur">
                 <Sparkles className="h-4 w-4" />
                 2-4주 빠른 개발
               </div>
-              <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
                 웹사이트 개발
               </h1>
-              <p className="mb-8 text-xl text-white/90">
+              <p className="mb-12 text-xl text-white/90 leading-relaxed">
                 템플릿과 AI를 활용한 빠르고 효율적인 웹사이트 개발.
+                <br />
                 전환율 최적화와 함께 30분 온보딩까지 제공합니다.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
                   className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
@@ -39,6 +110,12 @@ export default function WebsitePage() {
                 </Link>
               </div>
             </div>
+          </div>
+          
+          {/* Background Decoration */}
+          <div className="absolute left-0 top-0 -z-10 h-full w-full">
+            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white opacity-5 blur-3xl"></div>
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-80 w-80 rounded-full bg-blue-300 opacity-10 blur-3xl"></div>
           </div>
         </section>
 
