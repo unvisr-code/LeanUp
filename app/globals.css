@@ -94,3 +94,13 @@
 .pause-animation {
   animation-play-state: paused !important;
 }
+
+/* Channel.io 런처 버튼 커스터마이징 */
+#ch-plugin-launcher {
+  background-color: #2563eb !important;
+}
+
+/* Channel.io 런처 버튼 호버 시 색상 */
+#ch-plugin-launcher:hover {
+  background-color: #1d4ed8 !important;
+}
