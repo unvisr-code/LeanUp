@@ -139,7 +139,7 @@ export default function DataModulePage() {
                     <div>
                       <h3 className="font-semibold text-gray-900">자연어 질의</h3>
                       <p className="text-sm text-gray-600">
-                        "지난달 전환율은?" 같은 일상 언어로 데이터 조회
+                        &ldquo;지난달 전환율은?&rdquo; 같은 일상 언어로 데이터 조회
                       </p>
                     </div>
                   </div>
@@ -198,7 +198,7 @@ export default function DataModulePage() {
                       <span className="text-sm font-medium text-gray-700">데이터 도우미</span>
                     </div>
                     <div className="text-sm text-gray-600 mb-2">
-                      "지난주 가장 많이 방문한 페이지는 뭐야?"
+                      &ldquo;지난주 가장 많이 방문한 페이지는 뭐야?&rdquo;
                     </div>
                     <div className="text-sm text-purple-600">
                       분석 중... ✨

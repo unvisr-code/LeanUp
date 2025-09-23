@@ -45,7 +45,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* Filter Tabs */}
-        <section className="sticky top-16 z-40 border-b bg-white">
+        <section className="sticky top-16 z-30 border-b bg-white">
           <div className="container">
             <div className="flex justify-center py-4">
               <div className="inline-flex rounded-lg bg-gray-100 p-1">

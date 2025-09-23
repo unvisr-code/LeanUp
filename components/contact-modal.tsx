@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { ModalPortal } from "./modal-portal";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: 폼 제출 로직 구현
-    console.log("Form submitted:", formData);
+    // Form submitted
     alert("문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다!");
     onClose();
   };
@@ -58,7 +59,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   };
 
   return (
-    <>
+    <ModalPortal>
       {/* Backdrop with blur - z-[9998]로 최상위 레이어 설정 */}
       <div
         className={`fixed inset-0 bg-black/75 backdrop-blur-sm z-[9998] transition-all duration-300 ${
@@ -283,6 +284,6 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
           </div>
         </div>
       </div>
-    </>
+    </ModalPortal>
   );
 }

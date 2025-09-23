@@ -186,7 +186,7 @@ export default function LiveStatusPage() {
                 <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-red-100">
                   <Users className="h-8 w-8 text-orange-600" />
                 </div>
-                <h3 className="mb-2 text-xl font-semibold">'관리받는 느낌'</h3>
+                <h3 className="mb-2 text-xl font-semibold">&lsquo;관리받는 느낌&rsquo;</h3>
                 <p className="text-gray-600">
                   지속적인 업데이트로 프로젝트가 잘 진행되고 있음을 체감
                 </p>

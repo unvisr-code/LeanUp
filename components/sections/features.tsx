@@ -2,7 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const features = [
+const features: Array<{
+  iconSvg: JSX.Element;
+  keyword: string;
+  title: string;
+  description: string;
+  align: "left" | "right";
+}> = [
   {
     // 전문적인 3D 로켓 - 블루 톤
     iconSvg: (

@@ -28,7 +28,7 @@ export default function ChannelTalk() {
       if (typeof window !== 'undefined') {
         window.ChannelIO = ch;
 
-        function loadScript() {
+        const loadScript = function() {
           if (window.ChannelIOInitialized) {
             return;
           }
@@ -44,7 +44,7 @@ export default function ChannelTalk() {
           }
 
           window.ChannelIOInitialized = true;
-        }
+        };
 
         if (document.readyState === 'complete') {
           loadScript();

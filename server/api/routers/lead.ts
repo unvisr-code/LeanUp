@@ -20,7 +20,7 @@ export const leadRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       // TODO: 실제 데이터베이스에 저장
-      console.log("New lead created:", input);
+      // Lead created successfully
 
       // 여기서 이메일 알림, CRM 연동 등을 처리
 
