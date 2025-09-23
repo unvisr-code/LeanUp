@@ -19,22 +19,22 @@ const values = [
   {
     icon: Zap,
     title: "속도",
-    description: "빠른 납기와 신속한 대응으로 비즈니스 성장을 가속화합니다",
+    description: "빠른 납기와 신속한 대응으로\n비즈니스 성장을 가속화합니다",
   },
   {
     icon: Target,
     title: "효율",
-    description: "불필요한 과정을 제거하고 핵심에 집중하여 비용을 최적화합니다",
+    description: "불필요한 과정을 제거하고\n핵심에 집중하여 비용을 최적화합니다",
   },
   {
     icon: Heart,
     title: "고객 중심",
-    description: "고객의 성공이 우리의 성공이라는 믿음으로 함께 성장합니다",
+    description: "고객의 성공이 우리의 성공이라는\n믿음으로 함께 성장합니다",
   },
   {
     icon: Users,
     title: "협업",
-    description: "투명한 소통과 체계적인 협업으로 최고의 결과를 만듭니다",
+    description: "투명한 소통과 체계적인 협업으로\n최고의 결과를 만듭니다",
   },
 ];
 
@@ -350,39 +350,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Mission Section */}
-        <section className="relative py-24 md:py-32 overflow-hidden">
-          {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400"></div>
-          
-          {/* 3D Background Icons */}
-          <Background3DElements />
-          
-          <div className="container relative z-20">
-            <div className="max-w-5xl mx-auto text-center">
-              {/* Main Content */}
-              <div className="space-y-8">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                  웹사이트 제작부터 데이터 추적, 온보딩까지 한 번에
-                </h2>
-                
-                <div className="max-w-4xl mx-auto">
-                  <p className="text-xl md:text-2xl text-blue-100 leading-relaxed font-medium mb-6">
-                    LeanUP은 합리적인 가격으로 전문적인 웹사이트를 제작하고, 
-                    데이터 추적과 온보딩을 통해 기업 성장을 돕습니다.
-                  </p>
-                  
-                  <p className="text-lg text-blue-200 leading-relaxed">
-                    🚧 데이터 모듈과 실시간 현황 공유 서비스는 현재 개발 중입니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Values Section */}
-        <section className="bg-gradient-to-b from-blue-50 to-white py-16 md:py-20">
+        <section className="bg-white py-16 md:py-20">
           <div className="container">
             <div className="text-center">
               <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900">
@@ -393,18 +363,123 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto">
               {values.map((value, index) => {
                 const Icon = value.icon;
                 return (
                   <div key={index} className="text-center">
-                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                      <Icon className="h-8 w-8 text-primary" />
+                    <div className="rounded-xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-white/20 hover:bg-white/90 transition-all">
+                      <div className="w-16 h-16 mx-auto mb-4" style={{ filter: "drop-shadow(0 8px 16px rgba(59, 130, 246, 0.15))" }}>
+                        {index === 0 && (
+                          // 속도 - 3D 번개 아이콘
+                          <svg viewBox="0 0 100 100" className="w-full h-full">
+                            <defs>
+                              <linearGradient id="lightning3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#60A5FA" />
+                                <stop offset="50%" stopColor="#3B82F6" />
+                                <stop offset="100%" stopColor="#2563EB" />
+                              </linearGradient>
+                              <linearGradient id="lightningShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#1E40AF" />
+                                <stop offset="100%" stopColor="#1E3A8A" />
+                              </linearGradient>
+                            </defs>
+                            <ellipse cx="52" cy="85" rx="20" ry="4" fill="#000000" opacity="0.1" />
+                            <path d="M35 15 L55 15 L45 45 L60 45 L40 85 L50 55 L35 55 Z" fill="url(#lightning3d)" />
+                            <path d="M40 85 L45 70 L42 55 L35 55 L35 50 L40 45 L35 30 L40 15 L35 15 L30 30 L35 45 L25 45 L40 85" fill="url(#lightningShadow)" opacity="0.4" />
+                            <path d="M50 15 Q45 20 50 25 Q55 20 55 15 Q52 12 50 15" fill="#93C5FD" />
+                            <circle cx="47" cy="30" r="2" fill="#FFFFFF" opacity="0.8" />
+                            <circle cx="52" cy="65" r="2" fill="#FFFFFF" opacity="0.6" />
+                          </svg>
+                        )}
+                        {index === 1 && (
+                          // 효율 - 3D 타겟 아이콘  
+                          <svg viewBox="0 0 100 100" className="w-full h-full">
+                            <defs>
+                              <linearGradient id="target3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#60A5FA" />
+                                <stop offset="50%" stopColor="#3B82F6" />
+                                <stop offset="100%" stopColor="#2563EB" />
+                              </linearGradient>
+                              <radialGradient id="targetCenter3d">
+                                <stop offset="0%" stopColor="#DBEAFE" />
+                                <stop offset="50%" stopColor="#93C5FD" />
+                                <stop offset="100%" stopColor="#3B82F6" />
+                              </radialGradient>
+                            </defs>
+                            <ellipse cx="52" cy="52" rx="25" ry="25" fill="#000000" opacity="0.1" />
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="url(#target3d)" strokeWidth="4" />
+                            <circle cx="50" cy="50" r="22" fill="none" stroke="url(#target3d)" strokeWidth="3" />
+                            <circle cx="50" cy="50" r="14" fill="none" stroke="url(#target3d)" strokeWidth="2" />
+                            <circle cx="50" cy="50" r="8" fill="url(#targetCenter3d)" />
+                            <circle cx="50" cy="50" r="4" fill="#2563EB" />
+                            <path d="M20 50 L30 50" stroke="url(#target3d)" strokeWidth="2" strokeLinecap="round" />
+                            <path d="M70 50 L80 50" stroke="url(#target3d)" strokeWidth="2" strokeLinecap="round" />
+                            <path d="M50 20 L50 30" stroke="url(#target3d)" strokeWidth="2" strokeLinecap="round" />
+                            <path d="M50 70 L50 80" stroke="url(#target3d)" strokeWidth="2" strokeLinecap="round" />
+                            <circle cx="46" cy="46" r="1.5" fill="#FFFFFF" opacity="0.8" />
+                          </svg>
+                        )}
+                        {index === 2 && (
+                          // 고객 중심 - 3D 하트 아이콘
+                          <svg viewBox="0 0 100 100" className="w-full h-full">
+                            <defs>
+                              <linearGradient id="heart3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#60A5FA" />
+                                <stop offset="50%" stopColor="#3B82F6" />
+                                <stop offset="100%" stopColor="#2563EB" />
+                              </linearGradient>
+                              <linearGradient id="heartShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#1E40AF" />
+                                <stop offset="100%" stopColor="#1E3A8A" />
+                              </linearGradient>
+                            </defs>
+                            <ellipse cx="52" cy="85" rx="20" ry="4" fill="#000000" opacity="0.1" />
+                            <path d="M50 75 C35 60 20 45 20 30 C20 20 30 15 40 20 C45 15 50 15 50 20 C50 15 55 15 60 20 C70 15 80 20 80 30 C80 45 65 60 50 75 Z" fill="url(#heart3d)" />
+                            <path d="M50 75 C40 65 30 55 25 45 C22 40 20 35 20 30 C20 25 22 20 25 18 C22 20 20 25 20 30 C20 45 35 60 50 75" fill="url(#heartShadow)" opacity="0.4" />
+                            <circle cx="35" cy="28" r="3" fill="url(#heartShadow)" />
+                            <circle cx="65" cy="28" r="3" fill="url(#heartShadow)" />
+                            <ellipse cx="42" cy="35" rx="6" ry="4" fill="#93C5FD" opacity="0.6" />
+                            <ellipse cx="58" cy="35" rx="6" ry="4" fill="#93C5FD" opacity="0.6" />
+                            <circle cx="38" cy="32" r="2" fill="#FFFFFF" opacity="0.8" />
+                            <circle cx="62" cy="32" r="2" fill="#FFFFFF" opacity="0.8" />
+                          </svg>
+                        )}
+                        {index === 3 && (
+                          // 협업 - 3D 팀 아이콘
+                          <svg viewBox="0 0 100 100" className="w-full h-full">
+                            <defs>
+                              <linearGradient id="team3d" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stopColor="#60A5FA" />
+                                <stop offset="50%" stopColor="#3B82F6" />
+                                <stop offset="100%" stopColor="#2563EB" />
+                              </linearGradient>
+                              <radialGradient id="person3d">
+                                <stop offset="0%" stopColor="#DBEAFE" />
+                                <stop offset="50%" stopColor="#93C5FD" />
+                                <stop offset="100%" stopColor="#3B82F6" />
+                              </radialGradient>
+                            </defs>
+                            <ellipse cx="52" cy="85" rx="25" ry="4" fill="#000000" opacity="0.1" />
+                            <circle cx="35" cy="25" r="8" fill="url(#person3d)" />
+                            <ellipse cx="35" cy="45" rx="10" ry="15" fill="url(#team3d)" />
+                            <circle cx="65" cy="25" r="8" fill="url(#person3d)" />
+                            <ellipse cx="65" cy="45" rx="10" ry="15" fill="url(#team3d)" />
+                            <circle cx="50" cy="35" r="10" fill="url(#person3d)" />
+                            <ellipse cx="50" cy="60" rx="12" ry="18" fill="url(#team3d)" />
+                            <circle cx="32" cy="22" r="2" fill="#FFFFFF" opacity="0.8" />
+                            <circle cx="62" cy="22" r="2" fill="#FFFFFF" opacity="0.8" />
+                            <circle cx="47" cy="32" r="2.5" fill="#FFFFFF" opacity="0.8" />
+                            <path d="M25 45 Q35 40 45 45" stroke="#93C5FD" strokeWidth="2" fill="none" opacity="0.6" />
+                            <path d="M55 45 Q65 40 75 45" stroke="#93C5FD" strokeWidth="2" fill="none" opacity="0.6" />
+                          </svg>
+                        )}
+                      </div>
+                      <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                        {value.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 whitespace-pre-line">{value.description}</p>
                     </div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-900">
-                      {value.title}
-                    </h3>
-                    <p className="text-sm text-gray-600">{value.description}</p>
                   </div>
                 );
               })}
@@ -448,17 +523,17 @@ export default function AboutPage() {
 
 
         {/* CTA Section */}
-        <section className="bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 py-16 md:py-20">
+        <section className="bg-gray-50 py-16 md:py-20">
           <div className="container text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">
               함께 성장할 준비가 되셨나요?
             </h2>
-            <p className="mb-8 text-lg text-blue-100">
+            <p className="mb-8 text-lg text-gray-600">
               LeanUp과 함께 비즈니스의 다음 단계로 나아가세요
             </p>
             <a
               href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-primary shadow-lg transition-all hover:bg-gray-50"
+              className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-base font-medium text-white shadow-lg transition-all hover:bg-primary/90"
             >
               프로젝트 시작하기
             </a>

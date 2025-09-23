@@ -93,9 +93,9 @@ export default function ContactPage() {
       <main className="bg-gradient-to-b from-gray-50 to-white">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-28">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10" />
-          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-pink-400/20 to-purple-400/20 blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-blue-500/10 to-blue-400/10" />
+          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-400/20 to-blue-300/20 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-blue-300/20 to-blue-400/20 blur-3xl" />
 
           <div className="container relative">
             <div className="mx-auto max-w-4xl text-center">
@@ -103,7 +103,7 @@ export default function ContactPage() {
                 <Sparkles className="h-4 w-4" />
                 24시간 내 답변 보장
               </div>
-              <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+              <h1 className="mb-6 text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
                 프로젝트를 시작하세요
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
@@ -155,10 +155,10 @@ export default function ContactPage() {
                       href="https://channel.io/leanup"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative flex items-center gap-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 p-5 text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02]"
+                      className="group relative flex items-center gap-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-400 p-5 text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02]"
                     >
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur">
-                        <MessageCircle className="h-6 w-6" />
+                        <MessageCircle className="h-6 w-6 text-white" />
                       </div>
                       <div className="flex-1">
                         <p className="font-semibold">채널톡 상담</p>
@@ -192,21 +192,21 @@ export default function ContactPage() {
                   </div>
 
                   {/* Benefits Card */}
-                  <div className="rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 p-6">
+                  <div className="rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 p-6">
                     <h3 className="mb-4 text-lg font-bold text-gray-900">
                       왜 LeanUp인가요?
                     </h3>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3">
-                        <Zap className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <Zap className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-gray-700">2-4주 내 MVP 완성</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <Shield className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <Shield className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-gray-700">6개월 무상 유지보수</span>
                       </li>
                       <li className="flex items-start gap-3">
-                        <Users className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <Users className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                         <span className="text-sm text-gray-700">전담 PM 배정</span>
                       </li>
                     </ul>
@@ -460,7 +460,7 @@ export default function ContactPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                      className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
                       <div className="relative flex items-center justify-center gap-2">
                         {isSubmitting ? (

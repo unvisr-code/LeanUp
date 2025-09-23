@@ -134,13 +134,13 @@ export default function WebsitePage() {
             <div className="max-w-5xl mx-auto">
               <div className="relative">
                 {/* Timeline Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 to-purple-600"></div>
+                <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-200 to-blue-100 z-0"></div>
 
                 {/* Timeline Items */}
-                <div className="space-y-8">
+                <div className="space-y-8 relative z-10">
                   <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      D0-2
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      Step1
                     </div>
                     <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
                       <h3 className="text-xl font-semibold mb-2">자료 수령 & 킥오프</h3>
@@ -149,8 +149,8 @@ export default function WebsitePage() {
                   </div>
 
                   <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      D3-5
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      Step2
                     </div>
                     <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
                       <h3 className="text-xl font-semibold mb-2">골격 배치 & 카피/이미지 스테이징</h3>
@@ -159,8 +159,8 @@ export default function WebsitePage() {
                   </div>
 
                   <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      D6-7
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      Step3
                     </div>
                     <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
                       <h3 className="text-xl font-semibold mb-2">추적/SEO 설정</h3>
@@ -169,8 +169,8 @@ export default function WebsitePage() {
                   </div>
 
                   <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      D8-9
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      Step4
                     </div>
                     <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
                       <h3 className="text-xl font-semibold mb-2">리비전 & QA</h3>
@@ -179,10 +179,10 @@ export default function WebsitePage() {
                   </div>
 
                   <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      D10
+                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                      Step5
                     </div>
-                    <div className="flex-1 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 shadow-md border-2 border-blue-200">
+                    <div className="flex-1 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 shadow-md border-2 border-blue-200">
                       <h3 className="text-xl font-semibold mb-2 text-blue-900">런칭 & 7일 하이퍼케어</h3>
                       <p className="text-gray-700">배포 완료 후 7일간 집중 모니터링 및 즉시 대응</p>
                     </div>
@@ -227,8 +227,8 @@ export default function WebsitePage() {
               </div>
 
               <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
-                  <Clock className="h-6 w-6 text-purple-600" />
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
+                  <Clock className="h-6 w-6 text-blue-600" />
                 </div>
                 <h3 className="mb-3 text-xl font-semibold">30분 온보딩</h3>
                 <p className="text-gray-600">
@@ -338,7 +338,7 @@ export default function WebsitePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 md:py-24 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <section className="py-20 md:py-24 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
           <div className="container text-center">
             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
               10일 안에 웹사이트를 런칭하세요
