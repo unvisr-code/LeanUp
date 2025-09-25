@@ -24,7 +24,22 @@ import {
 } from "lucide-react";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
+  type BudgetOption = "under-500" | "500-1000" | "1000-3000" | "3000-5000" | "over-5000" | "";
+  type TimelineOption = "asap" | "1month" | "2month" | "3month" | "over-3month" | "";
+
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    phone: string;
+    company: string;
+    budget: BudgetOption;
+    timeline: TimelineOption;
+    requirements: string;
+    referenceUrl: string;
+    industry: string;
+    includeDataModule: boolean;
+    includeMaintenanceModule: boolean;
+  }>({
     name: "",
     email: "",
     phone: "",
@@ -69,11 +84,11 @@ export default function ContactPage() {
     try {
       await createLead.mutateAsync({
         ...formData,
-        budget: formData.budget as any,
-        timeline: formData.timeline as any,
+        budget: formData.budget || undefined,
+        timeline: formData.timeline || undefined,
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      // Error submitting form
     } finally {
       setIsSubmitting(false);
     }

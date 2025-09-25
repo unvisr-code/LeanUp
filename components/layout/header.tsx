@@ -289,7 +289,8 @@ function NotificationModal({
     if (!email) return;
     
     // TODO: 실제 API 호출로 알림 신청 처리
-    console.log(`${serviceName} 출시 알림 신청:`, email);
+    // await api.notification.subscribe({ email, service: serviceName });
+    // Notification submitted for service: serviceName with email
     setIsSubmitted(true);
     
     setTimeout(() => {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { X, Send, Phone, Mail, Building, Calendar, DollarSign, FileText } from "lucide-react";
 import { ModalPortal } from "./modal-portal";
+import { useToast } from "@/components/ui/toast";
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface QuoteModalProps {
 }
 
 export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,10 +26,21 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // TODO: API 호출 구현
+    try {
+      // TODO: API 호출 구현
+      // const response = await fetch('/api/quote', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData),
+      // });
+      // const result = await response.json();
 
-    // 성공 메시지
-    alert("견적 요청이 성공적으로 접수되었습니다. 24시간 이내에 연락드리겠습니다.");
+      // 성공 메시지
+      showToast("견적 요청이 성공적으로 접수되었습니다. 24시간 이내에 연락드리겠습니다.", "success");
+    } catch (error) {
+      showToast("견적 요청 중 오류가 발생했습니다. 다시 시도해주세요.", "error");
+      return;
+    }
 
     // 폼 초기화
     setFormData({

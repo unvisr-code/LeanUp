@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { ModalPortal } from "./modal-portal";
+import { useToast } from "@/components/ui/toast";
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface ContactModalProps {
 }
 
 export function ContactModal({ isOpen, onClose }: ContactModalProps) {
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     company: "",
     name: "",
@@ -41,12 +43,37 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: 폼 제출 로직 구현
-    // Form submitted
-    alert("문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다!");
-    onClose();
+
+    try {
+      // TODO: API 연동
+      // const response = await fetch('/api/contact', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData),
+      // });
+      // const result = await response.json();
+
+      // Form submitted successfully
+      showToast("문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다!", "success");
+
+      // Reset form
+      setFormData({
+        company: "",
+        name: "",
+        email: "",
+        phone: "",
+        budget: "",
+        timeline: "",
+        projectType: "",
+        description: "",
+      });
+
+      onClose();
+    } catch (error) {
+      showToast("문의 접수 중 오류가 발생했습니다. 다시 시도해주세요.", "error");
+    }
   };
 
   const handleChange = (

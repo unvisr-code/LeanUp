@@ -20,9 +20,24 @@ export const leadRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       // TODO: 실제 데이터베이스에 저장
-      // Lead created successfully
+      // const lead = await db.lead.create({ data: input });
 
-      // 여기서 이메일 알림, CRM 연동 등을 처리
+      // Lead created successfully
+      const leadData = {
+        ...input,
+        createdAt: new Date(),
+        id: Math.random().toString(36).substr(2, 9),
+      };
+
+      // TODO: 이메일 알림 서비스 연동
+      // await sendEmail({
+      //   to: 'admin@leanup.kr',
+      //   subject: `새로운 문의: ${input.name}`,
+      //   data: leadData,
+      // });
+
+      // TODO: CRM API 연동
+      // await crm.createLead(leadData);
 
       return {
         success: true,
