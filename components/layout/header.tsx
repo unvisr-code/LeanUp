@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { Menu, X, ChevronDown, Send, Lock, Bell } from "lucide-react";
+import { Menu, X, ChevronDown, Send, Lock, Bell, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { QuoteModal } from "@/components/quote-modal";
+import { ModalPortal } from "@/components/modal-portal";
 
 const serviceItems = [
   { 
@@ -64,14 +64,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="flex items-center space-x-2">
-          <Image
-            src="/assets/main.png"
-            alt="LeanUp"
-            width={120}
-            height={40}
-            className="h-8 w-auto"
-          />
+        <Link href="/" className="flex items-center space-x-2 group">
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center justify-center w-9 h-9 bg-blue-600 rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
+              <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
+            </div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
+              LeanUp
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -147,7 +148,7 @@ export function Header() {
           ))}
           <button
             onClick={() => setIsQuoteModalOpen(true)}
-            className="ml-4 inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            className="ml-4 inline-flex h-9 items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           >
             견적 문의
           </button>
@@ -248,7 +249,7 @@ export function Header() {
               setIsMobileMenuOpen(false);
               setIsQuoteModalOpen(true);
             }}
-            className="block w-full rounded-md bg-primary px-3 py-2 text-center text-base font-medium text-primary-foreground hover:bg-primary/90"
+            className="block w-full rounded-md bg-blue-600 px-3 py-2 text-center text-base font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg"
           >
             견적 문의
           </button>
@@ -303,15 +304,17 @@ function NotificationModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
-      {/* Backdrop */}
+    <ModalPortal>
+      {/* Backdrop with dark blur effect */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-[99998] bg-black/70 backdrop-blur-md"
         onClick={onClose}
       />
 
-      {/* Modal */}
-      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6">
+      {/* Modal container with higher z-index and centered positioning */}
+      <div className="fixed inset-0 z-[99999] overflow-y-auto">
+        <div className="flex min-h-full items-center justify-center p-4">
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6">
         {!isSubmitted ? (
           <>
             <div className="text-center mb-6">
@@ -376,7 +379,9 @@ function NotificationModal({
         >
           <X className="h-5 w-5 text-gray-400" />
         </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </ModalPortal>
   );
 }

@@ -95,12 +95,39 @@
   animation-play-state: paused !important;
 }
 
-/* Channel.io 런처 버튼 커스터마이징 */
+/* Channel.io 채널톡 버튼 커스터마이징 - 파란색 테마 */
 #ch-plugin-launcher {
-  background-color: #2563eb !important;
+  background-color: #3B82F6 !important; /* blue-500 */
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3) !important;
 }
 
 /* Channel.io 런처 버튼 호버 시 색상 */
 #ch-plugin-launcher:hover {
-  background-color: #1d4ed8 !important;
+  background-color: #2563EB !important; /* blue-600 */
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Channel.io 아이콘 색상 */
+#ch-plugin-launcher svg {
+  fill: #FFFFFF !important;
+}
+
+/* Channel.io 대화창 헤더 색상 */
+#ch-plugin-core > div:first-child {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important;
+}
+
+/* Channel.io 메시지 버블 색상 */
+.ch-messenger-bubble {
+  background-color: #3B82F6 !important;
+}
+
+/* Channel.io 전송 버튼 색상 */
+.ch-messenger-input-send-button {
+  background-color: #3B82F6 !important;
+}
+
+.ch-messenger-input-send-button:hover {
+  background-color: #2563EB !important;
 }

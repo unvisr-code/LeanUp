@@ -239,7 +239,7 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
       <div
         className={`flex flex-col ${
           isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-        } items-center justify-center gap-6 md:gap-10 py-16 md:py-24 transition-all duration-700 ${
+        } items-center justify-center gap-6 md:gap-8 py-10 md:py-16 transition-all duration-700 ${
           isVisible
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-12"
@@ -296,7 +296,7 @@ export function FeaturesSection() {
 
       <div className="container relative z-10">
         {/* 헤더 */}
-        <div className="text-center mb-20 md:mb-32">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             이런 점이 특별해요
           </h2>
@@ -306,7 +306,7 @@ export function FeaturesSection() {
         </div>
 
         {/* 특징 목록 - 가운데 정렬 */}
-        <div className="flex flex-col items-center space-y-8">
+        <div className="flex flex-col items-center space-y-4">
           {features.map((feature, index) => (
             <FeatureItem key={index} feature={feature} index={index} />
           ))}
