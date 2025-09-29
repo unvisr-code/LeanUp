@@ -166,7 +166,7 @@ export function PortfolioCarousel() {
                       <div className="p-8 md:p-10 flex flex-col justify-center">
                         {/* Tags */}
                         <div className="mb-4 flex flex-wrap gap-2">
-                          {item.serviceType.map((type, i) => (
+                          {item.serviceType.map((type: string, i: number) => (
                             <span
                               key={i}
                               className="inline-block rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-800"
@@ -189,7 +189,7 @@ export function PortfolioCarousel() {
                         {/* Work Scope */}
                         {item.workScope && (
                           <div className="mb-4 flex flex-wrap gap-2">
-                            {item.workScope.map((scope, i) => (
+                            {item.workScope.map((scope: string, i: number) => (
                               <span
                                 key={i}
                                 className="inline-block rounded-md bg-green-100 px-3 py-1 text-sm font-medium text-green-800"
@@ -202,7 +202,7 @@ export function PortfolioCarousel() {
 
                         {/* Tech Stack */}
                         <div className="mb-6 flex flex-wrap gap-2">
-                          {item.techStack.map((tech, i) => (
+                          {item.techStack.map((tech: string, i: number) => (
                             <span
                               key={i}
                               className="text-sm text-gray-500"

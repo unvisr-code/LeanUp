@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { motion } from "framer-motion";
 
 const features: Array<{
@@ -284,7 +284,7 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
   );
 }
 
-export function FeaturesSection() {
+function FeaturesSectionComponent() {
   return (
     <motion.section
       className="relative py-20 md:py-32 overflow-hidden"
@@ -329,3 +329,6 @@ export function FeaturesSection() {
     </motion.section>
   );
 }
+
+// Export memoized component
+export const FeaturesSection = memo(FeaturesSectionComponent);

@@ -92,7 +92,7 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
     const mesh = new Mesh(gl, { geometry, program });
     let animateId: number;
 
-    function update(t) {
+    function update(t: number) {
       animateId = requestAnimationFrame(update);
       program.uniforms.uTime.value = t * 0.001;
       renderer.render({ scene: mesh });
@@ -100,7 +100,7 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
     animateId = requestAnimationFrame(update);
     ctn.appendChild(gl.canvas);
 
-    function handleMouseMove(e) {
+    function handleMouseMove(e: MouseEvent) {
       const rect = ctn.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
       const y = 1.0 - (e.clientY - rect.top) / rect.height;

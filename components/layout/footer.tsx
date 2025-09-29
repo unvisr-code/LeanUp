@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import { memo } from "react";
 import { Logo } from "@/components/ui/logo";
 
-export function Footer() {
+function FooterComponent() {
   return (
     <footer className="relative bg-black border-t border-white/[0.1] overflow-hidden">
       {/* Background gradient similar to other sections */}
@@ -35,3 +36,5 @@ export function Footer() {
     </footer>
   );
 }
+
+export const Footer = memo(FooterComponent);

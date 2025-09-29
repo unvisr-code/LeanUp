@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import {
   X, Send, Phone, Mail, Building, Calendar, DollarSign, FileText,
   Globe, Loader2, CheckCircle, User, Briefcase
@@ -14,7 +14,7 @@ interface QuoteModalProps {
   onClose: () => void;
 }
 
-export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
+function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
   const { showToast } = useToast();
 
   type BudgetOption = "under-500" | "500-1000" | "1000-3000" | "3000-5000" | "over-5000" | "";
@@ -119,20 +119,20 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
 
       {/* 모달 컨테이너 */}
       <div className="fixed inset-0 z-[9999] overflow-y-auto">
-        <div className="flex min-h-full items-center justify-center p-4">
-          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/[0.2] shadow-[0_20px_80px_rgba(0,0,0,0.8)] transition-all duration-300">
+        <div className="flex min-h-full items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-t-2xl sm:rounded-2xl bg-black/90 backdrop-blur-2xl border-0 sm:border border-white/[0.2] shadow-[0_20px_80px_rgba(0,0,0,0.8)] transition-all duration-300 min-h-[70vh] sm:min-h-0">
             {/* 헤더 */}
-            <div className="bg-gradient-to-r from-white/[0.12] to-white/[0.08] backdrop-blur-xl px-6 py-6 border-b border-white/[0.15]">
+            <div className="bg-gradient-to-r from-white/[0.12] to-white/[0.08] backdrop-blur-xl px-4 sm:px-6 py-4 sm:py-6 border-b border-white/[0.15]">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">무료 견적 받기</h2>
-                  <p className="mt-1 text-white/70">
+                  <h2 className="text-xl sm:text-2xl font-bold text-white">무료 견적 받기</h2>
+                  <p className="mt-1 text-sm sm:text-base text-white/70">
                     간단한 정보만 입력하시면 24시간 내에 맞춤 견적을 보내드립니다
                   </p>
                 </div>
                 <button
                   onClick={onClose}
-                  className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/[0.15] transition-all duration-200"
+                  className="rounded-lg p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-white/80 hover:text-white hover:bg-white/[0.15] transition-all duration-200"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -152,7 +152,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
             </div>
 
             {/* 폼 */}
-            <form onSubmit={handleSubmit} className="p-6 text-white">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 text-white">
               {/* Step 1: 기본 정보 */}
               {currentStep === 1 && (
                 <div className="space-y-6">
@@ -164,7 +164,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <p className="mt-1 text-sm text-white/60">연락 가능한 정보를 입력해주세요</p>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="name" className="mb-2 block text-sm font-medium text-white/80">
                         <User className="inline h-4 w-4 mr-1" />
@@ -177,7 +177,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                         placeholder="홍길동"
                       />
                     </div>
@@ -194,7 +194,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                         placeholder="email@example.com"
                       />
                     </div>
@@ -210,7 +210,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                         placeholder="010-1234-5678"
                       />
                     </div>
@@ -226,7 +226,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                         placeholder="회사명 입력"
                       />
                     </div>
@@ -245,7 +245,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <p className="mt-1 text-sm text-white/60">프로젝트에 대해 알려주세요</p>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="budget" className="mb-2 block text-sm font-medium text-white/80">
                         <DollarSign className="inline h-4 w-4 mr-1" />
@@ -300,7 +300,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.industry}
                         onChange={handleChange}
                         placeholder="예: 이커머스, 교육, 헬스케어"
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                       />
                     </div>
 
@@ -316,7 +316,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.referenceUrl}
                         onChange={handleChange}
                         placeholder="https://example.com"
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
                       />
                     </div>
                   </div>
@@ -397,9 +397,9 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className={`px-4 py-2 text-sm font-medium text-white/70 transition-all ${
+                  className={`px-4 py-2 min-h-[48px] text-sm font-medium text-white/70 transition-all touch-manipulation ${
                     currentStep === 1 ? "invisible" : "visible"
-                  } hover:text-white`}
+                  } hover:text-white active:scale-95`}
                 >
                   ← 이전
                 </button>
@@ -421,7 +421,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         (currentStep === 1 && !isStep1Valid) ||
                         (currentStep === 2 && !isStep2Valid)
                       }
-                      className="px-6 py-3 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                      className="px-6 py-3 min-h-[48px] bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-95 touch-manipulation"
                     >
                       다음 →
                     </button>
@@ -429,7 +429,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <button
                       type="submit"
                       disabled={isSubmitting || !isStep1Valid || !isStep2Valid}
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                      className="flex items-center gap-2 px-6 py-3 min-h-[48px] bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-95 touch-manipulation"
                     >
                       {isSubmitting ? (
                         <>
@@ -453,3 +453,5 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     </ModalPortal>
   );
 }
+
+export const QuoteModal = memo(QuoteModalComponent);

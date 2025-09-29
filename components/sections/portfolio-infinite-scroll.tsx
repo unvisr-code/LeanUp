@@ -94,7 +94,7 @@ export function PortfolioInfiniteScroll() {
 
                   {/* Overlay with service type */}
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    {item.serviceType.slice(0, 2).map((type, i) => (
+                    {item.serviceType.slice(0, 2).map((type: string, i: number) => (
                       <span
                         key={i}
                         className="inline-block rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium text-gray-800"
@@ -117,7 +117,7 @@ export function PortfolioInfiniteScroll() {
                   {/* Work Scope */}
                   {item.workScope && (
                     <div className="mb-3 flex flex-wrap gap-2">
-                      {item.workScope.map((scope, i) => (
+                      {item.workScope.map((scope: string, i: number) => (
                         <span
                           key={i}
                           className="inline-block rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-800"
@@ -200,7 +200,7 @@ export function PortfolioInfiniteScroll() {
 
                   {/* Overlay with service type */}
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                    {item.serviceType.slice(0, 2).map((type, i) => (
+                    {item.serviceType.slice(0, 2).map((type: string, i: number) => (
                       <span
                         key={i}
                         className="inline-block rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium text-gray-800"
@@ -223,7 +223,7 @@ export function PortfolioInfiniteScroll() {
                   {/* Work Scope */}
                   {item.workScope && (
                     <div className="mb-3 flex flex-wrap gap-2">
-                      {item.workScope.map((scope, i) => (
+                      {item.workScope.map((scope: string, i: number) => (
                         <span
                           key={i}
                           className="inline-block rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"

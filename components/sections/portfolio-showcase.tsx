@@ -4,6 +4,7 @@ import { Star, ArrowRight, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { memo, useMemo } from "react";
 import { api } from "@/lib/trpc/provider";
 
 // 미니 후기 데이터 (한 줄로 간소화)
@@ -13,11 +14,13 @@ const miniTestimonials = [
   { stars: 5, text: "매출 200% 증가, 최고의 선택", author: "쇼핑몰 운영자" },
 ];
 
-export function PortfolioShowcaseSection() {
+function PortfolioShowcaseSectionComponent() {
   const { data: portfolios, isLoading } = api.portfolio.getAll.useQuery();
 
-  // 홈페이지에서는 8개만 표시
-  const displayPortfolios = portfolios?.slice(0, 8) || [];
+  // 홈페이지에서는 8개만 표시 (메모화)
+  const displayPortfolios = useMemo(() => {
+    return portfolios?.slice(0, 8) || [];
+  }, [portfolios]);
 
   if (isLoading) {
     return (
@@ -54,23 +57,23 @@ export function PortfolioShowcaseSection() {
       <div className="container relative z-10">
         {/* 섹션 헤더 */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             실제 작업 포트폴리오
           </h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
             다양한 산업군의 고객들과 함께한 성공 프로젝트
           </p>
         </motion.div>
 
         {/* 포트폴리오 그리드 */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8 sm:mb-12 px-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -84,7 +87,7 @@ export function PortfolioShowcaseSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative aspect-video rounded-lg overflow-hidden bg-white/[0.08] border border-white/[0.15] hover:border-white/[0.25] transition-all duration-300"
+                className="group relative aspect-video rounded-lg overflow-hidden bg-white/[0.08] border border-white/[0.15] hover:border-white/[0.25] transition-all duration-300 active:scale-95 touch-manipulation"
               >
                 {item.thumbnail ? (
                   <Image
@@ -92,7 +95,8 @@ export function PortfolioShowcaseSection() {
                     alt={item.name}
                     fill
                     className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                    priority={index < 4}
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
@@ -102,10 +106,10 @@ export function PortfolioShowcaseSection() {
                   </div>
                 )}
 
-                {/* 호버 오버레이 - 심플하게 제목만 */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {/* 호버 오버레이 - 모바일에서는 항상 표시 */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <h3 className="text-white font-medium text-sm truncate">
+                    <h3 className="text-white font-medium text-sm sm:text-xs truncate">
                       {item.name}
                     </h3>
                     {item.serviceLink && (
@@ -139,13 +143,13 @@ export function PortfolioShowcaseSection() {
 
         {/* 미니 고객 후기 - 매우 심플 */}
         <motion.div
-          className="mb-12 py-8 border-y border-white/[0.1]"
+          className="mb-8 sm:mb-12 py-6 sm:py-8 border-y border-white/[0.1] px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
             {miniTestimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -181,7 +185,7 @@ export function PortfolioShowcaseSection() {
 
         {/* CTA 버튼 */}
         <motion.div
-          className="text-center"
+          className="text-center px-4"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -189,7 +193,7 @@ export function PortfolioShowcaseSection() {
         >
           <Link
             href="/portfolio"
-            className="group inline-flex items-center px-8 py-4 bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-full text-white font-medium transition-all hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-lg hover:shadow-white/10"
+            className="group inline-flex items-center px-8 py-4 min-h-[48px] bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-full text-white font-medium transition-all hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-lg hover:shadow-white/10 active:scale-95 touch-manipulation"
           >
             전체 포트폴리오 보기
             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -199,3 +203,6 @@ export function PortfolioShowcaseSection() {
     </motion.section>
   );
 }
+
+// 컴포넌트 메모화
+export const PortfolioShowcaseSection = memo(PortfolioShowcaseSectionComponent);

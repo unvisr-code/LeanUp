@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu, X, Lock, Bell } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import { QuoteModal } from "@/components/quote-modal";
@@ -55,7 +55,7 @@ const navItems = [
   { label: "Q&A", href: "/contact" },
 ];
 
-export function HeroSection() {
+function HeroSectionComponent() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -92,14 +92,14 @@ export function HeroSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleServiceClick = (item: typeof serviceItems[0], e: React.MouseEvent) => {
+  const handleServiceClick = useCallback((item: typeof serviceItems[0], e: React.MouseEvent) => {
     if (item.status === "development" || item.status === "coming-soon") {
       e.preventDefault();
       setSelectedService(item.label);
       setIsNotificationModalOpen(true);
       setIsServicesOpen(false);
     }
-  };
+  }, []);
 
   return (
     <>
@@ -109,15 +109,15 @@ export function HeroSection() {
           {mounted && (
             <Prism
               animationType="rotate"
-              timeScale={0.4}
+              timeScale={window.innerWidth < 768 ? 0.2 : 0.4}
               height={3.5}
               baseWidth={5.5}
-              scale={3.0}
+              scale={window.innerWidth < 768 ? 2.0 : 3.0}
               hueShift={0}
               colorFrequency={1.2}
               noise={0}
-              glow={1.0}
-              bloom={0.9}
+              glow={window.innerWidth < 768 ? 0.7 : 1.0}
+              bloom={window.innerWidth < 768 ? 0.6 : 0.9}
               suspendWhenOffscreen={true}
             />
           )}
@@ -228,10 +228,10 @@ export function HeroSection() {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden inline-flex items-center justify-center p-2 text-white hover:bg-white/10 rounded-lg"
+                className="md:hidden inline-flex items-center justify-center p-3 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </motion.nav>
@@ -249,7 +249,7 @@ export function HeroSection() {
                     <div key={item.href}>
                       <button
                         onClick={() => setIsServicesOpen(!isServicesOpen)}
-                        className="flex items-center justify-between w-full px-3 py-2 text-white/80 hover:text-white rounded-lg hover:bg-white/10"
+                        className="flex items-center justify-between w-full px-4 py-3 min-h-[48px] text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
                       >
                         {item.label}
                         <ChevronDown className={cn("h-4 w-4 transition-transform", isServicesOpen && "rotate-180")} />
@@ -262,7 +262,7 @@ export function HeroSection() {
                                 key={subItem.href}
                                 href={subItem.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="block px-3 py-2 text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10"
+                                className="block px-4 py-3 min-h-[48px] text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
                               >
                                 {subItem.label}
                               </Link>
@@ -273,7 +273,7 @@ export function HeroSection() {
                                   handleServiceClick(subItem, e);
                                   setIsMobileMenuOpen(false);
                                 }}
-                                className="block px-3 py-2 text-sm text-white/50 rounded-lg hover:bg-white/10"
+                                className="block px-4 py-3 min-h-[48px] text-sm text-white/50 rounded-lg hover:bg-white/10 cursor-pointer transition-colors"
                               >
                                 <div className="flex items-center gap-2">
                                   <span>{subItem.label}</span>
@@ -291,7 +291,7 @@ export function HeroSection() {
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
-                        "block px-3 py-2 rounded-lg transition-all",
+                        "block px-4 py-3 min-h-[48px] rounded-lg transition-all",
                         pathname === item.href
                           ? "bg-white/[0.15] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/10"
@@ -306,7 +306,7 @@ export function HeroSection() {
                     setIsMobileMenuOpen(false);
                     setIsQuoteModalOpen(true);
                   }}
-                  className="w-full px-3 py-2 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200"
+                  className="w-full px-4 py-3 min-h-[48px] bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200 active:scale-95"
                 >
                   견적 문의
                 </button>
@@ -338,7 +338,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight"
+                className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1] sm:leading-tight"
               >
                 빠르고 전문적인
                 <br />
@@ -367,10 +367,11 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto"
+                className="text-base sm:text-lg md:text-xl text-white/80 mb-8 sm:mb-10 max-w-2xl mx-auto px-4"
               >
                 전문가 퀄리티 · 스타트업 속도 · 합리적 비용
-                <br />
+                <br className="hidden sm:block" />
+                <span className="sm:hidden"> </span>
                 템플릿과 AI를 활용하여 2주일 내 MVP 웹사이트 완성
               </motion.p>
 
@@ -379,11 +380,11 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.7 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center"
+                className="flex flex-col sm:flex-row gap-4 justify-center px-4"
               >
                 <button
                   onClick={() => setIsQuoteModalOpen(true)}
-                  className="group inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-full font-semibold text-base transition-all hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 hover:scale-105"
+                  className="group inline-flex items-center justify-center px-8 py-4 min-h-[48px] bg-white text-gray-900 rounded-full font-semibold text-base transition-all hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 hover:scale-105 active:scale-95"
                 >
                   견적 문의
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -391,7 +392,7 @@ export function HeroSection() {
 
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-base transition-all hover:bg-white/10 hover:border-white/50 backdrop-blur-sm"
+                  className="inline-flex items-center justify-center px-8 py-4 min-h-[48px] bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-base transition-all hover:bg-white/10 hover:border-white/50 backdrop-blur-sm active:scale-95"
                 >
                   포트폴리오 보기
                 </Link>
@@ -453,6 +454,9 @@ export function HeroSection() {
     </>
   );
 }
+
+// Export memoized component
+export const HeroSection = memo(HeroSectionComponent);
 
 // Notification Modal Component
 function NotificationModal({

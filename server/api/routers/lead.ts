@@ -49,7 +49,6 @@ export const leadRouter = createTRPCRouter({
           throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다.');
         }
 
-        console.log('New lead created:', lead.id);
 
         // TODO: 이메일 알림 서비스 연동
         // await sendEmail({

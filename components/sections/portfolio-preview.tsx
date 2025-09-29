@@ -52,7 +52,7 @@ export function PortfolioPreview() {
                 </div>
                 <div className="p-6">
                   <div className="mb-2 flex flex-wrap gap-2">
-                    {item.serviceType.map((type, i) => (
+                    {item.serviceType.map((type: string, i: number) => (
                       <span
                         key={i}
                         className="inline-block rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800"
@@ -68,7 +68,7 @@ export function PortfolioPreview() {
                     {item.description}
                   </p>
                   <div className="flex flex-wrap gap-2 text-xs text-gray-500">
-                    {item.techStack.map((tech, i) => (
+                    {item.techStack.map((tech: string, i: number) => (
                       <span key={i}>{tech}</span>
                     ))}
                   </div>
