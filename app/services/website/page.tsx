@@ -1,370 +1,362 @@
-import { Header } from "@/components/layout/header";
+"use client";
+
+import { useState } from "react";
+import { DarkHeader } from "@/components/layout/dark-header";
 import { Footer } from "@/components/layout/footer";
+import { PageWrapper, PageHeader } from "@/components/layout/page-wrapper";
+import { QuoteModal } from "@/components/quote-modal";
+import { motion } from "framer-motion";
 import { CheckCircle, Clock, Zap, Code, Globe, Shield, TrendingUp, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function WebsitePage() {
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   return (
-    <>
-      <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-500 to-blue-400 text-white overflow-hidden">
-          {/* 3D Background Icons */}
-          <div className="absolute inset-0 overflow-hidden">
-            {/* 3D Code Icon */}
-            <div className="absolute top-20 left-10 opacity-10">
-              <svg viewBox="0 0 120 120" className="w-32 h-32 md:w-40 md:h-40">
-                <defs>
-                  <linearGradient id="code3d" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#DBEAFE" />
-                    <stop offset="50%" stopColor="#93C5FD" />
-                    <stop offset="100%" stopColor="#60A5FA" />
-                  </linearGradient>
-                </defs>
-                <rect x="20" y="30" width="80" height="60" fill="url(#code3d)" rx="8" />
-                <path d="M35 45 L50 55 L35 65" stroke="#1E40AF" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M85 45 L70 55 L85 65" stroke="#1E40AF" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                <line x1="55" y1="40" x2="65" y2="70" stroke="#1E40AF" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+    <PageWrapper>
+      <DarkHeader />
+
+      {/* Add padding to account for fixed header */}
+      <div className="pt-24">
+        <PageHeader
+          title="웹사이트 개발"
+          subtitle="템플릿과 AI를 활용한 빠르고 효율적인 웹사이트 개발"
+        />
+
+        {/* Key Features */}
+        <section className="py-2 md:py-4">
+          <div className="container">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Zap,
+                  title: "템플릿 + AI 활용",
+                  description: "검증된 템플릿과 AI 기술을 활용하여 개발 속도와 품질을 동시에 확보",
+                  color: "from-blue-600 to-cyan-600"
+                },
+                {
+                  icon: TrendingUp,
+                  title: "전환율 최적화",
+                  description: "히어로, CTA, 폼, 이벤트 등 전환 중심의 설계로 비즈니스 성과 극대화",
+                  color: "from-green-600 to-emerald-600"
+                },
+                {
+                  icon: Clock,
+                  title: "30분 온보딩",
+                  description: "관리자 교육과 함께 직접 운영할 수 있도록 체계적인 온보딩 제공",
+                  color: "from-blue-600 to-indigo-600"
+                },
+                {
+                  icon: Shield,
+                  title: "7일 하이퍼케어",
+                  description: "런칭 후 7일간 집중 모니터링과 즉시 대응으로 안정적인 서비스 운영",
+                  color: "from-orange-600 to-red-600"
+                },
+                {
+                  icon: Globe,
+                  title: "SEO 최적화",
+                  description: "검색 엔진 최적화로 자연 유입 트래픽 증가 및 마케팅 효과 극대화",
+                  color: "from-purple-600 to-pink-600"
+                },
+                {
+                  icon: Code,
+                  title: "최신 기술 스택",
+                  description: "Next.js, TypeScript, tRPC 등 최신 기술로 확장성과 유지보수성 확보",
+                  color: "from-indigo-600 to-blue-600"
+                }
+              ].map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6 hover:bg-white/[0.12] hover:border-white/[0.25] transition-all"
+                  >
+                    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${feature.color} shadow-lg`}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="mb-3 text-xl font-semibold text-white">{feature.title}</h3>
+                    <p className="text-white/70">
+                      {feature.description}
+                    </p>
+                  </motion.div>
+                );
+              })}
             </div>
-            
-            {/* 3D Globe Icon */}
-            <div className="absolute top-32 right-16 opacity-15">
-              <svg viewBox="0 0 120 120" className="w-28 h-28 md:w-36 md:h-36">
-                <defs>
-                  <radialGradient id="globe3d">
-                    <stop offset="0%" stopColor="#DBEAFE" />
-                    <stop offset="70%" stopColor="#93C5FD" />
-                    <stop offset="100%" stopColor="#3B82F6" />
-                  </radialGradient>
-                </defs>
-                <circle cx="60" cy="60" r="35" fill="url(#globe3d)" />
-                <ellipse cx="60" cy="60" rx="35" ry="15" fill="none" stroke="#1E40AF" strokeWidth="1.5" />
-                <ellipse cx="60" cy="60" rx="15" ry="35" fill="none" stroke="#1E40AF" strokeWidth="1.5" />
-                <line x1="25" y1="60" x2="95" y2="60" stroke="#1E40AF" strokeWidth="1.5" />
-              </svg>
-            </div>
-            
-            {/* 3D Rocket Icon */}
-            <div className="absolute bottom-20 left-20 opacity-12">
-              <svg viewBox="0 0 120 120" className="w-24 h-24 md:w-32 md:h-32">
-                <defs>
-                  <linearGradient id="rocket3dBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#DBEAFE" />
-                    <stop offset="100%" stopColor="#60A5FA" />
-                  </linearGradient>
-                </defs>
-                <path d="M60 20 C55 20 50 25 50 35 L50 70 L70 70 L70 35 C70 25 65 20 60 20 Z" fill="url(#rocket3dBg)" />
-                <circle cx="60" cy="40" r="8" fill="#3B82F6" opacity="0.8" />
-                <path d="M50 70 L45 85 L55 80 L50 70 Z" fill="#60A5FA" />
-                <path d="M70 70 L75 85 L65 80 L70 70 Z" fill="#60A5FA" />
-              </svg>
-            </div>
-            
-            {/* 3D Gear Icon */}
-            <div className="absolute bottom-32 right-10 opacity-10">
-              <svg viewBox="0 0 120 120" className="w-20 h-20 md:w-28 md:h-28">
-                <defs>
-                  <radialGradient id="gear3dBg">
-                    <stop offset="0%" stopColor="#DBEAFE" />
-                    <stop offset="100%" stopColor="#93C5FD" />
-                  </radialGradient>
-                </defs>
-                <circle cx="60" cy="60" r="25" fill="url(#gear3dBg)" />
-                <circle cx="60" cy="60" r="12" fill="#3B82F6" />
-                <rect x="57" y="35" width="6" height="12" fill="#60A5FA" />
-                <rect x="57" y="73" width="6" height="12" fill="#60A5FA" />
-                <rect x="35" y="57" width="12" height="6" fill="#60A5FA" />
-                <rect x="73" y="57" width="12" height="6" fill="#60A5FA" />
-              </svg>
-            </div>
-          </div>
-          
-          <div className="container relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-                <Sparkles className="h-4 w-4" />
-                2-4주 빠른 개발
-              </div>
-              <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                웹사이트 개발
-              </h1>
-              <p className="mb-12 text-xl text-white/90 leading-relaxed">
-                템플릿과 AI를 활용한 빠르고 효율적인 웹사이트 개발.
-                <br />
-                전환율 최적화와 함께 30분 온보딩까지 제공합니다.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
-                >
-                  무료 상담 받기
-                </Link>
-                <Link
-                  href="/portfolio"
-                  className="inline-flex items-center justify-center rounded-lg border-2 border-white px-8 py-3 text-base font-medium text-white transition-all hover:bg-white hover:text-blue-600"
-                >
-                  포트폴리오 보기
-                </Link>
-              </div>
-            </div>
-          </div>
-          
-          {/* Background Decoration */}
-          <div className="absolute left-0 top-0 -z-10 h-full w-full">
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-white opacity-5 blur-3xl"></div>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-80 w-80 rounded-full bg-blue-300 opacity-10 blur-3xl"></div>
           </div>
         </section>
 
         {/* Process Timeline */}
-        <section className="py-20 md:py-24">
+        <section className="py-16 md:py-20">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                10일 완성 프로세스
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                2주 MVP 완성 프로세스
               </h2>
-              <p className="text-lg text-gray-600">
-                체계적인 프로세스로 빠르고 정확하게 개발합니다
+              <p className="text-lg text-white/70">
+                체계적인 MVP 접근법으로 빠르고 효율적으로 핵심 기능을 구현합니다
               </p>
-            </div>
+            </motion.div>
 
             <div className="max-w-5xl mx-auto">
               <div className="relative">
                 {/* Timeline Line */}
-                <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-200 to-blue-100 z-0"></div>
+                <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-600/50 to-blue-600/20 z-0"></div>
 
                 {/* Timeline Items */}
                 <div className="space-y-8 relative z-10">
-                  <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      Step1
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
-                      <h3 className="text-xl font-semibold mb-2">자료 수령 & 킥오프</h3>
-                      <p className="text-gray-600">요구사항 분석, 자료 수집, 프로젝트 계획 수립</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      Step2
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
-                      <h3 className="text-xl font-semibold mb-2">골격 배치 & 카피/이미지 스테이징</h3>
-                      <p className="text-gray-600">UI/UX 디자인, 콘텐츠 배치, 기본 구조 구현</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      Step3
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
-                      <h3 className="text-xl font-semibold mb-2">추적/SEO 설정</h3>
-                      <p className="text-gray-600">GA4, GTM, SEO 최적화, 이벤트 추적 설정</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      Step4
-                    </div>
-                    <div className="flex-1 bg-white rounded-xl p-6 shadow-md">
-                      <h3 className="text-xl font-semibold mb-2">리비전 & QA</h3>
-                      <p className="text-gray-600">수정사항 반영, 품질 테스트, 크로스 브라우징 체크</p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-6">
-                    <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                      Step5
-                    </div>
-                    <div className="flex-1 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 shadow-md border-2 border-blue-200">
-                      <h3 className="text-xl font-semibold mb-2 text-blue-900">런칭 & 7일 하이퍼케어</h3>
-                      <p className="text-gray-700">배포 완료 후 7일간 집중 모니터링 및 즉시 대응</p>
-                    </div>
-                  </div>
+                  {[
+                    {
+                      step: "Step1",
+                      title: "요구사항 분석 & 와이어프레임",
+                      description: "핵심 기능 정의, 사용자 여정 설계, MVP 범위 결정 (2-3일)"
+                    },
+                    {
+                      step: "Step2",
+                      title: "MVP 핵심 기능 개발",
+                      description: "필수 기능 중심 개발, 반응형 구조 구현, 기본 UI/UX 적용 (5-6일)"
+                    },
+                    {
+                      step: "Step3",
+                      title: "테스트 & 최적화",
+                      description: "기능 테스트, 성능 최적화, SEO 기본 설정, 반응형 점검 (2-3일)"
+                    },
+                    {
+                      step: "Step4",
+                      title: "배포 & 런칭",
+                      description: "서버 배포, 도메인 연결, SSL 설정, 최종 확인 (1일)"
+                    },
+                    {
+                      step: "Step5",
+                      title: "7일 하이퍼케어",
+                      description: "런칭 후 집중 모니터링, 즉시 대응, 사용법 안내",
+                      highlight: true
+                    }
+                  ].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="flex gap-6"
+                    >
+                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                        {item.step}
+                      </div>
+                      <div className={`flex-1 ${item.highlight ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-blue-500/30' : 'bg-white/[0.08] border-white/[0.15]'} backdrop-blur-xl border rounded-xl p-6`}>
+                        <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
+                        <p className="text-white/70">{item.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Core Features */}
-        <section className="py-20 md:py-24 bg-gray-50">
-          <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                핵심 특징
-              </h2>
-              <p className="text-lg text-gray-600">
-                LeanUp만의 차별화된 웹사이트 개발 서비스
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-                  <Zap className="h-6 w-6 text-blue-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">템플릿 + AI 활용</h3>
-                <p className="text-gray-600">
-                  검증된 템플릿과 AI 기술을 활용하여 개발 속도와 품질을 동시에 확보
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
-                  <TrendingUp className="h-6 w-6 text-green-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">전환율 최적화</h3>
-                <p className="text-gray-600">
-                  히어로, CTA, 폼, 이벤트 등 전환 중심의 설계로 비즈니스 성과 극대화
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-                  <Clock className="h-6 w-6 text-blue-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">30분 온보딩</h3>
-                <p className="text-gray-600">
-                  관리자 교육과 함께 직접 운영할 수 있도록 체계적인 온보딩 제공
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100">
-                  <Shield className="h-6 w-6 text-orange-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">7일 하이퍼케어</h3>
-                <p className="text-gray-600">
-                  런칭 후 7일간 집중 모니터링과 즉시 대응으로 안정적인 서비스 운영
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-red-100">
-                  <Globe className="h-6 w-6 text-red-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">SEO 최적화</h3>
-                <p className="text-gray-600">
-                  검색 엔진 최적화로 자연 유입 트래픽 증가 및 마케팅 효과 극대화
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100">
-                  <Code className="h-6 w-6 text-indigo-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">최신 기술 스택</h3>
-                <p className="text-gray-600">
-                  Next.js, TypeScript, tRPC 등 최신 기술로 확장성과 유지보수성 확보
-                </p>
               </div>
             </div>
           </div>
         </section>
 
         {/* Deliverables */}
-        <section className="py-20 md:py-24">
+        <section className="py-16 md:py-20">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 제공 사항
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-white/70">
                 웹사이트 개발과 함께 제공되는 서비스
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                <h3 className="font-semibold text-lg mb-4 text-gray-900">기본 제공</h3>
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              {/* 개발 & 기술 파트 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6"
+              >
+                <h3 className="font-semibold text-lg mb-4 text-white flex items-center gap-2">
+                  <Code className="h-5 w-5 text-blue-400" />
+                  개발 & 기술
+                </h3>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">반응형 웹사이트 (모바일/태블릿/PC)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">SSL 보안 인증서</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">기본 SEO 설정</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">30분 관리자 온보딩</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">7일 하이퍼케어</span>
-                  </li>
+                  {[
+                    "반응형 웹사이트 (모바일/태블릿/PC)",
+                    "최신 기술 스택 (Next.js, TypeScript)",
+                    "컴포넌트 기반 설계",
+                    "성능 최적화 (이미지 압축, 코드 분할)",
+                    "크로스 브라우저 호환성",
+                    "접근성 (WCAG) 준수"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="h-4 w-4 text-blue-400 flex-shrink-0 mt-1" />
+                      <span className="text-white/80 text-sm">{item}</span>
+                    </li>
+                  ))}
                 </ul>
-              </div>
+              </motion.div>
 
-              <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                <h3 className="font-semibold text-lg mb-4 text-gray-900">추가 옵션</h3>
+              {/* 마케팅 & SEO 파트 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6"
+              >
+                <h3 className="font-semibold text-lg mb-4 text-white flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-green-400" />
+                  마케팅 & SEO
+                </h3>
                 <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">데이터 모듈 (GA4, GTM, MS Clarity)</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">유지보수 효율화 모듈</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">실시간 개발 현황 공유</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">추가 페이지 개발</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-5 w-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">맞춤형 기능 개발</span>
-                  </li>
+                  {[
+                    "기본 SEO 설정 (메타태그, 구조화 데이터)",
+                    "Google Search Console 등록",
+                    "사이트맵 생성 및 제출",
+                    "Open Graph 메타태그 설정",
+                    "페이지 속도 최적화",
+                    "기본 전환 추적 설정"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-1" />
+                      <span className="text-white/80 text-sm">{item}</span>
+                    </li>
+                  ))}
                 </ul>
-              </div>
+              </motion.div>
+
+              {/* 호스팅 & 보안 파트 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6"
+              >
+                <h3 className="font-semibold text-lg mb-4 text-white flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-orange-400" />
+                  호스팅 & 보안
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    "클라우드 호스팅 설정 (Vercel/Netlify)",
+                    "SSL 보안 인증서",
+                    "CDN 최적화",
+                    "자동 백업 시스템",
+                    "보안 헤더 설정",
+                    "도메인 연결 지원"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-1" />
+                      <span className="text-white/80 text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* 지원 & 교육 파트 */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6"
+              >
+                <h3 className="font-semibold text-lg mb-4 text-white flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-purple-400" />
+                  지원 & 교육
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    "30분 관리자 온보딩 교육",
+                    "사용법 가이드 문서 제공",
+                    "7일 하이퍼케어 (집중 지원)",
+                    "콘텐츠 업데이트 방법 교육",
+                    "기본 유지보수 가이드",
+                    "문제 해결 24시간 대응"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-1" />
+                      <span className="text-white/80 text-sm">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-20 md:py-24 bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-          <div className="container text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
-              10일 안에 웹사이트를 런칭하세요
-            </h2>
-            <p className="mb-8 text-xl text-white/90">
+        <motion.section
+          className="py-20 md:py-24 relative overflow-hidden"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="container text-center relative z-10">
+            <motion.h2
+              className="mb-4 text-3xl md:text-4xl font-bold text-white"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              2주 안에 웹사이트를 런칭하세요
+            </motion.h2>
+            <motion.p
+              className="mb-8 text-xl text-white/70"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               지금 문의하시면 무료 상담과 함께 맞춤 견적을 제공합니다
-            </p>
+            </motion.p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-lg font-medium text-blue-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                무료 상담 신청
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center justify-center rounded-lg border-2 border-white px-8 py-4 text-lg font-medium text-white transition-all hover:bg-white hover:text-blue-600"
-              >
-                포트폴리오 보기
-              </Link>
+                <button
+                  onClick={() => setIsQuoteModalOpen(true)}
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-semibold text-lg transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/20"
+                >
+                  견적 문의
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </button>
+              </motion.div>
             </div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </div>
+
       <Footer />
-    </>
+
+      {/* Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+      />
+    </PageWrapper>
   );
 }

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { supabaseAdmin } from "@/lib/supabase";
 
 export const leadRouter = createTRPCRouter({
   create: publicProcedure
@@ -19,30 +20,60 @@ export const leadRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      // TODO: 실제 데이터베이스에 저장
-      // const lead = await db.lead.create({ data: input });
+      try {
+        // Convert input to database format
+        const leadData = {
+          name: input.name,
+          email: input.email,
+          phone: input.phone || null,
+          company: input.company || null,
+          budget: input.budget || null,
+          timeline: input.timeline || null,
+          requirements: input.requirements || null,
+          reference_url: input.referenceUrl || null,
+          industry: input.industry || null,
+          include_data_module: input.includeDataModule,
+          include_maintenance_module: input.includeMaintenanceModule,
+          status: 'pending' as const,
+        };
 
-      // Lead created successfully
-      const leadData = {
-        ...input,
-        createdAt: new Date(),
-        id: Math.random().toString(36).substr(2, 9),
-      };
+        // Save to Supabase
+        const { data: lead, error } = await supabaseAdmin
+          .from('leads')
+          .insert(leadData)
+          .select()
+          .single();
 
-      // TODO: 이메일 알림 서비스 연동
-      // await sendEmail({
-      //   to: 'admin@leanup.kr',
-      //   subject: `새로운 문의: ${input.name}`,
-      //   data: leadData,
-      // });
+        if (error) {
+          console.error('Database error:', error);
+          throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다.');
+        }
 
-      // TODO: CRM API 연동
-      // await crm.createLead(leadData);
+        console.log('New lead created:', lead.id);
 
-      return {
-        success: true,
-        message: "문의가 성공적으로 접수되었습니다. 곧 연락드리겠습니다.",
-      };
+        // TODO: 이메일 알림 서비스 연동
+        // await sendEmail({
+        //   to: 'admin@leanup.kr',
+        //   subject: `새로운 문의: ${input.name}`,
+        //   data: lead,
+        // });
+
+        // TODO: CRM API 연동
+        // await crm.createLead(lead);
+
+        return {
+          success: true,
+          message: "문의가 성공적으로 접수되었습니다. 곧 연락드리겠습니다.",
+          leadId: lead.id,
+        };
+      } catch (error) {
+        console.error('Lead creation error:', error);
+        throw new Error(
+          error instanceof Error
+            ? error.message
+            : "문의 접수 중 오류가 발생했습니다. 다시 시도해주세요."
+        );
+      }
     }),
 
   calculateScore: publicProcedure
@@ -74,5 +105,94 @@ export const leadRouter = createTRPCRouter({
         score,
         priority: score >= 80 ? "high" : score >= 60 ? "medium" : "low",
       };
+    }),
+
+  // Get all leads (admin function)
+  getAll: publicProcedure
+    .query(async () => {
+      try {
+        const { data: leads, error } = await supabaseAdmin
+          .from('leads')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Database error:', error);
+          throw new Error('리드 목록을 가져오는 중 오류가 발생했습니다.');
+        }
+
+        return leads;
+      } catch (error) {
+        console.error('Get leads error:', error);
+        throw new Error(
+          error instanceof Error
+            ? error.message
+            : "리드 목록을 가져오는 중 오류가 발생했습니다."
+        );
+      }
+    }),
+
+  // Get lead by ID
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      try {
+        const { data: lead, error } = await supabaseAdmin
+          .from('leads')
+          .select('*')
+          .eq('id', input.id)
+          .single();
+
+        if (error) {
+          console.error('Database error:', error);
+          throw new Error('리드를 찾을 수 없습니다.');
+        }
+
+        return lead;
+      } catch (error) {
+        console.error('Get lead error:', error);
+        throw new Error(
+          error instanceof Error
+            ? error.message
+            : "리드를 가져오는 중 오류가 발생했습니다."
+        );
+      }
+    }),
+
+  // Update lead status
+  updateStatus: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.enum(['pending', 'contacted', 'quoted', 'closed', 'rejected']),
+      })
+    )
+    .mutation(async ({ input }) => {
+      try {
+        const { data: lead, error } = await supabaseAdmin
+          .from('leads')
+          .update({ status: input.status })
+          .eq('id', input.id)
+          .select()
+          .single();
+
+        if (error) {
+          console.error('Database error:', error);
+          throw new Error('리드 상태 업데이트 중 오류가 발생했습니다.');
+        }
+
+        return {
+          success: true,
+          message: "리드 상태가 성공적으로 업데이트되었습니다.",
+          lead,
+        };
+      } catch (error) {
+        console.error('Update lead status error:', error);
+        throw new Error(
+          error instanceof Error
+            ? error.message
+            : "리드 상태 업데이트 중 오류가 발생했습니다."
+        );
+      }
     }),
 });

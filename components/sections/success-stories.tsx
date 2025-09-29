@@ -206,7 +206,7 @@ export function SuccessStoriesSection() {
 
                   {/* Testimonial */}
                   <blockquote className="text-sm text-white/80 italic mb-6 border-l-2 border-white/20 pl-4">
-                    "{story.testimonial}"
+                    &ldquo;{story.testimonial}&rdquo;
                   </blockquote>
 
                   {/* Portfolio Preview */}

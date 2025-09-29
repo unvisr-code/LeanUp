@@ -1,7 +1,10 @@
 "use client";
 
-import { Header } from "@/components/layout/header";
+import { DarkHeader } from "@/components/layout/dark-header";
 import { Footer } from "@/components/layout/footer";
+import { PageWrapper, PageHeader } from "@/components/layout/page-wrapper";
+import { QuoteModal } from "@/components/quote-modal";
+import { motion } from "framer-motion";
 import { Users, Zap, Target, Heart, ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -330,45 +333,56 @@ function FloatingIcons() {
 }
 
 export default function AboutPage() {
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   return (
-    <>
-      <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="bg-gradient-to-b from-blue-50 to-white py-16 md:py-20">
-          <div className="container">
-            <div className="mx-auto max-w-3xl text-center">
-              <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                LeanUp 소개
-              </h1>
-              <p className="text-lg text-gray-600">
-                스타트업과 소규모 기업의 성장을 돕는
-                <br />
-                웹 개발 전문 팀입니다
-              </p>
-            </div>
-          </div>
-        </section>
+    <PageWrapper>
+      <DarkHeader />
+
+      {/* Add padding to account for fixed header */}
+      <div className="pt-24">
+        <PageHeader
+          title="LeanUp 소개"
+          subtitle="스타트업과 소규모 기업의 성장을 돕는 웹 개발 전문 팀입니다"
+        />
 
 
         {/* Values Section */}
-        <section className="bg-white py-16 md:py-20">
+        <motion.section
+          className="py-16 md:py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container">
-            <div className="text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900">
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white">
                 핵심 가치
               </h2>
-              <p className="mb-12 text-lg text-gray-600">
+              <p className="mb-12 text-lg text-white/70">
                 우리가 추구하는 가치
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid gap-8 grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto">
               {values.map((value, index) => {
                 const Icon = value.icon;
                 return (
-                  <div key={index} className="text-center">
-                    <div className="rounded-xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-white/20 hover:bg-white/90 transition-all">
+                  <motion.div
+                    key={index}
+                    className="text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <div className="rounded-xl bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] p-6 shadow-lg hover:bg-white/[0.12] hover:border-white/[0.25] transition-all">
                       <div className="w-16 h-16 mx-auto mb-4" style={{ filter: "drop-shadow(0 8px 16px rgba(59, 130, 246, 0.15))" }}>
                         {index === 0 && (
                           // 속도 - 3D 번개 아이콘
@@ -475,72 +489,119 @@ export default function AboutPage() {
                           </svg>
                         )}
                       </div>
-                      <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                      <h3 className="mb-2 text-lg font-semibold text-white">
                         {value.title}
                       </h3>
-                      <p className="text-sm text-gray-600 whitespace-pre-line">{value.description}</p>
+                      <p className="text-sm text-white/60 whitespace-pre-line">{value.description}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Team Section */}
-        <section className="bg-gradient-to-b from-white to-blue-50 py-16 md:py-20">
+        <motion.section
+          className="py-16 md:py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container">
-            <div className="text-center">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900">
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white">
                 우리 팀
               </h2>
-              <p className="mb-12 text-lg text-gray-600">
+              <p className="mb-12 text-lg text-white/70">
                 각 분야의 전문가들이 함께 만들어가는 LeanUp
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {teamMembers.map((member, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-lg"
+                  className="rounded-xl bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] p-6 transition-all hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)]"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                    <Users className="h-6 w-6 text-primary" />
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 shadow-lg">
+                    <Users className="h-6 w-6 text-white" />
                   </div>
-                  <h3 className="mb-1 text-lg font-semibold text-gray-900">
+                  <h3 className="mb-1 text-lg font-semibold text-white">
                     {member.name}
                   </h3>
-                  <p className="mb-2 text-sm font-medium text-primary">
+                  <p className="mb-2 text-sm font-medium bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                     {member.role}
                   </p>
-                  <p className="text-sm text-gray-600">{member.description}</p>
-                </div>
+                  <p className="text-sm text-white/60">{member.description}</p>
+                </motion.div>
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
 
 
         {/* CTA Section */}
-        <section className="bg-gray-50 py-16 md:py-20">
-          <div className="container text-center">
-            <h2 className="mb-4 text-3xl font-bold text-gray-900">
-              함께 성장할 준비가 되셨나요?
-            </h2>
-            <p className="mb-8 text-lg text-gray-600">
-              LeanUp과 함께 비즈니스의 다음 단계로 나아가세요
-            </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-primary px-8 py-3 text-base font-medium text-white shadow-lg transition-all hover:bg-primary/90"
+        <motion.section
+          className="py-20 md:py-24 relative overflow-hidden"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="container text-center relative z-10">
+            <motion.h2
+              className="mb-4 text-3xl md:text-4xl font-bold text-white"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              프로젝트 시작하기
-            </a>
+              함께 성장할 준비가 되셨나요?
+            </motion.h2>
+            <motion.p
+              className="mb-8 text-lg text-white/70"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              LeanUp과 함께 비즈니스의 다음 단계로 나아가세요
+            </motion.p>
+            <motion.button
+              onClick={() => setIsQuoteModalOpen(true)}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-semibold text-base transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/20"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              견적 문의
+            </motion.button>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </div>
+
       <Footer />
-    </>
+
+      {/* Quote Modal */}
+      <QuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+      />
+    </PageWrapper>
   );
 }

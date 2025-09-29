@@ -167,7 +167,7 @@ export function PortfolioShowcaseSection() {
                   </div>
                   {/* 후기 텍스트 */}
                   <p className="text-sm text-white/70 mb-1">
-                    "{testimonial.text}"
+                    &ldquo;{testimonial.text}&rdquo;
                   </p>
                   {/* 작성자 */}
                   <p className="text-xs text-white/50">

@@ -42,7 +42,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     requirements: "",
     referenceUrl: "",
     industry: "",
-    includeDataModule: true,
+    includeDataModule: false,
     includeMaintenanceModule: false,
   });
 
@@ -62,7 +62,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
         requirements: "",
         referenceUrl: "",
         industry: "",
-        includeDataModule: true,
+        includeDataModule: false,
         includeMaintenanceModule: false,
       });
       setCurrentStep(1);
@@ -113,16 +113,16 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     <ModalPortal>
       {/* 백드롭 */}
       <div
-        className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 z-[9998] bg-black/80 backdrop-blur-xl transition-all duration-300"
         onClick={onClose}
       />
 
       {/* 모달 컨테이너 */}
       <div className="fixed inset-0 z-[9999] overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
-          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-3xl bg-black/90 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all">
+          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-2xl bg-black/90 backdrop-blur-2xl border border-white/[0.2] shadow-[0_20px_80px_rgba(0,0,0,0.8)] transition-all duration-300">
             {/* 헤더 */}
-            <div className="bg-white/[0.08] backdrop-blur-xl px-6 py-5 border-b border-white/[0.1]">
+            <div className="bg-gradient-to-r from-white/[0.12] to-white/[0.08] backdrop-blur-xl px-6 py-6 border-b border-white/[0.15]">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-white">무료 견적 받기</h2>
@@ -132,7 +132,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 </div>
                 <button
                   onClick={onClose}
-                  className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/10 transition-all"
+                  className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/[0.15] transition-all duration-200"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -177,7 +177,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                         placeholder="홍길동"
                       />
                     </div>
@@ -194,7 +194,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                         placeholder="email@example.com"
                       />
                     </div>
@@ -210,7 +210,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                         placeholder="010-1234-5678"
                       />
                     </div>
@@ -226,7 +226,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                         placeholder="회사명 입력"
                       />
                     </div>
@@ -256,7 +256,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl [&>option]:bg-gray-900 [&>option]:text-white"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="under-500">500만원 미만</option>
@@ -277,7 +277,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="timeline"
                         value={formData.timeline}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl [&>option]:bg-gray-900 [&>option]:text-white"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="asap">ASAP</option>
@@ -300,7 +300,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.industry}
                         onChange={handleChange}
                         placeholder="예: 이커머스, 교육, 헬스케어"
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                       />
                     </div>
 
@@ -316,7 +316,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.referenceUrl}
                         onChange={handleChange}
                         placeholder="https://example.com"
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm"
                       />
                     </div>
                   </div>
@@ -334,57 +334,25 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                       value={formData.requirements}
                       onChange={handleChange}
                       placeholder="프로젝트에 대해 자유롭게 설명해주세요. 목적, 타겟 고객, 주요 기능 등을 포함하시면 더욱 정확한 견적을 받으실 수 있습니다."
-                      className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl resize-none"
+                      className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl resize-none shadow-sm"
                     />
                   </div>
                 </div>
               )}
 
-              {/* Step 3: 추가 옵션 */}
+              {/* Step 3: 입력 정보 요약 */}
               {currentStep === 3 && (
                 <div className="space-y-6">
                   <div className="mb-6">
                     <h3 className="text-lg font-semibold text-white flex items-center gap-2">
                       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.15] text-sm font-bold text-white">3</span>
-                      추가 옵션
+                      입력 정보 확인
                     </h3>
-                    <p className="mt-1 text-sm text-white/60">필요한 추가 서비스를 선택해주세요</p>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="flex items-start gap-4 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4 cursor-pointer transition-all hover:bg-white/[0.12] hover:border-white/[0.25]">
-                      <input
-                        type="checkbox"
-                        name="includeDataModule"
-                        checked={formData.includeDataModule}
-                        onChange={handleChange}
-                        className="mt-1 h-5 w-5 rounded border-white/20 bg-white/10 text-white focus:ring-white/50 focus:ring-offset-0"
-                      />
-                      <div>
-                        <p className="font-medium text-white">데이터 분석 모듈</p>
-                        <p className="text-sm text-white/60">GA4, GTM, MS Clarity 연동 및 대시보드 구축</p>
-                        <p className="text-xs text-white/80 mt-1">✓ 무료 설정 포함</p>
-                      </div>
-                    </label>
-
-                    <label className="flex items-start gap-4 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4 cursor-pointer transition-all hover:bg-white/[0.12] hover:border-white/[0.25]">
-                      <input
-                        type="checkbox"
-                        name="includeMaintenanceModule"
-                        checked={formData.includeMaintenanceModule}
-                        onChange={handleChange}
-                        className="mt-1 h-5 w-5 rounded border-white/20 bg-white/10 text-white focus:ring-white/50 focus:ring-offset-0"
-                      />
-                      <div>
-                        <p className="font-medium text-white">유지보수 패키지</p>
-                        <p className="text-sm text-white/60">월간 정기 점검 및 긴급 대응 서비스</p>
-                        <p className="text-xs text-white/80 mt-1">✓ 첫 6개월 무료</p>
-                      </div>
-                    </label>
+                    <p className="mt-1 text-sm text-white/60">입력하신 정보를 확인해주세요</p>
                   </div>
 
                   {/* 요약 정보 */}
-                  <div className="mt-6 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4">
+                  <div className="rounded-lg bg-white/[0.08] border border-white/[0.15] p-6 shadow-sm backdrop-blur-xl">
                     <h4 className="font-semibold text-white mb-3">입력 정보 요약</h4>
                     <div className="space-y-2 text-sm text-white/60">
                       <div className="flex justify-between">
@@ -453,7 +421,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         (currentStep === 1 && !isStep1Valid) ||
                         (currentStep === 2 && !isStep2Valid)
                       }
-                      className="px-6 py-2.5 bg-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.2] hover:bg-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-3 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                     >
                       다음 →
                     </button>
@@ -461,7 +429,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <button
                       type="submit"
                       disabled={isSubmitting || !isStep1Valid || !isStep2Valid}
-                      className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.2] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                     >
                       {isSubmitting ? (
                         <>

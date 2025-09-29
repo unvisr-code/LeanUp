@@ -1,110 +1,135 @@
-import { Header } from "@/components/layout/header";
+"use client";
+
+import { DarkHeader } from "@/components/layout/dark-header";
 import { Footer } from "@/components/layout/footer";
+import { PageWrapper, PageHeader } from "@/components/layout/page-wrapper";
+import { motion } from "framer-motion";
 import { Bell, Activity, Users, BarChart, CheckCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 export default function LiveStatusPage() {
   return (
-    <>
-      <Header />
-      <main>
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 bg-gradient-to-br from-orange-500 to-red-600 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="container relative z-10">
-            <div className="max-w-3xl">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-                <Bell className="h-4 w-4" />
-                Coming Soon
-              </div>
-              <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-                실시간 개발 현황 공유
-              </h1>
-              <p className="mb-8 text-xl text-white/90">
-                개발 진행 상황을 실시간으로 확인하고
-                단계별 자동 알림을 받으세요.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3 text-base font-medium text-orange-600 shadow-lg transition-all hover:bg-gray-100 hover:shadow-xl"
-                >
-                  출시 알림 신청
-                </Link>
-              </div>
-            </div>
+    <PageWrapper>
+      <DarkHeader />
+
+      {/* Add padding to account for fixed header */}
+      <div className="pt-24">
+        <PageHeader
+          title="실시간 개발 현황 공유"
+          subtitle="개발 진행 상황을 실시간으로 확인하고 단계별 자동 알림을 받으세요."
+        >
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/30 px-4 py-2 text-sm font-medium text-orange-400"
+            >
+              <Bell className="h-4 w-4" />
+              Coming Soon
+            </motion.div>
           </div>
-        </section>
+          <div className="mt-4 flex flex-wrap justify-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white text-black rounded-full font-semibold text-base transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/20"
+              >
+                출시 알림 신청
+              </Link>
+            </motion.div>
+          </div>
+        </PageHeader>
 
         {/* Coming Soon Notice */}
-        <section className="py-8 bg-blue-50 border-y border-blue-200">
+        <motion.section
+          className="py-8 bg-gradient-to-r from-orange-600/10 to-red-600/10 border-y border-orange-500/20"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           <div className="container">
-            <div className="flex items-center justify-center gap-3 text-blue-800">
+            <div className="flex items-center justify-center gap-3 text-orange-400">
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
               <p className="font-medium">곧 공개 예정입니다. 프로젝트 진행을 더욱 투명하게 만들어드립니다.</p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Preview Features */}
-        <section className="py-20 md:py-24">
+        <section className="py-16 md:py-20">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 주요 기능 (예정)
               </h2>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-white/70">
                 프로젝트 진행을 실시간으로
               </p>
-            </div>
+            </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-100 opacity-90">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100">
-                  <Activity className="h-6 w-6 text-orange-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">실시간 대시보드</h3>
-                <p className="text-gray-600">
-                  진행중인 작업과 완료 현황을 실시간으로 확인
-                </p>
-                <div className="mt-4 inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
-                  개발 중
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-100 opacity-90">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-                  <Bell className="h-6 w-6 text-blue-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">자동 알림</h3>
-                <p className="text-gray-600">
-                  단계 전환 시 이메일/브라우저 푸시 알림
-                </p>
-                <div className="mt-4 inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
-                  개발 중
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl p-6 shadow-md border-2 border-gray-100 opacity-90">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
-                  <BarChart className="h-6 w-6 text-purple-600" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold">진행률 추적</h3>
-                <p className="text-gray-600">
-                  전체 프로젝트와 개별 작업의 진행률 시각화
-                </p>
-                <div className="mt-4 inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
-                  개발 중
-                </div>
-              </div>
+              {[
+                {
+                  icon: Activity,
+                  title: "실시간 대시보드",
+                  description: "진행중인 작업과 완료 현황을 실시간으로 확인",
+                  color: "from-orange-600 to-red-600"
+                },
+                {
+                  icon: Bell,
+                  title: "자동 알림",
+                  description: "단계 전환 시 이메일/브라우저 푸시 알림",
+                  color: "from-blue-600 to-cyan-600"
+                },
+                {
+                  icon: BarChart,
+                  title: "진행률 추적",
+                  description: "전체 프로젝트와 개별 작업의 진행률 시각화",
+                  color: "from-purple-600 to-pink-600"
+                }
+              ].map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] rounded-xl p-6 hover:bg-white/[0.12] hover:border-white/[0.25] transition-all"
+                  >
+                    <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${feature.color} shadow-lg`}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="mb-3 text-xl font-semibold text-white">{feature.title}</h3>
+                    <p className="text-white/70">
+                      {feature.description}
+                    </p>
+                    <div className="mt-4 inline-block px-3 py-1 bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/30 text-orange-400 rounded-full text-xs font-medium">
+                      개발 중
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
 
         {/* Workflow Preview */}
-        <section className="py-20 md:py-24 bg-gray-50">
+        <section className="py-16 md:py-20">
           <div className="container">
             <div className="max-w-4xl mx-auto">
               <h2 className="mb-12 text-3xl font-bold text-center text-gray-900">
@@ -232,8 +257,9 @@ export default function LiveStatusPage() {
             </Link>
           </div>
         </section>
-      </main>
+      </div>
+
       <Footer />
-    </>
+    </PageWrapper>
   );
 }

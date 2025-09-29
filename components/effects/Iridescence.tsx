@@ -52,12 +52,12 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
 
   useEffect(() => {
     if (!ctnDom.current) return;
-    const ctn = ctnDom.current;
+    const ctn = ctnDom.current as HTMLDivElement;
     const renderer = new Renderer();
     const gl = renderer.gl;
     gl.clearColor(0.1, 0.1, 0.15, 1); // Slightly brighter dark background
 
-    let program;
+    let program: any;
 
     function resize() {
       const scale = 1;
@@ -90,7 +90,7 @@ export default function Iridescence({ color = [1, 1, 1], speed = 1.0, amplitude 
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    let animateId;
+    let animateId: number;
 
     function update(t) {
       animateId = requestAnimationFrame(update);

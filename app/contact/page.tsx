@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "@/components/layout/header";
+import { DarkHeader } from "@/components/layout/dark-header";
 import { Footer } from "@/components/layout/footer";
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import { motion } from "framer-motion";
 import { QuoteModal } from "@/components/quote-modal";
 import {
   Mail,
@@ -142,37 +144,47 @@ const faqItems: FAQItem[] = [
 
 const categories = ["전체", "가격 및 비용", "프로젝트 진행", "기술 및 기능", "유지보수 및 지원", "기타"];
 
-function FAQItemComponent({ item }: { item: FAQItem }) {
+function FAQItemComponent({ item, index }: { item: FAQItem; index: number }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border border-gray-200 rounded-lg hover:border-blue-300 transition-all">
+    <motion.div
+      className="rounded-xl bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] hover:bg-white/[0.12] hover:border-white/[0.25] transition-all"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-6 py-4 text-left flex items-center justify-between group"
       >
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-8 h-8 bg-blue-50 text-blue-600 rounded-lg">
-            {item.icon || <HelpCircle className="h-5 w-5" />}
+          <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg shadow-lg">
+            {item.icon ? (
+              <span className="text-white">{item.icon}</span>
+            ) : (
+              <HelpCircle className="h-5 w-5 text-white" />
+            )}
           </div>
-          <span className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+          <span className="font-medium text-white group-hover:text-blue-300 transition-colors">
             {item.question}
           </span>
         </div>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+          <ChevronUp className="h-5 w-5 text-white/60 group-hover:text-blue-300 transition-colors" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+          <ChevronDown className="h-5 w-5 text-white/60 group-hover:text-blue-300 transition-colors" />
         )}
       </button>
       {isOpen && (
         <div className="px-6 pb-4">
-          <p className="text-gray-600 leading-relaxed pl-11">
+          <p className="text-white/70 leading-relaxed pl-11">
             {item.answer}
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }
 
@@ -185,123 +197,112 @@ export default function ContactPage() {
     : faqItems.filter(item => item.category === selectedCategory);
 
   return (
-    <>
-      <Header />
-      <main className="bg-gradient-to-b from-gray-50 to-white">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-28">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-50/30" />
-          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-gradient-to-br from-blue-200/20 to-blue-300/20 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-gradient-to-tr from-blue-300/20 to-blue-200/20 blur-3xl" />
+    <PageWrapper>
+      <DarkHeader />
 
+      {/* Add padding to account for fixed header */}
+      <div className="pt-24">
+        {/* Hero Section */}
+        <motion.section
+          className="relative overflow-hidden py-20 md:py-32"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container relative">
-            <div className="mx-auto max-w-4xl text-center">
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700">
-                <Sparkles className="h-4 w-4" />
-                24시간 내 답변 보장
-              </div>
-              <h1 className="mb-6 text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
+            <motion.div
+              className="mx-auto max-w-4xl text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h1 className="mb-6 text-4xl md:text-5xl font-bold tracking-tight text-white">
                 무엇을 도와드릴까요?
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+              <p className="text-xl text-white/70 leading-relaxed mb-8">
                 프로젝트에 대한 궁금증을 해결해드립니다
               </p>
-              <button
+              <motion.button
                 onClick={() => setIsQuoteModalOpen(true)}
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-600 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold transition-all hover:scale-105 hover:shadow-lg hover:shadow-white/20"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                무료 견적 받기
+                견적 받기
                 <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Quick Contact Methods */}
-        <section className="py-12 border-y bg-white">
-          <div className="container">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <a
-                href="https://channel.io/leanup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-xl bg-gradient-to-r from-blue-50 to-white p-6 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                  <MessageCircle className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 group-hover:text-blue-600">채널톡 상담</p>
-                  <p className="text-sm text-gray-600">실시간 1:1 상담</p>
-                </div>
-                <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 ml-auto" />
-              </a>
-
-              <a
-                href="mailto:contact@leanup.kr"
-                className="group flex items-center gap-4 rounded-xl bg-gradient-to-r from-blue-50 to-white p-6 border border-blue-100 hover:border-blue-300 hover:shadow-md transition-all"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                  <Mail className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 group-hover:text-blue-600">이메일 문의</p>
-                  <p className="text-sm text-gray-600">contact@leanup.kr</p>
-                </div>
-              </a>
-
-              <div className="flex items-center gap-4 rounded-xl bg-gradient-to-r from-gray-50 to-white p-6 border border-gray-200">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-600">
-                  <Clock className="h-6 w-6" />
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900">업무시간</p>
-                  <p className="text-sm text-gray-600">평일 10:00 - 19:00</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Why LeanUp */}
-        <section className="py-12 bg-gradient-to-br from-blue-50 to-white">
+        <motion.section
+          className="py-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container">
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">왜 LeanUp인가요?</h2>
+              <motion.h2
+                className="text-2xl font-bold text-white mb-8 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                왜 LeanUp인가요?
+              </motion.h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
-                    <Zap className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">빠른 개발</h3>
-                  <p className="text-sm text-gray-600">7-10일 내 웹사이트 완성</p>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
-                    <Shield className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">안정적 유지보수</h3>
-                  <p className="text-sm text-gray-600">6개월 무상 유지보수 제공</p>
-                </div>
-                <div className="text-center">
-                  <div className="flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mx-auto mb-4">
-                    <Users className="h-8 w-8" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">전담 PM 배정</h3>
-                  <p className="text-sm text-gray-600">원활한 소통과 프로젝트 관리</p>
-                </div>
+                {[
+                  { icon: Zap, title: "빠른 개발", desc: "7-10일 내 웹사이트 완성" },
+                  { icon: Shield, title: "안정적 유지보수", desc: "6개월 무상 유지보수 제공" },
+                  { icon: Users, title: "전담 PM 배정", desc: "원활한 소통과 프로젝트 관리" },
+                ].map((item, index) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.div
+                      key={index}
+                      className="text-center"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                    >
+                      <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full mx-auto mb-4 shadow-lg">
+                        <Icon className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="font-semibold text-white mb-2">{item.title}</h3>
+                      <p className="text-sm text-white/60">{item.desc}</p>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* FAQ Section */}
-        <section className="py-20">
+        <motion.section
+          className="py-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="container">
             <div className="mx-auto max-w-4xl">
-              <h2 className="mb-12 text-center text-3xl font-bold text-gray-900">
+              <motion.h2
+                className="mb-12 text-center text-3xl font-bold text-white"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
                 자주 묻는 질문
-              </h2>
+              </motion.h2>
 
               {/* Category Filter */}
               <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -311,8 +312,8 @@ export default function ContactPage() {
                     onClick={() => setSelectedCategory(category)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                       selectedCategory === category
-                        ? "bg-blue-600 text-white shadow-md"
-                        : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300 hover:text-blue-600"
+                        ? "bg-white text-black shadow-lg"
+                        : "bg-white/[0.08] text-white/80 border border-white/[0.15] hover:bg-white/[0.12] hover:text-white"
                     }`}
                   >
                     {category}
@@ -323,38 +324,33 @@ export default function ContactPage() {
               {/* FAQ Items */}
               <div className="space-y-4">
                 {filteredFAQ.map((item, index) => (
-                  <FAQItemComponent key={index} item={item} />
+                  <FAQItemComponent key={index} item={item} index={index} />
                 ))}
               </div>
 
               {/* CTA */}
               <div className="mt-16 text-center">
-                <p className="text-gray-600 mb-6">
+                <p className="text-white/60 mb-6">
                   원하는 답변을 찾지 못하셨나요?
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex justify-center">
                   <button
-                    onClick={() => setIsQuoteModalOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-all shadow-md hover:shadow-lg"
-                  >
-                    무료 상담 신청
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                  <a
-                    href="https://channel.io/leanup"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-blue-600 border-2 border-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-all"
+                    onClick={() => {
+                      if (window.ChannelIO) {
+                        window.ChannelIO('show');
+                      }
+                    }}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded-full font-medium hover:scale-105 transition-all shadow-lg"
                   >
                     채널톡 문의하기
                     <MessageCircle className="h-5 w-5" />
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </div>
 
       {/* Quote Modal */}
       <QuoteModal
@@ -363,6 +359,6 @@ export default function ContactPage() {
       />
 
       <Footer />
-    </>
+    </PageWrapper>
   );
 }
