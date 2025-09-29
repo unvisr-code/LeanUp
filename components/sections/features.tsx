@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const features: Array<{
   iconSvg: JSX.Element;
@@ -15,9 +16,9 @@ const features: Array<{
       <svg viewBox="0 0 100 100" className="w-full h-full">
         <defs>
           <linearGradient id="rocket3d" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#60A5FA" />
-            <stop offset="50%" stopColor="#3B82F6" />
-            <stop offset="100%" stopColor="#2563EB" />
+            <stop offset="0%" stopColor="#93C5FD" />
+            <stop offset="50%" stopColor="#60A5FA" />
+            <stop offset="100%" stopColor="#3B82F6" />
           </linearGradient>
           <linearGradient id="rocketShadow" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#1E40AF" />
@@ -29,9 +30,9 @@ const features: Array<{
             <stop offset="100%" stopColor="#3B82F6" />
           </radialGradient>
           <linearGradient id="flame3d" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#60A5FA" />
-            <stop offset="50%" stopColor="#3B82F6" />
-            <stop offset="100%" stopColor="#2563EB" />
+            <stop offset="0%" stopColor="#93C5FD" />
+            <stop offset="50%" stopColor="#60A5FA" />
+            <stop offset="100%" stopColor="#3B82F6" />
           </linearGradient>
         </defs>
         <ellipse cx="52" cy="85" rx="18" ry="4" fill="#000000" opacity="0.1" />
@@ -98,7 +99,7 @@ const features: Array<{
     ),
     keyword: "데이터 분석",
     title: "데이터 분석도 함께 세팅해요",
-    description: "GA4, GTM, UTM, MS Clarity 기본 세팅과 퍼널 대시보드를 제공합니다. 데이터 기반 의사결정을 시작하세요.",
+    description: "Google Analytics 4, Google Tag Manager, UTM 기본 세팅과 퍼널 대시보드를 제공합니다. 데이터 기반 의사결정을 시작하세요.",
     align: "right",
   },
   {
@@ -252,7 +253,7 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
               isVisible ? "scale-100" : "scale-75"
             }`}
             style={{
-              filter: "drop-shadow(0 12px 32px rgba(59, 130, 246, 0.2))",
+              filter: "drop-shadow(0 12px 32px rgba(96, 165, 250, 0.3))",
             }}
           >
             {feature.iconSvg}
@@ -261,20 +262,20 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 
         {/* 텍스트 섹션 */}
         <div className="flex-1 text-center lg:text-left max-w-md">
-          {/* 둥근 키워드 */}
+          {/* 둥근 키워드 - 글래스모피즘 스타일 */}
           <div className="mb-6">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 text-blue-700 text-sm font-semibold">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm font-semibold">
               {feature.keyword}
             </span>
           </div>
 
           {/* 메인 카피 */}
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
             {feature.title}
           </h3>
 
           {/* 서브 카피 */}
-          <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+          <p className="text-sm md:text-base text-white/70 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -285,22 +286,27 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 
 export function FeaturesSection() {
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
-      {/* 그라데이션 배경 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-blue-25 to-white"></div>
-      
-      {/* 장식용 그라데이션 원들 */}
-      <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-200/40 to-blue-300/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-100/30 to-blue-200/40 rounded-full blur-3xl"></div>
-      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-br from-blue-100/25 to-blue-200/35 rounded-full blur-2xl"></div>
+    <motion.section
+      className="relative py-20 md:py-32 overflow-hidden"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      {/* 그라데이션 배경 - 제거하여 main의 배경이 이어지게 함 */}
+
+      {/* 장식용 그라데이션 원들 - 어두운 톤 */}
+      <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-blue-400/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-blue-300/5 rounded-full blur-2xl"></div>
 
       <div className="container relative z-10">
         {/* 헤더 */}
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             이런 점이 특별해요
           </h2>
-          <p className="text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base text-white/70 max-w-3xl mx-auto leading-relaxed">
             웹사이트 제작부터 데이터 추적, 유지보수까지 원스톱 솔루션
           </p>
         </div>
@@ -308,10 +314,18 @@ export function FeaturesSection() {
         {/* 특징 목록 - 가운데 정렬 */}
         <div className="flex flex-col items-center space-y-4">
           {features.map((feature, index) => (
-            <FeatureItem key={index} feature={feature} index={index} />
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+            >
+              <FeatureItem feature={feature} index={index} />
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

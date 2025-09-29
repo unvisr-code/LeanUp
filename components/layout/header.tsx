@@ -62,7 +62,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-[120] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center space-x-2 group">
           <div className="flex items-center gap-2.5">
@@ -307,12 +307,12 @@ function NotificationModal({
     <ModalPortal>
       {/* Backdrop with dark blur effect */}
       <div
-        className="fixed inset-0 z-[99998] bg-black/70 backdrop-blur-md"
+        className="fixed inset-0 z-[9996] bg-black/70 backdrop-blur-md"
         onClick={onClose}
       />
 
       {/* Modal container with higher z-index and centered positioning */}
-      <div className="fixed inset-0 z-[99999] overflow-y-auto">
+      <div className="fixed inset-0 z-[9997] overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
           <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6">
         {!isSubmitted ? (

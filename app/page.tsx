@@ -1,14 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { HeroSection } from "@/components/sections/hero-enhanced";
+import { HeroSection } from "@/components/sections/hero-with-nav";
 import { FeaturesSection } from "@/components/sections/features";
-import { TestimonialsSection } from "@/components/sections/testimonials";
-import { PortfolioAutoScroll } from "@/components/sections/portfolio-auto-scroll";
-import { PartnersSection } from "@/components/sections/partners";
-import { CTASection } from "@/components/sections/cta";
+import { PortfolioShowcaseSection } from "@/components/sections/portfolio-showcase";
 import { QuoteModal } from "@/components/quote-modal";
 
 export default function HomePage() {
@@ -16,14 +12,10 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
-      <main>
+      <main className="bg-black">
         <HeroSection />
         <FeaturesSection />
-        <TestimonialsSection />
-        <PartnersSection />
-        <PortfolioAutoScroll />
-        <CTASection onQuoteClick={() => setIsQuoteModalOpen(true)} />
+        <PortfolioShowcaseSection />
       </main>
       <QuoteModal
         isOpen={isQuoteModalOpen}

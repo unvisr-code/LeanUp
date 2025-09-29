@@ -131,3 +131,269 @@
 .ch-messenger-input-send-button:hover {
   background-color: #2563EB !important;
 }
+
+/* Modern Hero Section Optimizations */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* GPU Acceleration for smooth animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Perspective for 3D effects */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Holographic effect */
+@keyframes holographic {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.holographic {
+  background-size: 200% 200%;
+  animation: holographic 3s ease infinite;
+}
+
+/* Iridescent Effects - Blue Theme */
+@keyframes iridescent-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes iridescent-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.iridescent-bg {
+  background: linear-gradient(
+    135deg,
+    #0ea5e9 0%,    /* sky-500 */
+    #3b82f6 20%,   /* blue-500 */
+    #60a5fa 40%,   /* blue-400 */
+    #2563eb 60%,   /* blue-600 */
+    #1e40af 80%,   /* blue-800 */
+    #0ea5e9 100%   /* sky-500 */
+  );
+  background-size: 400% 400%;
+  animation: iridescent-shift 12s ease infinite;
+}
+
+.iridescent-border {
+  position: relative;
+}
+
+.iridescent-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    #0ea5e9,    /* sky-500 */
+    #3b82f6,    /* blue-500 */
+    #60a5fa,    /* blue-400 */
+    #2563eb,    /* blue-600 */
+    #0ea5e9     /* sky-500 */
+  );
+  background-size: 400% 400%;
+  animation: iridescent-shift 4s ease infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+               linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.iridescent-border:hover::before {
+  opacity: 1;
+}
+
+.iridescent-text {
+  background: linear-gradient(
+    92deg,
+    #0ea5e9 0%,    /* sky-500 */
+    #3b82f6 25%,   /* blue-500 */
+    #60a5fa 50%,   /* blue-400 */
+    #2563eb 75%,   /* blue-600 */
+    #0ea5e9 100%   /* sky-500 */
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: iridescent-shift 4s linear infinite;
+}
+
+.iridescent-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(14, 165, 233, 0.1),   /* sky-500 */
+    rgba(59, 130, 246, 0.1),   /* blue-500 */
+    rgba(96, 165, 250, 0.1),   /* blue-400 */
+    rgba(37, 99, 235, 0.1)     /* blue-600 */
+  );
+  background-size: 200% 200%;
+  animation: iridescent-shift 15s ease infinite;
+  mix-blend-mode: color-dodge;
+  pointer-events: none;
+}
+
+/* Apple Liquid Glass Effect */
+.apple-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 32px 0 rgba(31, 38, 135, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 -1px 0 0 rgba(255, 255, 255, 0.1) inset,
+    0 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+  position: relative;
+  overflow: hidden;
+}
+
+.apple-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.2) 80%,
+    transparent
+  );
+  opacity: 0.6;
+}
+
+.apple-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.02) 50%,
+    transparent 60%
+  );
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  50% {
+    transform: translateX(100%) translateY(100%);
+  }
+}
+
+.apple-glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-glass-hover:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  box-shadow:
+    0 12px 48px 0 rgba(31, 38, 135, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 -1px 0 0 rgba(255, 255, 255, 0.15) inset,
+    0 1px 0 0 rgba(0, 0, 0, 0.1) inset;
+  transform: translateY(-1px);
+}
+
+.apple-glass-button {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 4px 16px 0 rgba(31, 38, 135, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-glass-button:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  box-shadow:
+    0 6px 20px 0 rgba(31, 38, 135, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  transform: scale(1.02);
+}

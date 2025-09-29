@@ -20,16 +20,21 @@ export function PartnersSection() {
   const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-blue-50 to-white overflow-hidden">
-      <div className="container mb-12">
+    <section className="py-16 md:py-24 bg-black overflow-hidden relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
+      <div className="absolute top-10 right-20 w-96 h-96 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 left-20 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-blue-400/5 rounded-full blur-3xl" />
+
+      <div className="container mb-12 relative z-10">
         <div className="text-center">
-          <span className="inline-block mb-4 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold">
+          <span className="inline-block mb-4 px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-md border border-white/[0.15] text-white text-sm font-semibold shadow-sm">
             TRUSTED BY
           </span>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             함께한 회사들
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
             다양한 기업들과 함께 성장하고 있습니다
           </p>
         </div>
@@ -38,8 +43,8 @@ export function PartnersSection() {
       {/* Partner Logos Infinite Scroll - Single Line */}
       <div className="relative">
         {/* Gradient Overlays for fade effect */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white via-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white via-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
 
         {/* Scrolling Container */}
         <div className="flex">
@@ -49,13 +54,13 @@ export function PartnersSection() {
                 key={`${partner.name}-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-gray-50 rounded-xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
+                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] transition-all duration-500 hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-[0_8px_32px_rgba(96,165,250,0.2)] hover:scale-110 cursor-pointer">
                   <div className="relative w-32 md:w-36 h-14 md:h-16">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
-                      className="object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                      className="object-contain filter brightness-90 opacity-80 group-hover:brightness-110 group-hover:opacity-100 transition-all duration-500"
                       sizes="(max-width: 768px) 128px, 144px"
                       style={{ objectFit: 'contain' }}
                     />
@@ -72,13 +77,13 @@ export function PartnersSection() {
                 key={`${partner.name}-duplicate-${index}`}
                 className="flex-shrink-0"
               >
-                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-gray-50 rounded-xl transition-all duration-500 hover:bg-white hover:shadow-2xl hover:scale-110 cursor-pointer">
+                <div className="group flex items-center justify-center w-40 md:w-48 h-20 md:h-24 px-4 md:px-6 py-3 md:py-4 bg-white/[0.08] backdrop-blur-sm border border-white/[0.15] rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] transition-all duration-500 hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-[0_8px_32px_rgba(96,165,250,0.2)] hover:scale-110 cursor-pointer">
                   <div className="relative w-32 md:w-36 h-14 md:h-16">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
-                      className="object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                      className="object-contain filter brightness-90 opacity-80 group-hover:brightness-110 group-hover:opacity-100 transition-all duration-500"
                       sizes="(max-width: 768px) 128px, 144px"
                       style={{ objectFit: 'contain' }}
                     />

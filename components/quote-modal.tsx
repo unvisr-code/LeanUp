@@ -113,26 +113,26 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
     <ModalPortal>
       {/* 백드롭 */}
       <div
-        className="fixed inset-0 z-[9998] bg-black bg-opacity-50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-md transition-opacity"
         onClick={onClose}
       />
 
       {/* 모달 컨테이너 */}
       <div className="fixed inset-0 z-[9999] overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4">
-          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white shadow-2xl transition-all">
+          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-3xl bg-black/90 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all">
             {/* 헤더 */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-400 px-6 py-5">
+            <div className="bg-white/[0.08] backdrop-blur-xl px-6 py-5 border-b border-white/[0.1]">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-bold text-white">무료 견적 받기</h2>
-                  <p className="mt-1 text-blue-100">
+                  <p className="mt-1 text-white/70">
                     간단한 정보만 입력하시면 24시간 내에 맞춤 견적을 보내드립니다
                   </p>
                 </div>
                 <button
                   onClick={onClose}
-                  className="rounded-lg p-2 text-white hover:bg-white/20 transition-colors"
+                  className="rounded-lg p-2 text-white/80 hover:text-white hover:bg-white/10 transition-all"
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -143,8 +143,8 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 {[1, 2, 3].map((step) => (
                   <div
                     key={step}
-                    className={`flex-1 h-2 rounded-full transition-all ${
-                      currentStep >= step ? "bg-white" : "bg-white/30"
+                    className={`flex-1 h-1.5 rounded-full transition-all ${
+                      currentStep >= step ? "bg-white" : "bg-white/20"
                     }`}
                   />
                 ))}
@@ -152,23 +152,23 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
             </div>
 
             {/* 폼 */}
-            <form onSubmit={handleSubmit} className="p-6">
+            <form onSubmit={handleSubmit} className="p-6 text-white">
               {/* Step 1: 기본 정보 */}
               {currentStep === 1 && (
                 <div className="space-y-6">
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">1</span>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.15] text-sm font-bold text-white">1</span>
                       기본 정보
                     </h3>
-                    <p className="mt-1 text-sm text-gray-600">연락 가능한 정보를 입력해주세요</p>
+                    <p className="mt-1 text-sm text-white/60">연락 가능한 정보를 입력해주세요</p>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="name" className="mb-2 block text-sm font-medium text-white/80">
                         <User className="inline h-4 w-4 mr-1" />
-                        이름 <span className="text-red-500">*</span>
+                        이름 <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="text"
@@ -177,15 +177,15 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                         placeholder="홍길동"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/80">
                         <Mail className="inline h-4 w-4 mr-1" />
-                        이메일 <span className="text-red-500">*</span>
+                        이메일 <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="email"
@@ -194,13 +194,13 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                         placeholder="email@example.com"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="phone" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white/80">
                         <Phone className="inline h-4 w-4 mr-1" />
                         연락처
                       </label>
@@ -210,13 +210,13 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                         placeholder="010-1234-5678"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="company" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="company" className="mb-2 block text-sm font-medium text-white/80">
                         <Building className="inline h-4 w-4 mr-1" />
                         회사명
                       </label>
@@ -226,7 +226,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                         placeholder="회사명 입력"
                       />
                     </div>
@@ -238,16 +238,16 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
               {currentStep === 2 && (
                 <div className="space-y-6">
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">2</span>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.15] text-sm font-bold text-white">2</span>
                       프로젝트 정보
                     </h3>
-                    <p className="mt-1 text-sm text-gray-600">프로젝트에 대해 알려주세요</p>
+                    <p className="mt-1 text-sm text-white/60">프로젝트에 대해 알려주세요</p>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div>
-                      <label htmlFor="budget" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="budget" className="mb-2 block text-sm font-medium text-white/80">
                         <DollarSign className="inline h-4 w-4 mr-1" />
                         예산 범위
                       </label>
@@ -256,7 +256,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="under-500">500만원 미만</option>
@@ -268,7 +268,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </div>
 
                     <div>
-                      <label htmlFor="timeline" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="timeline" className="mb-2 block text-sm font-medium text-white/80">
                         <Calendar className="inline h-4 w-4 mr-1" />
                         희망 일정
                       </label>
@@ -277,7 +277,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         name="timeline"
                         value={formData.timeline}
                         onChange={handleChange}
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="asap">ASAP</option>
@@ -289,7 +289,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     </div>
 
                     <div>
-                      <label htmlFor="industry" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="industry" className="mb-2 block text-sm font-medium text-white/80">
                         <Briefcase className="inline h-4 w-4 mr-1" />
                         업종
                       </label>
@@ -300,12 +300,12 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.industry}
                         onChange={handleChange}
                         placeholder="예: 이커머스, 교육, 헬스케어"
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="referenceUrl" className="mb-2 block text-sm font-medium text-gray-700">
+                      <label htmlFor="referenceUrl" className="mb-2 block text-sm font-medium text-white/80">
                         <Globe className="inline h-4 w-4 mr-1" />
                         참고 사이트
                       </label>
@@ -316,15 +316,15 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.referenceUrl}
                         onChange={handleChange}
                         placeholder="https://example.com"
-                        className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="requirements" className="mb-2 block text-sm font-medium text-gray-700">
+                    <label htmlFor="requirements" className="mb-2 block text-sm font-medium text-white/80">
                       <FileText className="inline h-4 w-4 mr-1" />
-                      프로젝트 설명 <span className="text-red-500">*</span>
+                      프로젝트 설명 <span className="text-red-400">*</span>
                     </label>
                     <textarea
                       id="requirements"
@@ -334,7 +334,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                       value={formData.requirements}
                       onChange={handleChange}
                       placeholder="프로젝트에 대해 자유롭게 설명해주세요. 목적, 타겟 고객, 주요 기능 등을 포함하시면 더욱 정확한 견적을 받으실 수 있습니다."
-                      className="w-full rounded-lg border-2 border-gray-200 px-4 py-2.5 transition-all focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none"
+                      className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-2.5 text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl resize-none"
                     />
                   </div>
                 </div>
@@ -344,61 +344,61 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
               {currentStep === 3 && (
                 <div className="space-y-6">
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">3</span>
+                    <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.15] text-sm font-bold text-white">3</span>
                       추가 옵션
                     </h3>
-                    <p className="mt-1 text-sm text-gray-600">필요한 추가 서비스를 선택해주세요</p>
+                    <p className="mt-1 text-sm text-white/60">필요한 추가 서비스를 선택해주세요</p>
                   </div>
 
                   <div className="space-y-3">
-                    <label className="flex items-start gap-4 rounded-lg border-2 border-gray-200 p-4 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50/50">
+                    <label className="flex items-start gap-4 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4 cursor-pointer transition-all hover:bg-white/[0.12] hover:border-white/[0.25]">
                       <input
                         type="checkbox"
                         name="includeDataModule"
                         checked={formData.includeDataModule}
                         onChange={handleChange}
-                        className="mt-1 h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="mt-1 h-5 w-5 rounded border-white/20 bg-white/10 text-white focus:ring-white/50 focus:ring-offset-0"
                       />
                       <div>
-                        <p className="font-medium text-gray-900">데이터 분석 모듈</p>
-                        <p className="text-sm text-gray-600">GA4, GTM, MS Clarity 연동 및 대시보드 구축</p>
-                        <p className="text-xs text-blue-600 mt-1">✓ 무료 설정 포함</p>
+                        <p className="font-medium text-white">데이터 분석 모듈</p>
+                        <p className="text-sm text-white/60">GA4, GTM, MS Clarity 연동 및 대시보드 구축</p>
+                        <p className="text-xs text-white/80 mt-1">✓ 무료 설정 포함</p>
                       </div>
                     </label>
 
-                    <label className="flex items-start gap-4 rounded-lg border-2 border-gray-200 p-4 cursor-pointer transition-all hover:border-blue-300 hover:bg-blue-50/50">
+                    <label className="flex items-start gap-4 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4 cursor-pointer transition-all hover:bg-white/[0.12] hover:border-white/[0.25]">
                       <input
                         type="checkbox"
                         name="includeMaintenanceModule"
                         checked={formData.includeMaintenanceModule}
                         onChange={handleChange}
-                        className="mt-1 h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="mt-1 h-5 w-5 rounded border-white/20 bg-white/10 text-white focus:ring-white/50 focus:ring-offset-0"
                       />
                       <div>
-                        <p className="font-medium text-gray-900">유지보수 패키지</p>
-                        <p className="text-sm text-gray-600">월간 정기 점검 및 긴급 대응 서비스</p>
-                        <p className="text-xs text-blue-600 mt-1">✓ 첫 6개월 무료</p>
+                        <p className="font-medium text-white">유지보수 패키지</p>
+                        <p className="text-sm text-white/60">월간 정기 점검 및 긴급 대응 서비스</p>
+                        <p className="text-xs text-white/80 mt-1">✓ 첫 6개월 무료</p>
                       </div>
                     </label>
                   </div>
 
                   {/* 요약 정보 */}
-                  <div className="mt-6 rounded-lg bg-blue-50 p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3">입력 정보 요약</h4>
-                    <div className="space-y-2 text-sm text-gray-600">
+                  <div className="mt-6 rounded-lg bg-white/[0.08] border border-white/[0.15] p-4">
+                    <h4 className="font-semibold text-white mb-3">입력 정보 요약</h4>
+                    <div className="space-y-2 text-sm text-white/60">
                       <div className="flex justify-between">
                         <span>신청자:</span>
-                        <span className="font-medium text-gray-900">{formData.name || "-"}</span>
+                        <span className="font-medium text-white">{formData.name || "-"}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>이메일:</span>
-                        <span className="font-medium text-gray-900">{formData.email || "-"}</span>
+                        <span className="font-medium text-white">{formData.email || "-"}</span>
                       </div>
                       {formData.budget && (
                         <div className="flex justify-between">
                           <span>예산:</span>
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-white">
                             {formData.budget === "under-500" && "500만원 미만"}
                             {formData.budget === "500-1000" && "500-1,000만원"}
                             {formData.budget === "1000-3000" && "1,000-3,000만원"}
@@ -410,7 +410,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                       {formData.timeline && (
                         <div className="flex justify-between">
                           <span>일정:</span>
-                          <span className="font-medium text-gray-900">
+                          <span className="font-medium text-white">
                             {formData.timeline === "asap" && "ASAP"}
                             {formData.timeline === "1month" && "1개월 이내"}
                             {formData.timeline === "2month" && "2개월 이내"}
@@ -429,9 +429,9 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                 <button
                   type="button"
                   onClick={prevStep}
-                  className={`px-4 py-2 text-sm font-medium text-gray-700 transition-all ${
+                  className={`px-4 py-2 text-sm font-medium text-white/70 transition-all ${
                     currentStep === 1 ? "invisible" : "visible"
-                  } hover:text-blue-600`}
+                  } hover:text-white`}
                 >
                   ← 이전
                 </button>
@@ -440,7 +440,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-6 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    className="px-6 py-2.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
                   >
                     취소
                   </button>
@@ -453,7 +453,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                         (currentStep === 1 && !isStep1Valid) ||
                         (currentStep === 2 && !isStep2Valid)
                       }
-                      className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-6 py-2.5 bg-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.2] hover:bg-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       다음 →
                     </button>
@@ -461,7 +461,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
                     <button
                       type="submit"
                       disabled={isSubmitting || !isStep1Valid || !isStep2Valid}
-                      className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg font-medium hover:from-blue-700 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.2] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <>

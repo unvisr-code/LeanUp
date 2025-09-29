@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { api } from "@/lib/trpc/provider";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export function PortfolioAutoScroll() {
   const { data: portfolios, isLoading } = api.portfolio.getAll.useQuery();
@@ -37,13 +38,34 @@ export function PortfolioAutoScroll() {
   }
 
   return (
-    <section className="py-12 md:py-16 bg-gradient-to-b from-blue-50 to-white">
+    <motion.section
+      className="py-20 md:py-24 relative overflow-hidden"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      {/* Background gradient - main의 배경이 이어지게 함 */}
+      <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-blue-400/5 rounded-full blur-2xl" />
+
+      {/* 섹션 타이틀 */}
+      <div className="container relative z-10">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            실제 작업 포트폴리오
+          </h2>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            다양한 산업군의 고객들과 함께한 성공적인 프로젝트들을 확인해보세요
+          </p>
+        </div>
+      </div>
 
       {/* First Row - Scrolling Left */}
       <div className="relative mb-3 overflow-hidden">
         {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 h-full w-20 md:w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 h-full w-20 md:w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 h-full w-20 md:w-40 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 h-full w-20 md:w-40 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
 
         <div className="relative">
           <div className="flex gap-3 animate-scroll-left">
@@ -62,8 +84,8 @@ export function PortfolioAutoScroll() {
       {/* Second Row - Scrolling Right */}
       <div className="relative overflow-hidden">
         {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 h-full w-20 md:w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 h-full w-20 md:w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 h-full w-20 md:w-40 bg-gradient-to-r from-black via-black/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 h-full w-20 md:w-40 bg-gradient-to-l from-black via-black/80 to-transparent z-10 pointer-events-none" />
 
         <div className="relative">
           <div className="flex gap-3 animate-scroll-right">
@@ -79,7 +101,7 @@ export function PortfolioAutoScroll() {
         </div>
       </div>
 
-    </section>
+    </motion.section>
   );
 }
 
@@ -90,26 +112,26 @@ interface PortfolioImageCardProps {
 
 function PortfolioImageCard({ item }: PortfolioImageCardProps) {
   const content = (
-    <div className="relative group rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 h-full">
+    <div className="relative group rounded-lg overflow-hidden bg-white/[0.08] border border-white/[0.15] shadow-[0_4px_16px_rgba(0,0,0,0.3)] hover:shadow-[0_8px_32px_rgba(96,165,250,0.2)] transition-all duration-300 h-full backdrop-blur-sm">
       {item.thumbnail ? (
         <Image
           src={item.thumbnail}
           alt={item.name}
           width={360}
           height={180}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
           loading="lazy"
         />
       ) : (
-        <div className="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-          <div className="text-4xl font-bold text-white/20">
+        <div className="w-full h-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex items-center justify-center">
+          <div className="text-4xl font-bold text-white/30">
             {item.name.charAt(0)}
           </div>
         </div>
       )}
 
       {/* Overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="absolute bottom-0 left-0 right-0 p-3">
           <h3 className="text-white font-semibold text-sm mb-1">{item.name}</h3>
           {item.serviceLink && (
