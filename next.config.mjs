@@ -11,11 +11,7 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
     dangerouslyAllowSVG: false,
   },
-  // 실험적 기능 - 성능 최적화
-  experimental: {
-    optimizeCss: true,
-    optimizeServerReact: true,
-  },
+  // 실험적 기능 제거 - Vercel 배포 오류 해결
   // 번들 분석을 위한 설정
   webpack: (config, { isServer }) => {
     if (!isServer) {
