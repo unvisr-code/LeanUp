@@ -32,6 +32,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
     industry: string;
     includeDataModule: boolean;
     includeMaintenanceModule: boolean;
+    confirmed: boolean;
   }>({
     name: "",
     email: "",
@@ -44,6 +45,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
     industry: "",
     includeDataModule: false,
     includeMaintenanceModule: false,
+    confirmed: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,8 +66,11 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
         industry: "",
         includeDataModule: false,
         includeMaintenanceModule: false,
+        confirmed: false,
       });
       setCurrentStep(1);
+      // Reset confirmed state for next time
+      setFormData(prev => ({ ...prev, confirmed: false }));
       onClose();
     },
     onError: () => {
@@ -389,6 +394,31 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                       )}
                     </div>
                   </div>
+
+                  {/* 확인 체크박스 */}
+                  <div className={`mt-6 p-4 rounded-lg border transition-all duration-300 ${
+                    !formData.confirmed
+                      ? "bg-yellow-500/[0.05] border-yellow-500/[0.3] animate-pulse"
+                      : "bg-green-500/[0.1] border-green-500/[0.3]"
+                  }`}>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="confirmed"
+                        checked={formData.confirmed}
+                        onChange={handleChange}
+                        className="mt-1 h-5 w-5 min-w-[20px] min-h-[20px] rounded border-2 border-white/30 bg-transparent text-white focus:ring-2 focus:ring-white/50 focus:ring-offset-0 focus:ring-offset-transparent checked:bg-white checked:border-white transition-all cursor-pointer"
+                      />
+                      <div className="flex-1">
+                        <p className="text-sm text-white font-medium">
+                          입력한 정보가 정확함을 확인합니다
+                        </p>
+                        <p className="text-xs text-white/60 mt-1">
+                          위 정보를 바탕으로 맞춤 견적을 준비하여 24시간 이내에 연락드리겠습니다.
+                        </p>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               )}
 
@@ -428,7 +458,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                   ) : (
                     <button
                       type="submit"
-                      disabled={isSubmitting || !isStep1Valid || !isStep2Valid}
+                      disabled={isSubmitting || !isStep1Valid || !isStep2Valid || !formData.confirmed}
                       className="flex items-center gap-2 px-6 py-3 min-h-[48px] bg-gradient-to-r from-white/[0.2] to-white/[0.15] backdrop-blur-xl text-white rounded-lg font-medium border border-white/[0.25] hover:from-white/[0.25] hover:to-white/[0.2] hover:border-white/[0.3] transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-sm active:scale-95 touch-manipulation"
                     >
                       {isSubmitting ? (
