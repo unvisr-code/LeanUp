@@ -5,19 +5,64 @@ import "./globals.css";
 import { TRPCProvider } from "@/lib/trpc/provider";
 import { ToastProvider } from "@/components/ui/toast";
 import ChannelTalk from "@/components/ChannelTalk";
+import StructuredData from "@/components/structured-data";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LeanUp - 웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지",
+  metadataBase: new URL('https://leanup.kr'),
+  title: {
+    default: "LeanUp - 웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지",
+    template: '%s | LeanUp'
+  },
   description: "빠른 납기, 저렴한 가격으로 웹사이트 제작부터 데이터 추적 셋업, 온보딩, 유지보수까지 한 번에 해결하세요.",
   keywords: "웹사이트 제작, 데이터 추적, GA4, GTM, 온보딩, 유지보수, 스타트업, 웹 개발",
+  authors: [{ name: "LeanUp" }],
+  creator: "LeanUp",
+  publisher: "LeanUp",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
     title: "LeanUp - 웹사이트 제작 + 데이터 + 온보딩",
     description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
-    type: "website",
-    locale: "ko_KR",
+    url: 'https://leanup.kr',
     siteName: "LeanUp",
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'LeanUp - 웹사이트 제작부터 데이터 추적까지',
+      }
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "LeanUp - 웹사이트 제작 + 데이터 + 온보딩",
+    description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
+    images: ['/twitter-image.png'],
+    creator: '@leanup',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'verification-code', // Google Search Console 인증 코드 추가 필요
   },
 };
 
@@ -35,6 +80,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
         />
+        <StructuredData />
       </head>
       <body className={inter.className} style={{ fontFamily: '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif' }}>
         {/* Google Analytics */}
