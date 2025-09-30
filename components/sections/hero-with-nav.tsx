@@ -67,29 +67,67 @@ function HeroSectionComponent() {
   useEffect(() => {
     setMounted(true);
 
-    // 스크롤 시 자동 스냅 기능
+    // 매끄러운 자동 스크롤 스냅 기능 (조금만 스크롤해도 발동, 아래 방향으로만 작동)
     let isScrolling = false;
+    let lastScrollY = 0;
+    let scrollTimeout: NodeJS.Timeout | null = null;
+    let hasTriggeredSnap = false;
+
     const handleScroll = () => {
       if (isScrolling) return;
 
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
+      const isMobile = window.innerWidth < 768;
+      const scrollDelta = scrollY - lastScrollY;
+      const isScrollingDown = scrollDelta > 0;
 
-      // 히어로 섹션에서 10% 이상 스크롤하면 자동으로 다음 섹션으로
-      if (scrollY > windowHeight * 0.1 && scrollY < windowHeight * 0.9) {
-        isScrolling = true;
-        window.scrollTo({
-          top: windowHeight,
-          behavior: 'smooth'
-        });
-        setTimeout(() => {
-          isScrolling = false;
-        }, 1000);
+      lastScrollY = scrollY;
+
+      // 임계값 하향: 조금만 스크롤해도 자동 스냅 발동
+      const threshold = isMobile ? 0.20 : 0.15;
+      const upperBound = 0.75;
+      const inSnapZone = scrollY > windowHeight * threshold && scrollY < windowHeight * upperBound;
+
+      if (isScrollingDown && inSnapZone && !hasTriggeredSnap) {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+
+        // debounce 시간 단축: 더 빠른 반응
+        scrollTimeout = setTimeout(() => {
+          const currentScrollY = window.scrollY;
+          const stillInZone = currentScrollY > windowHeight * threshold && currentScrollY < windowHeight * upperBound;
+
+          if (stillInZone && !isScrolling) {
+            isScrolling = true;
+            hasTriggeredSnap = true;
+
+            window.scrollTo({
+              top: windowHeight,
+              behavior: 'smooth'
+            });
+
+            // 쿨다운 단축: 더 빠른 완료
+            setTimeout(() => {
+              isScrolling = false;
+              if (window.scrollY < windowHeight * 0.2) {
+                hasTriggeredSnap = false;
+              }
+            }, 600);
+          }
+        }, 100);
+      }
+
+      if (scrollY < windowHeight * 0.1) {
+        hasTriggeredSnap = false;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
   }, []);
 
   const handleServiceClick = useCallback((item: typeof serviceItems[0], e: React.MouseEvent) => {
@@ -133,16 +171,16 @@ function HeroSectionComponent() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="fixed top-0 left-0 right-0 z-[999999999] flex justify-center p-6"
+            className="fixed top-0 left-0 right-0 z-[100] flex justify-center p-6"
           >
-            <div className="px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
+            <div className="px-4 sm:px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
               {/* Logo */}
               <Link href="/" className="flex items-center text-white group hover:opacity-90 transition-opacity">
                 <Logo size="md" variant="light" />
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-6">
+              <div className="hidden md:flex items-center gap-8">
                 {navItems.map((item) => (
                   item.dropdown ? (
                     <div
@@ -152,7 +190,7 @@ function HeroSectionComponent() {
                       onMouseLeave={() => setIsServicesOpen(false)}
                     >
                       <button className={cn(
-                        "flex items-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                        "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
                         pathname?.startsWith('/services')
                           ? "bg-white/[0.15] border border-white/[0.25] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/[0.08]"
@@ -206,7 +244,7 @@ function HeroSectionComponent() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                        "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
                         pathname === item.href
                           ? "bg-white/[0.15] border border-white/[0.25] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/[0.08]"
@@ -216,32 +254,34 @@ function HeroSectionComponent() {
                     </Link>
                   )
                 ))}
+                {/* Quote Button */}
+                <button
+                  onClick={() => setIsQuoteModalOpen(true)}
+                  className="inline-flex items-center justify-center px-4 py-1.5 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-sm font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm whitespace-nowrap"
+                >
+                  견적 문의
+                </button>
               </div>
 
-              {/* Quote Button */}
+              {/* Mobile Menu Button - 터치 영역 및 접근성 개선 */}
               <button
-                onClick={() => setIsQuoteModalOpen(true)}
-                className="hidden md:inline-flex items-center px-4 py-2 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-sm font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm"
-              >
-                견적 문의
-              </button>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden inline-flex items-center justify-center p-3 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </motion.nav>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - 터치 영역 및 애니메이션 개선 */}
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="md:hidden absolute top-20 left-4 right-4 bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4"
+              exit={{ opacity: 0, y: -10 }}
+              className="md:hidden absolute top-20 left-4 right-4 bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto"
             >
               <nav className="space-y-2">
                 {navItems.map((item) => (
@@ -249,20 +289,21 @@ function HeroSectionComponent() {
                     <div key={item.href}>
                       <button
                         onClick={() => setIsServicesOpen(!isServicesOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 min-h-[48px] text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                        className="flex items-center justify-between w-full px-4 py-3 min-h-[48px] text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors touch-manipulation"
+                        aria-expanded={isServicesOpen}
                       >
                         {item.label}
                         <ChevronDown className={cn("h-4 w-4 transition-transform", isServicesOpen && "rotate-180")} />
                       </button>
                       {isServicesOpen && (
-                        <div className="pl-4 mt-2 space-y-1">
+                        <div className="pl-2 mt-2 space-y-1">
                           {item.dropdown.map((subItem) => (
                             subItem.status === "available" ? (
                               <Link
                                 key={subItem.href}
                                 href={subItem.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="block px-4 py-3 min-h-[48px] text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors"
+                                className="block px-4 py-3 min-h-[48px] text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors touch-manipulation"
                               >
                                 {subItem.label}
                               </Link>
@@ -273,7 +314,7 @@ function HeroSectionComponent() {
                                   handleServiceClick(subItem, e);
                                   setIsMobileMenuOpen(false);
                                 }}
-                                className="block px-4 py-3 min-h-[48px] text-sm text-white/50 rounded-lg hover:bg-white/10 cursor-pointer transition-colors"
+                                className="block px-4 py-3 min-h-[48px] text-sm text-white/50 rounded-lg hover:bg-white/10 cursor-pointer transition-colors touch-manipulation"
                               >
                                 <div className="flex items-center gap-2">
                                   <span>{subItem.label}</span>
@@ -291,7 +332,7 @@ function HeroSectionComponent() {
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
-                        "block px-4 py-3 min-h-[48px] rounded-lg transition-all",
+                        "block px-4 py-3 min-h-[48px] rounded-lg transition-all touch-manipulation",
                         pathname === item.href
                           ? "bg-white/[0.15] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/10"
@@ -306,7 +347,7 @@ function HeroSectionComponent() {
                     setIsMobileMenuOpen(false);
                     setIsQuoteModalOpen(true);
                   }}
-                  className="w-full px-4 py-3 min-h-[48px] bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200 active:scale-95"
+                  className="w-full px-4 py-3 min-h-[48px] bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200 active:scale-95 touch-manipulation"
                 >
                   견적 문의
                 </button>
@@ -333,12 +374,12 @@ function HeroSectionComponent() {
                 </span>
               </motion.div>
 
-              {/* Main Title */}
+              {/* Main Title - 모바일 반응형 개선 */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1] sm:leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight px-4"
               >
                 빠르고 전문적인
                 <br />
@@ -362,12 +403,12 @@ function HeroSectionComponent() {
                 )}
               </motion.h1>
 
-              {/* Subtitle */}
+              {/* Subtitle - 모바일 가독성 개선 */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-base sm:text-lg md:text-xl text-white/80 mb-8 sm:mb-10 max-w-2xl mx-auto px-4"
+                className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto px-6 leading-relaxed"
               >
                 전문가 퀄리티 · 스타트업 속도 · 합리적 비용
                 <br className="hidden sm:block" />
@@ -375,16 +416,16 @@ function HeroSectionComponent() {
                 템플릿과 AI를 활용하여 2주일 내 MVP 웹사이트 완성
               </motion.p>
 
-              {/* CTA Buttons */}
+              {/* CTA Buttons - 터치 영역 및 반응성 개선 */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.7 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center px-4"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-6 w-full sm:w-auto"
               >
                 <button
                   onClick={() => setIsQuoteModalOpen(true)}
-                  className="group inline-flex items-center justify-center px-8 py-4 min-h-[48px] bg-white text-gray-900 rounded-full font-semibold text-base transition-all hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 hover:scale-105 active:scale-95"
+                  className="group inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 min-h-[48px] bg-white text-gray-900 rounded-full font-semibold text-sm sm:text-base transition-all hover:bg-white/90 hover:shadow-lg hover:shadow-white/20 hover:scale-105 active:scale-95 touch-manipulation"
                 >
                   견적 문의
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -392,14 +433,14 @@ function HeroSectionComponent() {
 
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center justify-center px-8 py-4 min-h-[48px] bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-base transition-all hover:bg-white/10 hover:border-white/50 backdrop-blur-sm active:scale-95"
+                  className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 min-h-[48px] bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-sm sm:text-base transition-all hover:bg-white/10 hover:border-white/50 backdrop-blur-sm active:scale-95 touch-manipulation"
                 >
                   포트폴리오 보기
                 </Link>
               </motion.div>
             </div>
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - 터치 영역 개선 */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -410,7 +451,7 @@ function HeroSectionComponent() {
                 repeatType: "reverse",
                 repeatDelay: 0.5
               }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer p-3 min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
               onClick={() => {
                 // 다음 섹션으로 정확히 스크롤
                 const nextSection = document.querySelector('section:nth-of-type(2)');
@@ -423,6 +464,8 @@ function HeroSectionComponent() {
                   });
                 }
               }}
+              role="button"
+              aria-label="다음 섹션으로 스크롤"
             >
               <div className="flex flex-col items-center gap-2">
                 <span className="text-xs text-white/60 font-medium">Scroll</span>

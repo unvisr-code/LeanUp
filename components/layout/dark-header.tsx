@@ -70,16 +70,16 @@ export function DarkHeader() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-[999999999] flex justify-center p-6"
+      className="fixed top-0 left-0 right-0 z-[100] flex justify-center p-6"
     >
-      <div className="px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
+      <div className="px-4 sm:px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
         {/* Logo */}
         <Link href="/" className="flex items-center text-white group hover:opacity-90 transition-opacity">
           <Logo size="md" variant="light" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             item.dropdown ? (
               <div
@@ -89,7 +89,7 @@ export function DarkHeader() {
                 onMouseLeave={() => setIsServicesOpen(false)}
               >
                 <button className={cn(
-                  "flex items-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                  "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
                   pathname?.startsWith('/services')
                     ? "bg-white/[0.15] border border-white/[0.25] text-white"
                     : "text-white/80 hover:text-white hover:bg-white/[0.08]"
@@ -143,7 +143,7 @@ export function DarkHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                  "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
                   pathname === item.href
                     ? "bg-white/[0.15] border border-white/[0.25] text-white"
                     : "text-white/80 hover:text-white hover:bg-white/[0.08]"
@@ -153,22 +153,22 @@ export function DarkHeader() {
               </Link>
             )
           ))}
+          {/* Quote Button */}
+          <button
+            onClick={() => setIsQuoteModalOpen(true)}
+            className="inline-flex items-center justify-center px-4 py-1.5 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-sm font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm whitespace-nowrap"
+          >
+            견적 문의
+          </button>
         </div>
-
-        {/* Quote Button */}
-        <button
-          onClick={() => setIsQuoteModalOpen(true)}
-          className="hidden md:inline-flex items-center px-4 py-2 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-sm font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm"
-        >
-          견적 문의
-        </button>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-white/80 hover:text-white hover:bg-white/[0.08] transition-colors"
+          className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
+          aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
         >
-          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
 

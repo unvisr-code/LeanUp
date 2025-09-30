@@ -246,10 +246,10 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
             : "opacity-0 translate-y-12"
         }`}
       >
-        {/* 아이콘 섹션 */}
+        {/* 아이콘 섹션 - 모바일 크기 증가 */}
         <div className="flex-shrink-0">
           <div
-            className={`w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 transition-all duration-700 ${
+            className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 transition-all duration-700 ${
               isVisible ? "scale-100" : "scale-75"
             }`}
             style={{
@@ -260,22 +260,22 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
           </div>
         </div>
 
-        {/* 텍스트 섹션 */}
-        <div className="flex-1 text-center lg:text-left max-w-md">
+        {/* 텍스트 섹션 - 모바일 가독성 개선 */}
+        <div className="flex-1 text-center lg:text-left max-w-md px-4">
           {/* 둥근 키워드 - 글래스모피즘 스타일 */}
-          <div className="mb-6">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm font-semibold">
+          <div className="mb-4 sm:mb-6">
+            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm sm:text-base font-semibold">
               {feature.keyword}
             </span>
           </div>
 
-          {/* 메인 카피 */}
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+          {/* 메인 카피 - 반응형 크기 개선 */}
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
             {feature.title}
           </h3>
 
-          {/* 서브 카피 */}
-          <p className="text-sm md:text-base text-white/70 leading-relaxed">
+          {/* 서브 카피 - 모바일 가독성 개선 */}
+          <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -287,26 +287,24 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 function FeaturesSectionComponent() {
   return (
     <motion.section
-      className="relative py-20 md:py-32 overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-32 overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      {/* 그라데이션 배경 - 제거하여 main의 배경이 이어지게 함 */}
-
       {/* 장식용 그라데이션 원들 - 어두운 톤 */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-10 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-blue-400/5 rounded-full blur-3xl"></div>
       <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-blue-300/5 rounded-full blur-2xl"></div>
 
-      <div className="container relative z-10">
-        {/* 헤더 */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+      <div className="container relative z-10 px-4 sm:px-6">
+        {/* 헤더 - 모바일 최적화 */}
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
             이런 점이 특별해요
           </h2>
-          <p className="text-base text-white/70 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed px-4">
             웹사이트 제작부터 데이터 추적, 유지보수까지 원스톱 솔루션
           </p>
         </div>

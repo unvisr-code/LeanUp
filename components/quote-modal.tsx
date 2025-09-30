@@ -122,10 +122,10 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
         onClick={onClose}
       />
 
-      {/* 모달 컨테이너 */}
+      {/* 모달 컨테이너 - 모바일 전체 화면 최적화 */}
       <div className="fixed inset-0 z-[9999] overflow-y-auto">
         <div className="flex min-h-full items-end sm:items-center justify-center p-0 sm:p-4">
-          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-t-2xl sm:rounded-2xl bg-black/90 backdrop-blur-2xl border-0 sm:border border-white/[0.2] shadow-[0_20px_80px_rgba(0,0,0,0.8)] transition-all duration-300 min-h-[70vh] sm:min-h-0">
+          <div className="relative w-full max-w-3xl transform overflow-hidden rounded-t-3xl sm:rounded-2xl bg-black/90 backdrop-blur-2xl border-0 sm:border border-white/[0.2] shadow-[0_20px_80px_rgba(0,0,0,0.8)] transition-all duration-300 min-h-[85vh] sm:min-h-0 max-h-[95vh] sm:max-h-[90vh]">
             {/* 헤더 */}
             <div className="bg-gradient-to-r from-white/[0.12] to-white/[0.08] backdrop-blur-xl px-4 sm:px-6 py-4 sm:py-6 border-b border-white/[0.15]">
               <div className="flex items-center justify-between">
@@ -156,8 +156,8 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
               </div>
             </div>
 
-            {/* 폼 */}
-            <form onSubmit={handleSubmit} className="p-4 sm:p-6 text-white">
+            {/* 폼 - 모바일 스크롤 개선 */}
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 text-white overflow-y-auto" style={{ maxHeight: 'calc(85vh - 180px)' }}>
               {/* Step 1: 기본 정보 */}
               {currentStep === 1 && (
                 <div className="space-y-6">

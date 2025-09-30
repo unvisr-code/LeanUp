@@ -56,6 +56,41 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* 모바일 최적화 - 터치 딜레이 제거 */
+  html {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* iOS Safe Area 대응 - viewport-fit=cover 메타태그로 충분 */
+  /* 필요 시 개별 요소에 padding: env(safe-area-inset-*) 적용 */
+
+  /* 터치 타겟 최소 크기 보장 - 예외 처리 추가 */
+  button:not(.no-min-size):not(.icon-only),
+  a:not(.no-min-size):not(.inline-link),
+  [role="button"]:not(.no-min-size) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* 명시적 터치 타겟 클래스 */
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* 스크롤 성능 최적화 */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* GPU 가속 및 레이어 최적화 */
+  .gpu-accelerate {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
 }
 
 /* Infinite scroll animations - Optimized for performance */
@@ -79,20 +114,36 @@
 
 .animate-scroll-left {
   animation: scroll-left 20s linear infinite;
-  will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .animate-scroll-right {
   animation: scroll-right 20s linear infinite;
-  will-change: transform;
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 .pause-animation {
   animation-play-state: paused !important;
+}
+
+/* 성능 최적화 유틸리티 클래스 */
+.optimize-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+.optimize-paint {
+  contain: paint;
+}
+
+.optimize-layout {
+  contain: layout;
 }
 
 /* Channel.io 채널톡 버튼 커스터마이징 - 파란색 테마 */

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, Send, Lock, Bell, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { QuoteModal } from "@/components/quote-modal";
@@ -51,6 +51,18 @@ export function Header() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
+
+  // 모바일 메뉴 오픈 시 배경 스크롤 방지
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
 
   const handleServiceClick = (item: typeof serviceItems[0], e: React.MouseEvent) => {
     if (item.status === "development" || item.status === "coming-soon") {
@@ -154,10 +166,11 @@ export function Header() {
           </button>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button - 터치 영역 확대 (최소 48x48px) */}
         <button
-          className="ml-auto inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary md:hidden"
+          className="ml-auto inline-flex items-center justify-center rounded-md p-3 min-w-[48px] min-h-[48px] text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary md:hidden touch-manipulation"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
         >
           {isMobileMenuOpen ? (
             <X className="h-6 w-6" />
@@ -167,7 +180,7 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - 배경 스크롤 방지 및 터치 영역 개선 */}
       <div
         className={cn(
           "md:hidden",
@@ -180,7 +193,8 @@ export function Header() {
               <div key={item.href}>
                 <button
                   onClick={() => setIsServicesOpen(!isServicesOpen)}
-                  className="flex items-center justify-between w-full rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className="flex items-center justify-between w-full rounded-md px-3 py-3 min-h-[48px] text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 touch-manipulation"
+                  aria-expanded={isServicesOpen}
                 >
                   {item.label}
                   <ChevronDown className={cn(
@@ -189,7 +203,7 @@ export function Header() {
                   )} />
                 </button>
                 <div className={cn(
-                  "pl-6 space-y-1",
+                  "pl-4 space-y-1",
                   isServicesOpen ? "block" : "hidden"
                 )}>
                   {item.dropdown.map((subItem) => (
@@ -197,7 +211,7 @@ export function Header() {
                       <Link
                         key={subItem.href}
                         href={subItem.href}
-                        className="block rounded-md px-3 py-2 text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 font-medium"
+                        className="block rounded-md px-3 py-3 min-h-[48px] text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 hover:text-blue-800 font-medium touch-manipulation"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         <div className="flex items-center justify-between">
@@ -212,7 +226,7 @@ export function Header() {
                           handleServiceClick(subItem, e);
                           setIsMobileMenuOpen(false);
                         }}
-                        className="block rounded-md px-3 py-2 text-sm cursor-pointer text-gray-400 bg-gray-50 hover:bg-gray-100"
+                        className="block rounded-md px-3 py-3 min-h-[48px] text-sm cursor-pointer text-gray-400 bg-gray-50 hover:bg-gray-100 touch-manipulation"
                       >
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col">
@@ -237,7 +251,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className="block rounded-md px-3 py-3 min-h-[48px] text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {item.label}
@@ -249,7 +263,7 @@ export function Header() {
               setIsMobileMenuOpen(false);
               setIsQuoteModalOpen(true);
             }}
-            className="block w-full rounded-md bg-blue-600 px-3 py-2 text-center text-base font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg"
+            className="block w-full rounded-md bg-blue-600 px-3 py-3 min-h-[48px] text-center text-base font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg touch-manipulation active:scale-95"
           >
             견적 문의
           </button>
