@@ -3,15 +3,15 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://leanup.kr';
 
-  // 정적 페이지들
+  // 정적 페이지들 (공개된 페이지만 포함)
   const staticPages = [
     '',
     '/about',
     '/services',
     '/services/website',
-    '/services/data-module',
-    '/services/maintenance-module',
-    '/services/live-status',
+    // '/services/data-module', // 공개 예정
+    // '/services/maintenance-module', // 공개 예정
+    // '/services/live-status', // 공개 예정
     '/portfolio',
     '/contact',
   ];
