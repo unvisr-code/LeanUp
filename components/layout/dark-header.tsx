@@ -56,6 +56,27 @@ export function DarkHeader() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const body = document.body;
+    const previousOverflow = body.style.overflow;
+    const previousTouchAction = body.style.touchAction;
+
+    if (isMobileMenuOpen) {
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
+    } else {
+      body.style.overflow = "";
+      body.style.touchAction = "";
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.touchAction = previousTouchAction;
+    };
+  }, [isMobileMenuOpen]);
+
   const handleServiceClick = (item: typeof serviceItems[0], e: React.MouseEvent) => {
     if (item.status === "development" || item.status === "coming-soon") {
       e.preventDefault();
@@ -70,16 +91,16 @@ export function DarkHeader() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-[100] flex justify-center p-6"
+      className="fixed top-0 left-0 right-0 z-[9999] flex justify-center p-4 sm:p-6"
     >
-      <div className="px-4 sm:px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
+      <div className="w-full max-w-5xl px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center justify-between gap-4 sm:gap-8 hover:bg-black/60 transition-all duration-300">
         {/* Logo */}
-        <Link href="/" className="flex items-center text-white group hover:opacity-90 transition-opacity">
+        <Link href="/" className="flex items-center flex-shrink-0 text-white group hover:opacity-90 transition-opacity">
           <Logo size="md" variant="light" />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
           {navItems.map((item) => (
             item.dropdown ? (
               <div
@@ -165,7 +186,7 @@ export function DarkHeader() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
+          className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] flex-shrink-0 text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
           aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
         >
           {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -178,7 +199,7 @@ export function DarkHeader() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden absolute top-full left-4 right-4 mt-2 p-4 rounded-xl bg-black/90 backdrop-blur-2xl border border-white/[0.15] shadow-xl"
+          className="md:hidden fixed top-20 left-4 right-4 z-[9998] p-4 rounded-xl bg-black/90 backdrop-blur-2xl border border-white/[0.15] shadow-xl max-h-[calc(100vh-140px)] overflow-y-auto"
         >
           <nav className="space-y-2">
             {navItems.map((item) => (

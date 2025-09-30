@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu, X, Lock, Bell } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState, memo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
@@ -58,18 +58,41 @@ const navItems = [
 function HeroSectionComponent() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
+  const shouldReduceMotion = useReducedMotion();
+  const prismSettings = isMobile
+    ? { timeScale: 0.3, scale: 2.5, glow: 1.2, bloom: 0.9 }
+    : { timeScale: 0.4, scale: 3.0, glow: 1.0, bloom: 0.9 };
+  const showPrismEffect = mounted && !shouldReduceMotion;
 
   useEffect(() => {
     setMounted(true);
+  }, []);
 
-    // 매끄러운 자동 스크롤 스냅 기능 (조금만 스크롤해도 발동, 아래 방향으로만 작동)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateIsMobile = () => setIsMobile(mediaQuery.matches);
+
+    updateIsMobile();
+    mediaQuery.addEventListener("change", updateIsMobile);
+
+    return () => {
+      mediaQuery.removeEventListener("change", updateIsMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || isMobile || shouldReduceMotion) return;
+
     let isScrolling = false;
-    let lastScrollY = 0;
+    let lastScrollY = window.scrollY;
     let scrollTimeout: NodeJS.Timeout | null = null;
     let hasTriggeredSnap = false;
 
@@ -78,21 +101,21 @@ function HeroSectionComponent() {
 
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const isMobile = window.innerWidth < 768;
       const scrollDelta = scrollY - lastScrollY;
       const isScrollingDown = scrollDelta > 0;
 
       lastScrollY = scrollY;
 
-      // 임계값 하향: 조금만 스크롤해도 자동 스냅 발동
-      const threshold = isMobile ? 0.20 : 0.15;
+      const threshold = 0.15;
       const upperBound = 0.75;
       const inSnapZone = scrollY > windowHeight * threshold && scrollY < windowHeight * upperBound;
 
       if (isScrollingDown && inSnapZone && !hasTriggeredSnap) {
-        if (scrollTimeout) clearTimeout(scrollTimeout);
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = null;
+        }
 
-        // debounce 시간 단축: 더 빠른 반응
         scrollTimeout = setTimeout(() => {
           const currentScrollY = window.scrollY;
           const stillInZone = currentScrollY > windowHeight * threshold && currentScrollY < windowHeight * upperBound;
@@ -103,10 +126,9 @@ function HeroSectionComponent() {
 
             window.scrollTo({
               top: windowHeight,
-              behavior: 'smooth'
+              behavior: "smooth",
             });
 
-            // 쿨다운 단축: 더 빠른 완료
             setTimeout(() => {
               isScrolling = false;
               if (window.scrollY < windowHeight * 0.2) {
@@ -122,13 +144,36 @@ function HeroSectionComponent() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
     };
-  }, []);
+  }, [mounted, isMobile, shouldReduceMotion]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const body = document.body;
+    const previousOverflow = body.style.overflow;
+    const previousTouchAction = body.style.touchAction;
+
+    if (isMobileMenuOpen) {
+      body.style.overflow = "hidden";
+      body.style.touchAction = "none";
+    } else {
+      body.style.overflow = "";
+      body.style.touchAction = "";
+    }
+
+    return () => {
+      body.style.overflow = previousOverflow;
+      body.style.touchAction = previousTouchAction;
+    };
+  }, [isMobileMenuOpen]);
 
   const handleServiceClick = useCallback((item: typeof serviceItems[0], e: React.MouseEvent) => {
     if (item.status === "development" || item.status === "coming-soon") {
@@ -144,43 +189,45 @@ function HeroSectionComponent() {
       <section className="relative min-h-screen overflow-hidden flex items-center bg-black">
         {/* WebGL Prism Background - 3D rotating prism effect */}
         <div className="absolute inset-0 w-full h-full bg-black">
-          {mounted && (
+          {showPrismEffect ? (
             <Prism
               animationType="rotate"
-              timeScale={window.innerWidth < 768 ? 0.2 : 0.4}
+              timeScale={prismSettings.timeScale}
               height={3.5}
               baseWidth={5.5}
-              scale={window.innerWidth < 768 ? 2.0 : 3.0}
+              scale={prismSettings.scale}
               hueShift={0}
               colorFrequency={1.2}
               noise={0}
-              glow={window.innerWidth < 768 ? 0.7 : 1.0}
-              bloom={window.innerWidth < 768 ? 0.6 : 0.9}
+              glow={prismSettings.glow}
+              bloom={prismSettings.bloom}
               suspendWhenOffscreen={true}
             />
+          ) : (
+            <div className="h-full w-full bg-gradient-to-b from-blue-600/30 via-blue-500/10 to-black" />
           )}
         </div>
 
-        {/* Subtle overlay for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30" />
+        {/* Subtle overlay for better text visibility - 모바일에서 더 밝게 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
 
         {/* Content overlay needs a higher stacking context so the fixed nav stays above following sections */}
-        <div className="absolute inset-0 z-[120]">
-          {/* Glassmorphism Navigation Bar - Fixed/Sticky */}
+        <div className="absolute inset-0 z-[50]">
+          {/* Glassmorphism Navigation Bar - Fixed/Sticky with highest z-index */}
           <motion.nav
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="fixed top-0 left-0 right-0 z-[100] flex justify-center p-6"
+            className="fixed top-0 left-0 right-0 z-[9999] flex justify-center p-4 sm:p-6"
           >
-            <div className="px-4 sm:px-6 py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center gap-8 hover:bg-black/60 transition-all duration-300">
+            <div className="w-full max-w-5xl px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center justify-between gap-4 sm:gap-8 hover:bg-black/60 transition-all duration-300">
               {/* Logo */}
-              <Link href="/" className="flex items-center text-white group hover:opacity-90 transition-opacity">
+              <Link href="/" className="flex items-center flex-shrink-0 text-white group hover:opacity-90 transition-opacity">
                 <Logo size="md" variant="light" />
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
                 {navItems.map((item) => (
                   item.dropdown ? (
                     <div
@@ -265,7 +312,7 @@ function HeroSectionComponent() {
 
               {/* Mobile Menu Button - 터치 영역 및 접근성 개선 */}
               <button
-                className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
+                className="md:hidden inline-flex items-center justify-center p-2 min-w-[48px] min-h-[48px] flex-shrink-0 text-white hover:bg-white/10 rounded-lg transition-colors touch-manipulation"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
                 aria-expanded={isMobileMenuOpen}
@@ -281,7 +328,7 @@ function HeroSectionComponent() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="md:hidden absolute top-20 left-4 right-4 bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto"
+              className="md:hidden fixed top-20 left-4 right-4 z-[9998] bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto"
             >
               <nav className="space-y-2">
                 {navItems.map((item) => (
@@ -356,7 +403,7 @@ function HeroSectionComponent() {
           )}
 
           {/* Main Content */}
-          <div className="container flex flex-col items-center justify-center min-h-screen">
+          <div className="container flex flex-col items-center justify-center min-h-screen pt-28 pb-16 sm:pt-32 sm:pb-20">
             <div className="max-w-5xl text-center">
               {/* Badge */}
               <motion.div
@@ -383,7 +430,7 @@ function HeroSectionComponent() {
               >
                 빠르고 전문적인
                 <br />
-                {mounted && (
+                {mounted && !shouldReduceMotion ? (
                   <TypeAnimation
                     sequence={[
                       "웹사이트 제작",
@@ -400,6 +447,10 @@ function HeroSectionComponent() {
                     className="bg-gradient-to-r from-white/90 to-white/60 bg-clip-text text-transparent"
                     repeat={Infinity}
                   />
+                ) : (
+                  <span className="bg-gradient-to-r from-white/90 to-white/60 bg-clip-text text-transparent">
+                    웹사이트 제작
+                  </span>
                 )}
               </motion.h1>
 
@@ -451,7 +502,7 @@ function HeroSectionComponent() {
                 repeatType: "reverse",
                 repeatDelay: 0.5
               }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer p-3 min-w-[48px] min-h-[48px] flex items-center justify-center touch-manipulation"
+              className="flex absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer p-3 min-w-[48px] min-h-[48px] items-center justify-center touch-manipulation"
               onClick={() => {
                 // 다음 섹션으로 정확히 스크롤
                 const nextSection = document.querySelector('section:nth-of-type(2)');
