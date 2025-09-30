@@ -218,16 +218,16 @@ function HeroSectionComponent() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="fixed top-0 left-0 right-0 z-[9999] flex justify-center p-4 sm:p-6"
+            className="fixed top-0 left-0 right-0 z-[9999] flex justify-center p-2 sm:p-3"
           >
-            <div className="w-full max-w-5xl px-3 sm:px-6 py-2.5 sm:py-3 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center justify-between gap-4 sm:gap-8 hover:bg-black/60 transition-all duration-300">
+            <div className="w-full max-w-4xl px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center justify-between gap-3 sm:gap-6 hover:bg-black/60 transition-all duration-300">
               {/* Logo */}
               <Link href="/" className="flex items-center flex-shrink-0 text-white group hover:opacity-90 transition-opacity">
-                <Logo size="md" variant="light" />
+                <Logo size="sm" variant="light" />
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
+              <div className="hidden md:flex flex-1 items-center justify-center gap-3 lg:gap-4">
                 {navItems.map((item) => (
                   item.dropdown ? (
                     <div
@@ -237,13 +237,13 @@ function HeroSectionComponent() {
                       onMouseLeave={() => setIsServicesOpen(false)}
                     >
                       <button className={cn(
-                        "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                        "flex items-center justify-center text-[13px] font-medium transition-all px-2.5 py-1 rounded-full",
                         pathname?.startsWith('/services')
                           ? "bg-white/[0.15] border border-white/[0.25] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/[0.08]"
                       )}>
                         {item.label}
-                        <ChevronDown className="ml-1 h-3 w-3" />
+                        <ChevronDown className="ml-0.5 h-3 w-3" />
                       </button>
 
                       {/* Dropdown Menu */}
@@ -291,7 +291,7 @@ function HeroSectionComponent() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "flex items-center justify-center text-sm font-medium transition-all px-3 py-1.5 rounded-full",
+                        "flex items-center justify-center text-[13px] font-medium transition-all px-2.5 py-1 rounded-full",
                         pathname === item.href
                           ? "bg-white/[0.15] border border-white/[0.25] text-white"
                           : "text-white/80 hover:text-white hover:bg-white/[0.08]"
@@ -304,7 +304,7 @@ function HeroSectionComponent() {
                 {/* Quote Button */}
                 <button
                   onClick={() => setIsQuoteModalOpen(true)}
-                  className="inline-flex items-center justify-center px-4 py-1.5 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-sm font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm whitespace-nowrap"
+                  className="inline-flex items-center justify-center px-3 py-1 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-full text-white text-[13px] font-medium hover:bg-white/[0.25] transition-all duration-200 shadow-sm whitespace-nowrap"
                 >
                   견적 문의
                 </button>

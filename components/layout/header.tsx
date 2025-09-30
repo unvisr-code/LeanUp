@@ -75,20 +75,20 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-[120] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
-        <Link href="/" className="flex items-center space-x-2 group">
-          <div className="flex items-center gap-2.5">
-            <div className="flex items-center justify-center w-9 h-9 bg-blue-600 rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
-              <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
+      <div className="container max-w-6xl flex h-12 items-center px-4">
+        <Link href="/" className="flex items-center group">
+          <div className="flex items-center gap-1.5">
+            <div className="flex items-center justify-center w-7 h-7 bg-blue-600 rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
+              <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
+            <span className="text-base font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
               LeanUp
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="ml-auto hidden md:flex items-center space-x-6">
+        <nav className="ml-auto hidden md:flex items-center space-x-4">
           {navItems.map((item) => (
             item.dropdown ? (
               <div
@@ -98,10 +98,10 @@ export function Header() {
                 onMouseLeave={() => setIsServicesOpen(false)}
               >
                 <button
-                  className="flex items-center text-sm font-medium transition-colors hover:text-primary"
+                  className="flex items-center text-[13px] font-medium transition-colors hover:text-primary"
                 >
                   {item.label}
-                  <ChevronDown className="ml-1 h-4 w-4" />
+                  <ChevronDown className="ml-0.5 h-3.5 w-3.5" />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -152,7 +152,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-[13px] font-medium transition-colors hover:text-primary"
               >
                 {item.label}
               </Link>
@@ -160,7 +160,7 @@ export function Header() {
           ))}
           <button
             onClick={() => setIsQuoteModalOpen(true)}
-            className="ml-4 inline-flex h-9 items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            className="ml-3 inline-flex h-7 items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-[13px] font-medium text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           >
             견적 문의
           </button>
