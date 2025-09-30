@@ -6,6 +6,7 @@ import { TRPCProvider } from "@/lib/trpc/provider";
 import { ToastProvider } from "@/components/ui/toast";
 import ChannelTalk from "@/components/ChannelTalk";
 import StructuredData from "@/components/structured-data";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -127,6 +128,7 @@ export default function RootLayout({
             {children}
           </ToastProvider>
         </TRPCProvider>
+        <SpeedInsights />
         <ChannelTalk />
       </body>
     </html>
