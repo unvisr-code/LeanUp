@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  alternates: {
+    canonical: 'https://leanup.kr',
+  },
   openGraph: {
     title: "LeanUp - 웹사이트 제작 + 데이터 + 온보딩",
     description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
