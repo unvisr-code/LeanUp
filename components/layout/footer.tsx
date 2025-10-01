@@ -27,9 +27,12 @@ function FooterComponent() {
             contact@leanup.kr
           </a>
 
-          {/* Copyright */}
-          <div className="pt-4 border-t border-white/[0.1] w-full">
-            <p className="text-xs text-white/40">&copy; 2025 LeanUp. All rights reserved.</p>
+          {/* Company Info */}
+          <div className="pt-4 border-t border-white/[0.1] w-full space-y-2">
+            <p className="text-xs text-white/60">법인명: 위에이지 주식회사 (WEAGE Corp.)</p>
+            <p className="text-xs text-white/60">주소: 서울특별시 광진구 긴고랑로14길 64, 지하 1층(중곡동)</p>
+            <p className="text-xs text-white/60">사업자등록번호: 352-86-03601</p>
+            <p className="text-xs text-white/40 pt-2">&copy; 2025 LeanUp. All rights reserved.</p>
           </div>
         </div>
       </div>

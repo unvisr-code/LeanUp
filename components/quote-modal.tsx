@@ -157,7 +157,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
             </div>
 
             {/* 폼 - 모바일 스크롤 개선 */}
-            <form onSubmit={handleSubmit} className="p-4 sm:p-6 text-white overflow-y-auto" style={{ maxHeight: 'calc(85vh - 180px)' }}>
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 text-white overflow-y-auto" style={{ maxHeight: 'calc(95vh - 220px)' }}>
               {/* Step 1: 기본 정보 */}
               {currentStep === 1 && (
                 <div className="space-y-6">
@@ -200,7 +200,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white placeholder-white/40 transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm touch-manipulation"
-                        placeholder="email@example.com"
+                        placeholder="example@gmail.com"
                       />
                     </div>
 
@@ -261,7 +261,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="under-500">500만원 미만</option>
@@ -282,7 +282,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                         name="timeline"
                         value={formData.timeline}
                         onChange={handleChange}
-                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
+                        className="w-full rounded-lg bg-white/[0.08] border border-white/[0.15] px-4 py-3 min-h-[48px] text-white transition-all focus:bg-white/[0.12] focus:border-white/[0.25] focus:outline-none backdrop-blur-xl shadow-sm [&>option]:bg-gray-900 [&>option]:text-white"
                       >
                         <option value="">선택해주세요</option>
                         <option value="asap">ASAP</option>
@@ -398,7 +398,7 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
                   {/* 확인 체크박스 */}
                   <div className={`mt-6 p-4 rounded-lg border transition-all duration-300 ${
                     !formData.confirmed
-                      ? "bg-yellow-500/[0.05] border-yellow-500/[0.3] animate-pulse"
+                      ? "bg-yellow-500/[0.05] border-yellow-500/[0.3]"
                       : "bg-green-500/[0.1] border-green-500/[0.3]"
                   }`}>
                     <label className="flex items-start gap-3 cursor-pointer">

@@ -51,7 +51,7 @@ const features: Array<{
     ),
     keyword: "빠른 납기",
     title: "빠르고 합리적으로 만들어요",
-    description: "템플릿과 AI를 활용하여 7-10일 내 웹사이트를 완성합니다. 불필요한 비용 없이 핵심 기능에 집중합니다.",
+    description: "템플릿과 AI를 활용하여 1주일 내외에 웹사이트 MVP를 완성합니다. 불필요한 비용 없이 핵심 기능에 집중합니다.",
     align: "left",
   },
   {
@@ -146,7 +146,7 @@ const features: Array<{
     ),
     keyword: "유지보수",
     title: "유지보수도 쉽게 할 수 있어요",
-    description: "Framer 기반의 시각화된 피드백과 프롬프트 입력으로 간단한 수정이 가능합니다. 커뮤니케이션 비용을 줄입니다.",
+    description: "GUI 기반의 시각화된 피드백과 프롬프트 입력으로 간단한 수정이 가능합니다. 커뮤니케이션 비용을 줄입니다.",
     align: "left",
   },
   {

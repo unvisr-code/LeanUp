@@ -16,7 +16,7 @@ export default function MaintenanceModulePage() {
       <div className="pt-24">
         <PageHeader
           title="유지보수 효율화 모듈"
-          subtitle="Framer 기반 시각화된 피드백과 프롬프트로 간단한 수정. 커뮤니케이션 비용을 획기적으로 절감합니다."
+          subtitle="GUI 기반 시각화된 피드백과 프롬프트로 간단한 수정. 커뮤니케이션 비용을 획기적으로 절감합니다."
         >
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <motion.div
@@ -85,7 +85,7 @@ export default function MaintenanceModulePage() {
                 {
                   icon: MessageSquare,
                   title: "시각화된 피드백",
-                  description: "Framer 기반으로 화면에서 직접 수정 사항을 표시하고 피드백",
+                  description: "GUI 기반으로 화면에서 직접 수정 사항을 표시하고 피드백",
                   color: "from-green-600 to-teal-600"
                 },
                 {

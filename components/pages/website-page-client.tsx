@@ -256,7 +256,7 @@ export default function WebsitePageClient() {
                 </h3>
                 <ul className="space-y-3">
                   {[
-                    "클라우드 호스팅 설정 (Vercel/Netlify)",
+                    "원하는 DB로 맞춤 배포",
                     "SSL 보안 인증서",
                     "CDN 최적화",
                     "자동 백업 시스템",
