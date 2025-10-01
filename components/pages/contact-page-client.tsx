@@ -165,8 +165,8 @@ export default function ContactPageClient() {
               </motion.h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                  { icon: Zap, title: "빠른 개발", desc: "7-10일 내 웹사이트 완성" },
-                  { icon: Shield, title: "안정적 유지보수", desc: "6개월 무상 유지보수 제공" },
+                  { icon: Zap, title: "빠른 개발", desc: "1주일 내외에 웹사이트 MVP 완성" },
+                  { icon: Shield, title: "안정적 유지보수", desc: "7일 하이퍼케어 제공" },
                   { icon: Users, title: "전담 PM 배정", desc: "원활한 소통과 프로젝트 관리" },
                 ].map((item, index) => {
                   const Icon = item.icon;
