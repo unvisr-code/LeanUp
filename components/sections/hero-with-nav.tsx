@@ -65,9 +65,10 @@ function HeroSectionComponent() {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
   const shouldReduceMotion = useReducedMotion();
+  // 성능 최적화: 설정값 조정
   const prismSettings = isMobile
-    ? { timeScale: 0.3, scale: 2.5, glow: 1.2, bloom: 0.9 }
-    : { timeScale: 0.4, scale: 3.0, glow: 1.0, bloom: 0.9 };
+    ? { timeScale: 0.2, scale: 2.0, glow: 1.0, bloom: 0.8 }
+    : { timeScale: 0.3, scale: 2.8, glow: 0.8, bloom: 0.8 };
   const showPrismEffect = mounted && !shouldReduceMotion;
 
   useEffect(() => {
@@ -197,7 +198,7 @@ function HeroSectionComponent() {
               baseWidth={5.5}
               scale={prismSettings.scale}
               hueShift={0}
-              colorFrequency={1.2}
+              colorFrequency={1.0}
               noise={0}
               glow={prismSettings.glow}
               bloom={prismSettings.bloom}

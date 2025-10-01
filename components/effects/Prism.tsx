@@ -44,11 +44,15 @@ const Prism = ({
     const HOVSTR = Math.max(0, hoverStrength || 1);
     const INERT = Math.max(0, Math.min(1, inertia || 0.12));
 
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    // 성능 최적화: DPR 제한 (모바일 1.0, 데스크탑 1.5)
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const maxDpr = isMobileDevice ? 1.0 : 1.5;
+    const dpr = Math.min(maxDpr, window.devicePixelRatio || 1);
     const renderer = new Renderer({
       dpr,
       alpha: transparent,
-      antialias: false
+      antialias: false,
+      powerPreference: 'high-performance'
     });
     const gl = renderer.gl;
     gl.disable(gl.DEPTH_TEST);
@@ -95,6 +99,7 @@ const Prism = ({
       uniform float uMinAxis;
       uniform float uPxScale;
       uniform float uTimeScale;
+      uniform int uMaxSteps;
 
       vec4 tanh4(vec4 x){
         vec4 e2x = exp(2.0*x);
@@ -158,8 +163,9 @@ const Prism = ({
           wob = mat2(c0, c1, c2, c0);
         }
 
-        const int STEPS = 100;
-        for (int i = 0; i < STEPS; i++) {
+        // 동적 STEPS: 성능 최적화
+        for (int i = 0; i < 100; i++) {
+          if (i >= uMaxSteps) break;
           p = vec3(f, z);
           p.xz = p.xz * wob;
           p = uRot * p;
@@ -168,6 +174,9 @@ const Prism = ({
           d = 0.1 + 0.2 * abs(sdPyramidUpInv(q));
           z -= d;
           o += (sin((p.y + z) * cf + vec4(0.0, 1.0, 2.0, 3.0)) + 1.0) / d;
+
+          // 조기 종료: z가 충분히 작아지면 중단
+          if (z < -5.0) break;
         }
 
         o = tanh4(o * o * (uGlow * uBloom) / 1e5);
@@ -191,6 +200,9 @@ const Prism = ({
     const geometry = new Triangle(gl);
     const iResBuf = new Float32Array(2);
     const offsetPxBuf = new Float32Array(2);
+
+    // 성능 최적화: 디바이스별 STEPS 조절 (모바일 30, 데스크탑 60)
+    const maxSteps = isMobileDevice ? 30 : 60;
 
     const program = new Program(gl, {
       vertex,
@@ -217,7 +229,8 @@ const Prism = ({
         uPxScale: {
           value: 1 / ((gl.drawingBufferHeight || 1) * 0.1 * SCALE)
         },
-        uTimeScale: { value: TS }
+        uTimeScale: { value: TS },
+        uMaxSteps: { value: maxSteps }
       }
     });
     const mesh = new Mesh(gl, { geometry, program });
@@ -271,6 +284,11 @@ const Prism = ({
     const NOISE_IS_ZERO = NOISE < 1e-6;
     let raf = 0;
     const t0 = performance.now();
+
+    // 성능 최적화: 모바일에서 프레임레이트 제한 (30fps)
+    let lastFrameTime = 0;
+    const targetFrameTime = isMobileDevice ? 1000 / 30 : 0; // 모바일 30fps, 데스크탑 무제한
+
     const startRAF = () => {
       if (raf) return;
       raf = requestAnimationFrame(render);
@@ -331,6 +349,13 @@ const Prism = ({
     }
 
     const render = (t: number) => {
+      // 성능 최적화: 프레임레이트 제한 (모바일 30fps)
+      if (targetFrameTime > 0 && t - lastFrameTime < targetFrameTime) {
+        raf = requestAnimationFrame(render);
+        return;
+      }
+      lastFrameTime = t;
+
       const time = (t - t0) * 0.001;
       program.uniforms.iTime.value = time;
 
