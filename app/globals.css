@@ -80,6 +80,25 @@
     min-width: 48px;
   }
 
+  /* 모바일 입력 필드 최적화 */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea {
+    font-size: 16px; /* iOS 자동 줌 방지 */
+  }
+
+  @media (max-width: 767px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
   /* 스크롤 성능 최적화 */
   * {
     -webkit-overflow-scrolling: touch;
@@ -215,6 +234,57 @@
 
 .perspective-1000 {
   perspective: 1000px;
+}
+
+/* 모바일 전용 유틸리티 클래스 */
+@media (max-width: 767px) {
+  .mobile\:text-balance {
+    text-wrap: balance;
+  }
+
+  .mobile\:hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mobile\:hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 모바일에서 애니메이션 성능 최적화 */
+  .mobile\:reduce-motion {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* 모바일 안전 영역 패딩 */
+  .mobile\:safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .mobile\:safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobile\:safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .mobile\:safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* 모바일 간격 조정 */
+  .mobile\:compact {
+    padding: 0.75rem;
+  }
+
+  /* 모바일 텍스트 크기 최적화 */
+  .mobile\:text-readable {
+    font-size: 16px;
+    line-height: 1.6;
+  }
 }
 
 /* Holographic effect */

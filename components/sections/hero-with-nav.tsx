@@ -60,7 +60,8 @@ function HeroSectionComponent() {
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
@@ -181,9 +182,17 @@ function HeroSectionComponent() {
       e.preventDefault();
       setSelectedService(item.label);
       setIsNotificationModalOpen(true);
-      setIsServicesOpen(false);
+      setIsDesktopServicesOpen(false);
+      setIsMobileServicesOpen(false);
     }
   }, []);
+
+  // 모바일 메뉴가 닫힐 때 서비스 드롭다운도 초기화
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setIsMobileServicesOpen(false);
+    }
+  }, [isMobileMenuOpen]);
 
   return (
     <>
@@ -234,8 +243,8 @@ function HeroSectionComponent() {
                     <div
                       key={item.href}
                       className="relative group"
-                      onMouseEnter={() => setIsServicesOpen(true)}
-                      onMouseLeave={() => setIsServicesOpen(false)}
+                      onMouseEnter={() => setIsDesktopServicesOpen(true)}
+                      onMouseLeave={() => setIsDesktopServicesOpen(false)}
                     >
                       <button className={cn(
                         "flex items-center justify-center text-[13px] font-medium transition-all px-2.5 py-1 rounded-full",
@@ -244,14 +253,14 @@ function HeroSectionComponent() {
                           : "text-white/80 hover:text-white hover:bg-white/[0.08]"
                       )}>
                         {item.label}
-                        <ChevronDown className="ml-0.5 h-3 w-3" />
+                        <ChevronDown className={cn("ml-0.5 h-3 w-3 transition-transform", isDesktopServicesOpen && "rotate-180")} />
                       </button>
 
                       {/* Dropdown Menu */}
                       <div
                         className={cn(
                           "absolute top-full left-0 mt-1 w-56 rounded-lg bg-black/90 backdrop-blur-xl border border-white/[0.25] shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-200",
-                          isServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                          isDesktopServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
                         )}
                       >
                         {item.dropdown.map((subItem) => (
@@ -323,37 +332,58 @@ function HeroSectionComponent() {
             </div>
           </motion.nav>
 
+          {/* Mobile Menu Backdrop - 외부 클릭 시 닫힘 */}
+          {isMobileMenuOpen && (
+            <div
+              className="md:hidden fixed inset-0 z-[9997] bg-black/40 backdrop-blur-sm"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+          )}
+
           {/* Mobile Menu - 터치 영역 및 애니메이션 개선 */}
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="md:hidden fixed top-20 left-4 right-4 z-[9998] bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto"
+              className="md:hidden fixed top-20 left-4 right-4 z-[9998] bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto mobile:hide-scrollbar"
             >
               <nav className="space-y-2">
                 {navItems.map((item) => (
                   item.dropdown ? (
                     <div key={item.href}>
                       <button
-                        onClick={() => setIsServicesOpen(!isServicesOpen)}
-                        className="flex items-center justify-between w-full px-4 py-3 min-h-[48px] text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors touch-manipulation"
-                        aria-expanded={isServicesOpen}
+                        onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                        className={cn(
+                          "flex items-center justify-between w-full px-4 py-3 min-h-[48px] rounded-lg transition-all touch-manipulation",
+                          isMobileServicesOpen
+                            ? "bg-white/[0.15] text-white"
+                            : "text-white/80 hover:text-white hover:bg-white/10"
+                        )}
+                        aria-expanded={isMobileServicesOpen}
                       >
                         {item.label}
-                        <ChevronDown className={cn("h-4 w-4 transition-transform", isServicesOpen && "rotate-180")} />
+                        <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isMobileServicesOpen && "rotate-180")} />
                       </button>
-                      {isServicesOpen && (
-                        <div className="pl-2 mt-2 space-y-1">
+                      {isMobileServicesOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-2 mt-2 space-y-1 overflow-hidden"
+                        >
                           {item.dropdown.map((subItem) => (
                             subItem.status === "available" ? (
                               <Link
                                 key={subItem.href}
                                 href={subItem.href}
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                className="block px-4 py-3 min-h-[48px] text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors touch-manipulation"
+                                className="flex items-center justify-between px-4 py-3 min-h-[48px] text-sm rounded-lg transition-colors touch-manipulation border-l-2 border-blue-400/50 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20"
                               >
-                                {subItem.label}
+                                <span className="font-medium">{subItem.label}</span>
+                                <div className="w-2 h-2 bg-blue-400 rounded-full shadow-sm shadow-blue-400/50"></div>
                               </Link>
                             ) : (
                               <div
@@ -362,16 +392,17 @@ function HeroSectionComponent() {
                                   handleServiceClick(subItem, e);
                                   setIsMobileMenuOpen(false);
                                 }}
-                                className="block px-4 py-3 min-h-[48px] text-sm text-white/50 rounded-lg hover:bg-white/10 cursor-pointer transition-colors touch-manipulation"
+                                className="flex items-center justify-between px-4 py-3 min-h-[48px] text-sm rounded-lg cursor-pointer transition-colors touch-manipulation border-l-2 border-gray-500/30 bg-gray-500/5 hover:bg-gray-500/10"
                               >
                                 <div className="flex items-center gap-2">
-                                  <span>{subItem.label}</span>
-                                  <Lock className="h-3 w-3" />
+                                  <span className="text-gray-400">{subItem.label}</span>
+                                  <Lock className="h-3 w-3 text-gray-500" />
                                 </div>
+                                <Bell className="h-3 w-3 text-gray-500" />
                               </div>
                             )
                           ))}
-                        </div>
+                        </motion.div>
                       )}
                     </div>
                   ) : (
