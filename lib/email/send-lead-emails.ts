@@ -110,11 +110,15 @@ export async function sendAdminNotificationEmail(
     );
 
     const resend = getResendClient();
-    console.log('[Email] Admin recipient:', EMAIL_CONFIG.adminEmail);
+    const adminEmail = EMAIL_CONFIG.adminEmail;
+
+    console.log('[Email] Admin recipient:', adminEmail);
+    console.log('[Email] Admin recipient length:', adminEmail.length);
+    console.log('[Email] Admin recipient JSON:', JSON.stringify(adminEmail));
 
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
-      to: EMAIL_CONFIG.adminEmail,
+      to: adminEmail,
       subject: `새로운 문의 - ${leadData.name}님 (${leadData.company || '개인'})`,
       html: emailHtml,
     });
