@@ -26,6 +26,8 @@ interface EmailResult {
 
 /**
  * Send confirmation email to customer
+ * Note: In development/testing without domain verification,
+ * sends to admin email with customer info in the message
  */
 export async function sendCustomerConfirmationEmail(
   leadData: LeadData
@@ -43,10 +45,22 @@ export async function sendCustomerConfirmationEmail(
     );
 
     const resend = getResendClient();
+
+    // In production with verified domain, send to actual customer
+    // Otherwise, send to admin email for testing
+    const isDomainVerified = process.env.NODE_ENV === 'production' &&
+                            process.env.EMAIL_DOMAIN_VERIFIED === 'true';
+    const recipientEmail = isDomainVerified ? leadData.email : EMAIL_CONFIG.adminEmail;
+
+    // Add note if sending to admin instead of customer
+    const subjectPrefix = !isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail
+      ? `[테스트: ${leadData.email}에게 전송될 내용] `
+      : '';
+
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
-      to: leadData.email,
-      subject: `문의 접수 완료 - ${leadData.name}님의 문의가 접수되었습니다`,
+      to: recipientEmail,
+      subject: `${subjectPrefix}문의 접수 완료 - ${leadData.name}님의 문의가 접수되었습니다`,
       html: emailHtml,
     });
 
@@ -56,6 +70,11 @@ export async function sendCustomerConfirmationEmail(
         success: false,
         error: error.message,
       };
+    }
+
+    // Log if email was redirected to admin
+    if (!isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail) {
+      console.log(`Customer email redirected to admin (${EMAIL_CONFIG.adminEmail}) - Original recipient: ${leadData.email}`);
     }
 
     return {
@@ -75,9 +94,7 @@ export async function sendCustomerConfirmationEmail(
  * Send notification email to admin
  */
 export async function sendAdminNotificationEmail(
-  leadData: LeadData,
-  priority: 'high' | 'medium' | 'low',
-  score: number
+  leadData: LeadData
 ): Promise<EmailResult> {
   try {
     const emailHtml = await render(
@@ -94,22 +111,14 @@ export async function sendAdminNotificationEmail(
         referenceUrl: leadData.reference_url || undefined,
         includeDataModule: leadData.include_data_module,
         includeMaintenanceModule: leadData.include_maintenance_module,
-        priority,
-        score,
       })
     );
-
-    const priorityEmojis = {
-      high: '🔥',
-      medium: '⚡',
-      low: '📝',
-    };
 
     const resend = getResendClient();
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: EMAIL_CONFIG.adminEmail,
-      subject: `${priorityEmojis[priority]} 새로운 문의 - ${leadData.name}님 (${leadData.company || '개인'})`,
+      subject: `새로운 문의 - ${leadData.name}님 (${leadData.company || '개인'})`,
       html: emailHtml,
     });
 
@@ -139,9 +148,7 @@ export async function sendAdminNotificationEmail(
  * Note: Sends emails sequentially to avoid Resend rate limits (2 requests/second)
  */
 export async function sendLeadEmails(
-  leadData: LeadData,
-  priority: 'high' | 'medium' | 'low',
-  score: number
+  leadData: LeadData
 ): Promise<{
   customerEmail: EmailResult;
   adminEmail: EmailResult;
@@ -153,7 +160,7 @@ export async function sendLeadEmails(
   await new Promise(resolve => setTimeout(resolve, 600));
 
   // Send admin email
-  const adminEmail = await sendAdminNotificationEmail(leadData, priority, score);
+  const adminEmail = await sendAdminNotificationEmail(leadData);
 
   return {
     customerEmail,

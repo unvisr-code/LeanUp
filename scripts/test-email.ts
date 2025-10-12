@@ -83,7 +83,7 @@ async function testEmailSystem() {
     };
 
     try {
-      const slackResult = await sendSlackNotification(testLeadForSlack, 'high', 95);
+      const slackResult = await sendSlackNotification(testLeadForSlack);
       if (slackResult.success) {
         console.log('   ✅ Slack notification sent successfully!');
       } else {
@@ -118,7 +118,7 @@ async function testEmailSystem() {
   };
 
   try {
-    const emailResults = await sendLeadEmails(testLeadData, 'high', 90);
+    const emailResults = await sendLeadEmails(testLeadData);
 
     console.log('   Customer Email:');
     if (emailResults.customerEmail.success) {
@@ -151,7 +151,6 @@ async function testEmailSystem() {
   if (process.env.SLACK_WEBHOOK_URL) {
     console.log('💬 Check your Slack channel:');
     console.log('   You should see a test notification with:');
-    console.log('   - 🔥 High priority badge');
     console.log('   - Customer and project information');
     console.log('   - Rich formatted message');
     console.log('');

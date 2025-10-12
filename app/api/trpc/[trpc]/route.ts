@@ -2,6 +2,7 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { type NextRequest } from "next/server";
 import { appRouter } from "@/server/api/root";
 import { createTRPCContext } from "@/server/api/trpc";
+import superjson from "superjson";
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
@@ -9,6 +10,7 @@ const handler = (req: NextRequest) =>
     req,
     router: appRouter,
     createContext: () => createTRPCContext({ headers: req.headers }),
+    transformer: superjson,
   });
 
 export { handler as GET, handler as POST };

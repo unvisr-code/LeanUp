@@ -25,8 +25,6 @@ interface AdminNotificationEmailProps {
   referenceUrl?: string;
   includeDataModule: boolean;
   includeMaintenanceModule: boolean;
-  priority: 'high' | 'medium' | 'low';
-  score: number;
 }
 
 const budgetLabels: Record<string, string> = {
@@ -45,18 +43,6 @@ const timelineLabels: Record<string, string> = {
   'over-3month': '3개월 이후',
 };
 
-const priorityStyles: Record<string, any> = {
-  high: { backgroundColor: '#fee2e2', color: '#dc2626', borderColor: '#dc2626' },
-  medium: { backgroundColor: '#fef3c7', color: '#d97706', borderColor: '#d97706' },
-  low: { backgroundColor: '#e0e7ff', color: '#4f46e5', borderColor: '#4f46e5' },
-};
-
-const priorityLabels: Record<string, string> = {
-  high: '높음 🔥',
-  medium: '보통 ⚡',
-  low: '낮음 📝',
-};
-
 export default function AdminNotificationEmail({
   leadId,
   name,
@@ -70,24 +56,14 @@ export default function AdminNotificationEmail({
   referenceUrl,
   includeDataModule,
   includeMaintenanceModule,
-  priority,
-  score,
 }: AdminNotificationEmailProps) {
-  const priorityStyle = priorityStyles[priority];
-
   return (
     <Html>
       <Head />
-      <Preview>🔔 새로운 문의 - {name}님 ({company || '개인'}) | 우선순위: {priorityLabels[priority]}</Preview>
+      <Preview>🔔 새로운 문의 - {name}님 ({company || '개인'})</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>🔔 새로운 문의가 접수되었습니다</Heading>
-
-          <Section style={{...priorityBadge, ...priorityStyle}}>
-            <Text style={priorityText}>
-              우선순위: <strong>{priorityLabels[priority]}</strong> (점수: {score})
-            </Text>
-          </Section>
 
           <Section style={infoBox}>
             <Text style={sectionTitle}>👤 고객 정보</Text>
@@ -196,20 +172,6 @@ const h1 = {
   fontWeight: 'bold',
   margin: '40px 0',
   padding: '0 40px',
-};
-
-const priorityBadge = {
-  borderRadius: '8px',
-  margin: '0 40px 24px',
-  padding: '16px 24px',
-  border: '2px solid',
-};
-
-const priorityText = {
-  fontSize: '16px',
-  fontWeight: 'bold',
-  margin: 0,
-  textAlign: 'center' as const,
 };
 
 const infoBox = {

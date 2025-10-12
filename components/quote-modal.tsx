@@ -52,8 +52,11 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
   const [currentStep, setCurrentStep] = useState(1);
 
   const createLead = api.lead.create.useMutation({
-    onSuccess: () => {
-      showToast("견적 요청이 성공적으로 접수되었습니다. 24시간 이내에 연락드리겠습니다.", "success");
+    onSuccess: (data) => {
+      // Show success message
+      showToast("✅ 견적 요청이 성공적으로 접수되었습니다!\n24시간 이내에 연락드리겠습니다.", "success");
+
+      // Reset form
       setFormData({
         name: "",
         email: "",
@@ -69,12 +72,39 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
         confirmed: false,
       });
       setCurrentStep(1);
-      // Reset confirmed state for next time
-      setFormData(prev => ({ ...prev, confirmed: false }));
-      onClose();
+
+      // Close modal after a short delay so user can see the success message
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+
+      console.log("Lead created successfully:", data.leadId);
     },
-    onError: () => {
-      showToast("견적 요청 중 오류가 발생했습니다. 다시 시도해주세요.", "error");
+    onError: (error: any) => {
+      console.error("Lead creation error:", error);
+
+      // Parse Zod validation errors
+      if (error.data?.zodError?.fieldErrors) {
+        const fields = Object.keys(error.data.zodError.fieldErrors);
+        const fieldNames = fields.map(f => {
+          const nameMap: Record<string, string> = {
+            name: "이름",
+            email: "이메일",
+            phone: "연락처",
+            company: "회사명",
+            budget: "예산",
+            timeline: "일정",
+            requirements: "프로젝트 설명",
+            referenceUrl: "참고 사이트",
+            industry: "업종",
+          };
+          return nameMap[f] || f;
+        });
+        showToast(`❌ 입력 오류: ${fieldNames.join(", ")}를 확인해주세요`, "error");
+      } else {
+        const errorMessage = error.message || "견적 요청 중 오류가 발생했습니다";
+        showToast(`❌ ${errorMessage}\n다시 시도해주세요.`, "error");
+      }
     }
   });
 
@@ -83,11 +113,24 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
     setIsSubmitting(true);
 
     try {
-      await createLead.mutateAsync({
-        ...formData,
+      // Clean up form data - convert empty strings to undefined
+      const cleanData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        company: formData.company || undefined,
         budget: formData.budget || undefined,
         timeline: formData.timeline || undefined,
-      });
+        requirements: formData.requirements || undefined,
+        referenceUrl: formData.referenceUrl || undefined,
+        industry: formData.industry || undefined,
+        includeDataModule: formData.includeDataModule,
+        includeMaintenanceModule: formData.includeMaintenanceModule,
+      };
+
+      await createLead.mutateAsync(cleanData);
+    } catch (error) {
+      console.error("Form submission error:", error);
     } finally {
       setIsSubmitting(false);
     }

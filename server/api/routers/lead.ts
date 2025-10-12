@@ -10,13 +10,17 @@ export const leadRouter = createTRPCRouter({
       z.object({
         name: z.string().min(1, "이름을 입력해주세요"),
         email: z.string().email("올바른 이메일을 입력해주세요"),
-        phone: z.string().optional(),
-        company: z.string().optional(),
-        budget: z.enum(["under-500", "500-1000", "1000-3000", "3000-5000", "over-5000"]).optional(),
-        timeline: z.enum(["asap", "1month", "2month", "3month", "over-3month"]).optional(),
-        requirements: z.string().optional(),
-        referenceUrl: z.string().url().optional().or(z.literal("")),
-        industry: z.string().optional(),
+        phone: z.string().optional().transform(val => val === "" ? undefined : val),
+        company: z.string().optional().transform(val => val === "" ? undefined : val),
+        budget: z.enum(["under-500", "500-1000", "1000-3000", "3000-5000", "over-5000"]).optional()
+          .or(z.literal(""))
+          .transform(val => val === "" ? undefined : val),
+        timeline: z.enum(["asap", "1month", "2month", "3month", "over-3month"]).optional()
+          .or(z.literal(""))
+          .transform(val => val === "" ? undefined : val),
+        requirements: z.string().optional().transform(val => val === "" ? undefined : val),
+        referenceUrl: z.string().optional().transform(val => val === "" ? undefined : val).pipe(z.string().url().optional()),
+        industry: z.string().optional().transform(val => val === "" ? undefined : val),
         includeDataModule: z.boolean().default(false),
         includeMaintenanceModule: z.boolean().default(false),
       })
@@ -51,29 +55,11 @@ export const leadRouter = createTRPCRouter({
           throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다.');
         }
 
-        // Calculate lead score and priority
-        let score = 50; // 기본 점수
-
-        // 예산에 따른 점수
-        if (input.budget === "over-5000") score += 20;
-        else if (input.budget === "3000-5000") score += 15;
-        else if (input.budget === "1000-3000") score += 10;
-
-        // 타임라인에 따른 점수
-        if (input.timeline === "asap") score += 10;
-        else if (input.timeline === "1month") score += 8;
-
-        // 추가 모듈 선택 점수
-        if (input.includeDataModule) score += 10;
-        if (input.includeMaintenanceModule) score += 10;
-
-        const priority = score >= 80 ? "high" : score >= 60 ? "medium" : "low";
-
         // Send notifications (emails + Slack)
         // Run in parallel for better performance
         const [emailResults, slackResult] = await Promise.all([
-          sendLeadEmails(lead, priority, score),
-          sendSlackNotification(lead, priority, score),
+          sendLeadEmails(lead),
+          sendSlackNotification(lead),
         ]);
 
         // Log email results
@@ -117,37 +103,6 @@ export const leadRouter = createTRPCRouter({
             : "문의 접수 중 오류가 발생했습니다. 다시 시도해주세요."
         );
       }
-    }),
-
-  calculateScore: publicProcedure
-    .input(
-      z.object({
-        budget: z.string().optional(),
-        timeline: z.string().optional(),
-        includeDataModule: z.boolean(),
-        includeMaintenanceModule: z.boolean(),
-      })
-    )
-    .query(({ input }) => {
-      let score = 50; // 기본 점수
-
-      // 예산에 따른 점수
-      if (input.budget === "over-5000") score += 20;
-      else if (input.budget === "3000-5000") score += 15;
-      else if (input.budget === "1000-3000") score += 10;
-
-      // 타임라인에 따른 점수
-      if (input.timeline === "asap") score += 10;
-      else if (input.timeline === "1month") score += 8;
-
-      // 추가 모듈 선택 점수
-      if (input.includeDataModule) score += 10;
-      if (input.includeMaintenanceModule) score += 10;
-
-      return {
-        score,
-        priority: score >= 80 ? "high" : score >= 60 ? "medium" : "low",
-      };
     }),
 
   // Get all leads (admin function)

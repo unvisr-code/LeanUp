@@ -40,31 +40,11 @@ const timelineLabels: Record<string, string> = {
   'over-3month': '3개월 이후',
 };
 
-const priorityEmojis = {
-  high: '🔥',
-  medium: '⚡',
-  low: '📝',
-};
-
-const priorityLabels = {
-  high: '높음',
-  medium: '보통',
-  low: '낮음',
-};
-
-const priorityColors: Record<string, string> = {
-  high: '#dc2626',    // Red
-  medium: '#d97706',  // Orange
-  low: '#4f46e5',     // Indigo
-};
-
 /**
  * Send Slack notification for new lead
  */
 export async function sendSlackNotification(
-  leadData: LeadData,
-  priority: 'high' | 'medium' | 'low',
-  score: number
+  leadData: LeadData
 ): Promise<SlackNotificationResult> {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
@@ -77,23 +57,19 @@ export async function sendSlackNotification(
   try {
     // Build Slack message with blocks for rich formatting
     const message = {
-      text: `${priorityEmojis[priority]} 새로운 문의 - ${leadData.name}님 (${leadData.company || '개인'})`,
+      text: `새로운 문의 - ${leadData.name}님 (${leadData.company || '개인'})`,
       blocks: [
         {
           type: 'header',
           text: {
             type: 'plain_text',
-            text: `${priorityEmojis[priority]} 새로운 문의가 접수되었습니다`,
+            text: `🔔 새로운 문의가 접수되었습니다`,
             emoji: true,
           },
         },
         {
           type: 'section',
           fields: [
-            {
-              type: 'mrkdwn',
-              text: `*우선순위:*\n${priorityEmojis[priority]} ${priorityLabels[priority]} (${score}점)`,
-            },
             {
               type: 'mrkdwn',
               text: `*Lead ID:*\n\`${leadData.id}\``,
@@ -205,13 +181,6 @@ export async function sendSlackNotification(
               text: `⏰ ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} | 신속한 응대를 부탁드립니다! 🚀`,
             },
           ],
-        },
-      ],
-      // Color bar on the side
-      attachments: [
-        {
-          color: priorityColors[priority],
-          blocks: [],
         },
       ],
     };
