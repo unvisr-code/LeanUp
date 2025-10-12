@@ -48,25 +48,16 @@ export async function sendCustomerConfirmationEmail(
 
     const resend = getResendClient();
 
-    // In production with verified domain, send to actual customer
-    // Otherwise, send to admin email for testing
-    const isDomainVerified = process.env.NODE_ENV === 'production' &&
-                            process.env.EMAIL_DOMAIN_VERIFIED === 'true';
-    const recipientEmail = isDomainVerified ? leadData.email : EMAIL_CONFIG.adminEmail;
+    // Send directly to customer's email
+    const recipientEmail = leadData.email;
 
-    console.log('[Email] Domain verified:', isDomainVerified);
-    console.log('[Email] Recipient:', recipientEmail);
+    console.log('[Email] Sending to customer:', recipientEmail);
     console.log('[Email] From:', EMAIL_CONFIG.from);
-
-    // Add note if sending to admin instead of customer
-    const subjectPrefix = !isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail
-      ? `[테스트: ${leadData.email}에게 전송될 내용] `
-      : '';
 
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: recipientEmail,
-      subject: `${subjectPrefix}문의 접수 완료 - ${leadData.name}님의 문의가 접수되었습니다`,
+      subject: `문의 접수 완료 - ${leadData.name}님의 문의가 접수되었습니다`,
       html: emailHtml,
     });
 
@@ -78,12 +69,7 @@ export async function sendCustomerConfirmationEmail(
       };
     }
 
-    // Log if email was redirected to admin
-    if (!isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail) {
-      console.log(`[Email] Customer email redirected to admin (${EMAIL_CONFIG.adminEmail}) - Original recipient: ${leadData.email}`);
-    }
-
-    console.log('[Email] Customer email sent successfully, ID:', data?.id);
+    console.log('[Email] Customer email sent successfully to', recipientEmail, '- ID:', data?.id);
     return {
       success: true,
       messageId: data?.id,

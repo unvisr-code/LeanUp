@@ -27,12 +27,9 @@ function getResendClient(): Resend {
 
 // Email configuration
 export const EMAIL_CONFIG = {
-  // Use Resend's onboarding domain for development/testing
-  // Switch to your verified domain (noreply@leanup.kr) after domain verification
-  from: process.env.NODE_ENV === 'production' && process.env.EMAIL_DOMAIN_VERIFIED === 'true'
-    ? 'LeanUP <noreply@leanup.kr>'
-    : 'LeanUP <onboarding@resend.dev>',
-  adminEmail: process.env.ADMIN_EMAIL || 'admin@leanup.kr',
+  // Use verified domain for all emails
+  from: 'LeanUP <noreply@leanup.kr>',
+  adminEmail: process.env.ADMIN_EMAIL || 'contact@leanup.kr',
 } as const;
 
 export default getResendClient;
