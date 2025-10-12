@@ -19,12 +19,14 @@ export const leadRouter = createTRPCRouter({
           .or(z.literal(""))
           .transform(val => val === "" ? undefined : val),
         requirements: z.string().optional().transform(val => val === "" ? undefined : val),
-        referenceUrl: z.string().optional()
-          .transform(val => val === "" ? undefined : val)
+        referenceUrl: z
+          .string()
+          .optional()
           .refine(
-            (val) => !val || z.string().url().safeParse(val).success,
+            (val) => !val || val === "" || z.string().url().safeParse(val).success,
             { message: "올바른 URL 형식을 입력해주세요" }
-          ),
+          )
+          .transform(val => val === "" ? undefined : val),
         industry: z.string().optional().transform(val => val === "" ? undefined : val),
         includeDataModule: z.boolean().default(false),
         includeMaintenanceModule: z.boolean().default(false),
