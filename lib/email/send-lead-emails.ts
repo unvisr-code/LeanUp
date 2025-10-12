@@ -1,5 +1,5 @@
 import { render } from '@react-email/components';
-import resend, { EMAIL_CONFIG } from './resend';
+import getResendClient, { EMAIL_CONFIG } from './resend';
 import CustomerConfirmationEmail from '@/emails/customer-confirmation';
 import AdminNotificationEmail from '@/emails/admin-notification';
 
@@ -42,6 +42,7 @@ export async function sendCustomerConfirmationEmail(
       })
     );
 
+    const resend = getResendClient();
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: leadData.email,
@@ -104,6 +105,7 @@ export async function sendAdminNotificationEmail(
       low: '📝',
     };
 
+    const resend = getResendClient();
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: EMAIL_CONFIG.adminEmail,

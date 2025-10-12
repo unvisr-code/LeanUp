@@ -16,7 +16,7 @@ import { resolve } from 'path';
 config({ path: resolve(process.cwd(), '.env.local') });
 
 // Now import modules that depend on environment variables
-import resend, { EMAIL_CONFIG } from '../lib/email/resend';
+import getResendClient, { EMAIL_CONFIG } from '../lib/email/resend';
 import { sendLeadEmails } from '../lib/email/send-lead-emails';
 import { sendSlackNotification } from '../lib/slack/send-slack-notification';
 
@@ -40,6 +40,7 @@ async function testEmailSystem() {
   // Step 2: Test Resend API connection
   console.log('2️⃣ Testing Resend API connection...');
   try {
+    const resend = getResendClient();
     const testResult = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: EMAIL_CONFIG.adminEmail,

@@ -1,7 +1,27 @@
 import { Resend } from 'resend';
 
-// Initialize Resend client
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy initialization to avoid issues during build time
+let resendInstance: Resend | null = null;
+
+/**
+ * Get Resend client instance
+ * Uses lazy initialization to ensure environment variables are available at runtime
+ */
+function getResendClient(): Resend {
+  if (!resendInstance) {
+    const apiKey = process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      throw new Error(
+        'RESEND_API_KEY is not configured. Please set it in your environment variables.'
+      );
+    }
+
+    resendInstance = new Resend(apiKey);
+  }
+
+  return resendInstance;
+}
 
 // Email configuration
 export const EMAIL_CONFIG = {
@@ -13,4 +33,4 @@ export const EMAIL_CONFIG = {
   adminEmail: process.env.ADMIN_EMAIL || 'admin@leanup.kr',
 } as const;
 
-export default resend;
+export default getResendClient;
