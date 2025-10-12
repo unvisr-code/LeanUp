@@ -136,7 +136,7 @@ export default function AdminNotificationEmail({
           <Hr style={hr} />
 
           <Text style={footer}>
-            LeanUP Admin System<br />
+            LeanUp Admin System<br />
             자동 발송된 메일입니다.
           </Text>
         </Container>
@@ -156,6 +156,7 @@ const container = {
   padding: '20px 0 48px',
   marginBottom: '64px',
   maxWidth: '600px',
+  width: '100%',
 };
 
 const h1 = {
@@ -164,6 +165,7 @@ const h1 = {
   fontWeight: 'bold',
   margin: '40px 0',
   padding: '0 40px',
+  textAlign: 'center' as const,
 };
 
 const infoBox = {

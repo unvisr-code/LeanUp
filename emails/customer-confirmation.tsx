@@ -50,12 +50,12 @@ export default function CustomerConfirmationEmail({
   return (
     <Html>
       <Head />
-      <Preview>LeanUP 문의 접수 완료 - {name}님의 문의가 접수되었습니다</Preview>
+      <Preview>LeanUp 문의 접수 완료 - {name}님의 문의가 접수되었습니다</Preview>
       <Body style={main}>
         {/* Gradient Header */}
         <Section style={headerSection}>
           <Container style={headerContainer}>
-            <Text style={logoText}>LeanUP</Text>
+            <Text style={logoText}>LeanUp</Text>
           </Container>
         </Section>
 
@@ -77,7 +77,7 @@ export default function CustomerConfirmationEmail({
               안녕하세요, <span style={highlightName}>{name}</span>님!
             </Text>
             <Text style={text}>
-              LeanUP에 문의해 주셔서 감사합니다. 전문 담당자가 신속하게 검토하여 최적의 솔루션을 제안해 드리겠습니다.
+              LeanUp에 문의해 주셔서 감사합니다. 전문 담당자가 신속하게 검토하여 최적의 솔루션을 제안해 드리겠습니다.
             </Text>
           </Section>
 
@@ -182,7 +182,7 @@ export default function CustomerConfirmationEmail({
 
           {/* Footer */}
           <Section style={footerSection}>
-            <Text style={footerBrand}>LeanUP</Text>
+            <Text style={footerBrand}>LeanUp</Text>
             <Text style={footer}>
               웹사이트 제작 + 데이터 추적 + 온보딩까지
             </Text>
@@ -268,7 +268,7 @@ const checkmarkCircle = {
   borderRadius: '50%',
   background: colors.gradient,
   margin: '0 auto 24px',
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   boxShadow: `0 10px 25px ${colors.shadow}`,
@@ -355,6 +355,7 @@ const infoColumn = {
   backgroundColor: colors.surface,
   borderRadius: '12px',
   margin: '4px',
+  verticalAlign: 'top' as const,
 };
 
 const infoLabel = {
@@ -423,12 +424,13 @@ const timelineIcon = {
   borderRadius: '50%',
   backgroundColor: colors.surfaceAlt,
   color: colors.textSecondary,
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   fontSize: '14px',
   fontWeight: '700',
   border: `2px solid ${colors.border}`,
+  margin: '0',
 };
 
 const timelineIconActive = {
