@@ -22,11 +22,14 @@ export const leadRouter = createTRPCRouter({
         referenceUrl: z
           .string()
           .optional()
-          .refine(
-            (val) => !val || val === "" || z.string().url().safeParse(val).success,
-            { message: "올바른 URL 형식을 입력해주세요" }
-          )
-          .transform(val => val === "" ? undefined : val),
+          .transform(val => {
+            if (!val || val === "") return undefined;
+            // Add https:// if no protocol is specified
+            if (!/^https?:\/\//i.test(val)) {
+              return `https://${val}`;
+            }
+            return val;
+          }),
         industry: z.string().optional().transform(val => val === "" ? undefined : val),
         includeDataModule: z.boolean().default(false),
         includeMaintenanceModule: z.boolean().default(false),
