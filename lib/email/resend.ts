@@ -1,0 +1,16 @@
+import { Resend } from 'resend';
+
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Email configuration
+export const EMAIL_CONFIG = {
+  // Use Resend's onboarding domain for development/testing
+  // Switch to your verified domain (noreply@leanup.kr) after domain verification
+  from: process.env.NODE_ENV === 'production' && process.env.EMAIL_DOMAIN_VERIFIED === 'true'
+    ? 'LeanUP <noreply@leanup.kr>'
+    : 'LeanUP <onboarding@resend.dev>',
+  adminEmail: process.env.ADMIN_EMAIL || 'admin@leanup.kr',
+} as const;
+
+export default resend;

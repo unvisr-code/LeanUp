@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { supabaseAdmin } from "@/lib/supabase";
+import { sendLeadEmails } from "@/lib/email/send-lead-emails";
+import { sendSlackNotification } from "@/lib/slack/send-slack-notification";
 
 export const leadRouter = createTRPCRouter({
   create: publicProcedure
@@ -49,13 +51,50 @@ export const leadRouter = createTRPCRouter({
           throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다.');
         }
 
+        // Calculate lead score and priority
+        let score = 50; // 기본 점수
 
-        // TODO: 이메일 알림 서비스 연동
-        // await sendEmail({
-        //   to: 'admin@leanup.kr',
-        //   subject: `새로운 문의: ${input.name}`,
-        //   data: lead,
-        // });
+        // 예산에 따른 점수
+        if (input.budget === "over-5000") score += 20;
+        else if (input.budget === "3000-5000") score += 15;
+        else if (input.budget === "1000-3000") score += 10;
+
+        // 타임라인에 따른 점수
+        if (input.timeline === "asap") score += 10;
+        else if (input.timeline === "1month") score += 8;
+
+        // 추가 모듈 선택 점수
+        if (input.includeDataModule) score += 10;
+        if (input.includeMaintenanceModule) score += 10;
+
+        const priority = score >= 80 ? "high" : score >= 60 ? "medium" : "low";
+
+        // Send notifications (emails + Slack)
+        // Run in parallel for better performance
+        const [emailResults, slackResult] = await Promise.all([
+          sendLeadEmails(lead, priority, score),
+          sendSlackNotification(lead, priority, score),
+        ]);
+
+        // Log email results
+        if (emailResults.customerEmail.success) {
+          console.log('Customer email sent:', emailResults.customerEmail.messageId);
+        } else {
+          console.error('Customer email failed:', emailResults.customerEmail.error);
+        }
+
+        if (emailResults.adminEmail.success) {
+          console.log('Admin email sent:', emailResults.adminEmail.messageId);
+        } else {
+          console.error('Admin email failed:', emailResults.adminEmail.error);
+        }
+
+        // Log Slack notification result
+        if (slackResult.success) {
+          console.log('Slack notification sent successfully');
+        } else if (slackResult.error) {
+          console.error('Slack notification failed:', slackResult.error);
+        }
 
         // TODO: CRM API 연동
         // await crm.createLead(lead);
@@ -64,6 +103,11 @@ export const leadRouter = createTRPCRouter({
           success: true,
           message: "문의가 성공적으로 접수되었습니다. 곧 연락드리겠습니다.",
           leadId: lead.id,
+          emailSent: {
+            customer: emailResults.customerEmail.success,
+            admin: emailResults.adminEmail.success,
+          },
+          slackSent: slackResult.success,
         };
       } catch (error) {
         console.error('Lead creation error:', error);
