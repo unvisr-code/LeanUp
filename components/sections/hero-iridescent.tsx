@@ -14,7 +14,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center">
+    <section className="relative min-h-[85vh] md:min-h-screen overflow-hidden flex items-center py-12 md:py-0">
       {/* Iridescent background */}
       <div className="absolute inset-0 iridescent-bg" />
 
@@ -34,13 +34,13 @@ export function HeroSection() {
       />
 
       <div className="container relative z-10">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-4xl px-4">
           {/* Simple badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 flex justify-center"
+            className="mb-6 md:mb-8 flex justify-center"
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm font-medium">
               <span className="relative flex h-2 w-2">
@@ -56,21 +56,17 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="mb-6 text-center"
+            className="mb-5 md:mb-6 text-center"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-              <span className="block text-white mb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+              <span className="block text-white mb-2 md:mb-3">
                 합리적인 가격으로 만드는
               </span>
               {mounted && (
                 <TypeAnimation
                   sequence={[
                     "웹사이트 제작",
-                    2000,
-                    "데이터 추적 설정",
-                    2000,
-                    "온보딩 지원",
-                    2000,
+                    2500,
                     "원스톱 솔루션",
                     3000,
                   ]}
@@ -88,10 +84,10 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="mb-10 text-center text-lg text-white/90 max-w-2xl mx-auto"
+            className="mb-8 md:mb-10 text-center text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed"
           >
             전문가 퀄리티 · 스타트업 속도 · 합리적 비용
-            <br />
+            <br className="hidden sm:block" />
             <span className="text-white/70">LeanUp과 함께 성장의 첫걸음을 시작하세요</span>
           </motion.p>
 
@@ -100,11 +96,11 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mb-8 md:mb-12"
           >
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center px-7 py-3.5 bg-white text-blue-600 rounded-xl font-semibold text-base transition-all hover:bg-blue-50 hover:shadow-lg hover:shadow-white/25 hover:-translate-y-0.5"
+              className="group inline-flex items-center justify-center px-6 md:px-7 py-3 md:py-3.5 min-h-[48px] bg-white text-blue-600 rounded-xl font-semibold text-base transition-all hover:bg-blue-50 hover:shadow-lg hover:shadow-white/25 hover:-translate-y-0.5 active:scale-95 touch-manipulation"
             >
               무료 상담 신청
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -112,18 +108,18 @@ export function HeroSection() {
 
             <Link
               href="/portfolio"
-              className="inline-flex items-center justify-center px-7 py-3.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-xl font-medium text-base transition-all hover:bg-white/20 hover:border-white/30"
+              className="inline-flex items-center justify-center px-6 md:px-7 py-3 md:py-3.5 min-h-[48px] bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-xl font-medium text-base transition-all hover:bg-white/20 hover:border-white/30 active:scale-95 touch-manipulation"
             >
               포트폴리오 보기
             </Link>
           </motion.div>
 
-          {/* Simple feature cards */}
+          {/* Simple feature cards - 모바일에서 2개만 표시 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto"
+            className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto"
           >
             {[
               {
@@ -132,14 +128,15 @@ export function HeroSection() {
                 desc: "2주내 MVP 완성"
               },
               {
-                icon: "💎",
-                title: "합리적 가격",
-                desc: "스타트업 맞춤형"
+                icon: "🎯",
+                title: "원스톱",
+                desc: "기획부터 런칭"
               },
               {
-                icon: "🎯",
-                title: "원스톱 솔루션",
-                desc: "기획부터 런칭까지"
+                icon: "💎",
+                title: "합리적 가격",
+                desc: "스타트업 맞춤형",
+                hideMobile: true
               },
             ].map((feature, index) => (
               <motion.div
@@ -154,31 +151,34 @@ export function HeroSection() {
                   y: -4,
                   transition: { duration: 0.2 }
                 }}
-                className="group relative bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 transition-all hover:bg-white/15 hover:border-white/30 hover:shadow-xl hover:shadow-white/5"
+                className={`group relative bg-white/10 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/20 transition-all hover:bg-white/15 hover:border-white/30 hover:shadow-xl hover:shadow-white/5 active:scale-95 touch-manipulation ${feature.hideMobile ? 'hidden md:block' : ''}`}
               >
-                <div className="text-3xl mb-3">{feature.icon}</div>
-                <h3 className="text-base font-semibold text-white mb-1">
+                <div className="text-2xl md:text-3xl mb-2 md:mb-3">{feature.icon}</div>
+                <h3 className="text-sm md:text-base font-semibold text-white mb-0.5 md:mb-1">
                   {feature.title}
                 </h3>
-                <p className="text-sm text-white/70">{feature.desc}</p>
+                <p className="text-xs md:text-sm text-white/70">{feature.desc}</p>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Trust indicators */}
+          {/* Trust indicators - 모바일에서 하나로 요약 */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.2 }}
-            className="mt-16 flex flex-wrap justify-center gap-8 text-sm text-white/60"
+            className="mt-8 md:mt-12 flex flex-wrap justify-center gap-4 md:gap-8 text-xs md:text-sm text-white/60 px-4"
           >
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 md:hidden">
+              <span className="text-white">✓</span> 10+ 프로젝트 · 98% 만족도 · 24시간 응답
+            </span>
+            <span className="hidden md:flex items-center gap-2">
               <span className="text-white">✓</span> 10+ 프로젝트 완료
             </span>
-            <span className="flex items-center gap-2">
+            <span className="hidden md:flex items-center gap-2">
               <span className="text-white">✓</span> 98% 고객 만족도
             </span>
-            <span className="flex items-center gap-2">
+            <span className="hidden md:flex items-center gap-2">
               <span className="text-white">✓</span> 24시간 응답
             </span>
           </motion.div>

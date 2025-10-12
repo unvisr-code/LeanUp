@@ -9,6 +9,7 @@ const features: Array<{
   title: string;
   description: string;
   align: "left" | "right";
+  hideMobile?: boolean;
 }> = [
   {
     // 전문적인 3D 로켓 - 블루 톤
@@ -51,7 +52,7 @@ const features: Array<{
     ),
     keyword: "빠른 납기",
     title: "빠르고 합리적으로 만들어요",
-    description: "템플릿과 AI를 활용하여 1주일 내외에 웹사이트 MVP를 완성합니다. 불필요한 비용 없이 핵심 기능에 집중합니다.",
+    description: "1주일 내 MVP 완성. 핵심 기능에 집중합니다.",
     align: "left",
   },
   {
@@ -99,7 +100,7 @@ const features: Array<{
     ),
     keyword: "데이터 분석",
     title: "데이터 분석도 함께 세팅해요",
-    description: "Google Analytics 4, Google Tag Manager, UTM 기본 세팅과 퍼널 대시보드를 제공합니다. 데이터 기반 의사결정을 시작하세요.",
+    description: "GA4, GTM, UTM 기본 세팅 제공. 데이터 기반 의사결정을 시작하세요.",
     align: "right",
   },
   {
@@ -146,58 +147,9 @@ const features: Array<{
     ),
     keyword: "유지보수",
     title: "유지보수도 쉽게 할 수 있어요",
-    description: "GUI 기반의 시각화된 피드백과 프롬프트 입력으로 간단한 수정이 가능합니다. 커뮤니케이션 비용을 줄입니다.",
+    description: "GUI 피드백으로 간단 수정 가능. 소통 비용을 줄입니다.",
     align: "left",
-  },
-  {
-    // 전문적인 3D 모바일/소통 - 블루 톤
-    iconSvg: (
-      <svg viewBox="0 0 100 100" className="w-full h-full">
-        <defs>
-          <linearGradient id="phone3d" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#E2E8F0" />
-            <stop offset="30%" stopColor="#CBD5E1" />
-            <stop offset="70%" stopColor="#60A5FA" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </linearGradient>
-          <linearGradient id="screen3d" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#1E293B" />
-            <stop offset="50%" stopColor="#0F172A" />
-            <stop offset="100%" stopColor="#020617" />
-          </linearGradient>
-          <radialGradient id="notification3d">
-            <stop offset="0%" stopColor="#DBEAFE" />
-            <stop offset="30%" stopColor="#93C5FD" />
-            <stop offset="100%" stopColor="#3B82F6" />
-          </radialGradient>
-        </defs>
-        <ellipse cx="52" cy="85" rx="18" ry="4" fill="#000000" opacity="0.15" />
-        <rect x="35" y="15" width="30" height="55" rx="6" fill="url(#phone3d)" stroke="#3B82F6" strokeWidth="1" />
-        <rect x="38" y="22" width="24" height="35" rx="2" fill="url(#screen3d)" />
-        <circle cx="50" cy="63" r="3" fill="#2563EB" />
-        <rect x="45" y="18" width="10" height="1.5" rx="0.75" fill="#60A5FA" />
-        <circle cx="55" cy="19" r="1.5" fill="#3B82F6" />
-        <rect x="40" y="26" width="16" height="3" rx="1.5" fill="url(#notification3d)" />
-        <rect x="40" y="31" width="18" height="3" rx="1.5" fill="url(#notification3d)" opacity="0.8" />
-        <rect x="40" y="36" width="20" height="3" rx="1.5" fill="url(#notification3d)" opacity="0.6" />
-        <text x="41" y="28" fontSize="2" fill="#F1F5F9" fontWeight="bold">12:34</text>
-        <rect x="56" y="24" width="4" height="2" rx="0.3" fill="none" stroke="#3B82F6" strokeWidth="0.3" />
-        <rect x="56.2" y="24.2" width="3.6" height="1.6" rx="0.2" fill="#60A5FA" />
-        <rect x="52" y="26" width="1" height="1" fill="#3B82F6" />
-        <rect x="53.5" y="25.5" width="1" height="1.5" fill="#60A5FA" />
-        <rect x="55" y="25" width="1" height="2" fill="#93C5FD" />
-        <rect x="36" y="16" width="2" height="20" fill="#FFFFFF" opacity="0.2" rx="1" />
-        <path d="M25 30 Q35 25 45 30" stroke="#60A5FA" strokeWidth="1.5" fill="none" opacity="0.6" />
-        <path d="M20 35 Q35 28 50 35" stroke="#3B82F6" strokeWidth="1.2" fill="none" opacity="0.8" />
-        <circle cx="75" cy="25" r="3" fill="url(#notification3d)" />
-        <circle cx="80" cy="35" r="2" fill="#60A5FA" opacity="0.8" />
-        <circle cx="85" cy="45" r="1.5" fill="#93C5FD" opacity="0.6" />
-      </svg>
-    ),
-    keyword: "실시간 공유",
-    title: "진행상황을 실시간으로 공유해요",
-    description: "단계 전환 시 자동 알림과 진행 현황을 실시간으로 공유합니다. 불필요한 회의 없이도 안심할 수 있습니다.",
-    align: "right",
+    hideMobile: true,
   },
 ];
 
@@ -240,20 +192,20 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
       <div
         className={`flex flex-col ${
           isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-        } items-center justify-center gap-6 md:gap-8 py-10 md:py-16 transition-all duration-700 ${
+        } items-center justify-center gap-4 md:gap-6 py-6 md:py-10 transition-all duration-700 ${
           isVisible
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-12"
         }`}
       >
-        {/* 아이콘 섹션 - 모바일 크기 증가 */}
+        {/* 아이콘 섹션 - 모바일 크기 축소 */}
         <div className="flex-shrink-0">
           <div
-            className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 transition-all duration-700 ${
+            className={`w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 transition-all duration-700 ${
               isVisible ? "scale-100" : "scale-75"
             }`}
             style={{
-              filter: "drop-shadow(0 12px 32px rgba(96, 165, 250, 0.3))",
+              filter: "drop-shadow(0 8px 24px rgba(96, 165, 250, 0.25))",
             }}
           >
             {feature.iconSvg}
@@ -263,19 +215,19 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
         {/* 텍스트 섹션 - 모바일 가독성 개선 */}
         <div className="flex-1 text-center lg:text-left max-w-md px-4">
           {/* 둥근 키워드 - 글래스모피즘 스타일 */}
-          <div className="mb-4 sm:mb-6">
-            <span className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm sm:text-base font-semibold">
+          <div className="mb-2 sm:mb-3 md:mb-4">
+            <span className="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-xs sm:text-sm font-semibold">
               {feature.keyword}
             </span>
           </div>
 
           {/* 메인 카피 - 반응형 크기 개선 */}
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3 leading-tight">
             {feature.title}
           </h3>
 
           {/* 서브 카피 - 모바일 가독성 개선 */}
-          <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -287,7 +239,7 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 function FeaturesSectionComponent() {
   return (
     <motion.section
-      className="relative py-16 sm:py-20 md:py-32 overflow-hidden"
+      className="relative py-12 sm:py-16 md:py-24 overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -300,17 +252,17 @@ function FeaturesSectionComponent() {
 
       <div className="container relative z-10 px-4 sm:px-6">
         {/* 헤더 - 모바일 최적화 */}
-        <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="mb-2 sm:mb-3 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
             이런 점이 특별해요
           </h2>
-          <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed px-4">
-            웹사이트 제작부터 데이터 추적, 유지보수까지 원스톱 솔루션
+          <p className="text-xs sm:text-sm md:text-base text-white/70 max-w-2xl mx-auto leading-relaxed px-4">
+            웹사이트 제작부터 데이터 추적까지 원스톱 솔루션
           </p>
         </div>
 
-        {/* 특징 목록 - 가운데 정렬 */}
-        <div className="flex flex-col items-center space-y-4">
+        {/* 특징 목록 - 가운데 정렬, 모바일에서 3번째 항목 숨김 */}
+        <div className="flex flex-col items-center space-y-2 md:space-y-4">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -318,6 +270,7 @@ function FeaturesSectionComponent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+              className={feature.hideMobile ? 'hidden lg:block w-full' : 'w-full'}
             >
               <FeatureItem feature={feature} index={index} />
             </motion.div>

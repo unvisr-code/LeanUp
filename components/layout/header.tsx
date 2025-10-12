@@ -75,7 +75,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-[120] w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container max-w-6xl flex h-12 items-center px-4">
+      <div className="container max-w-6xl flex h-14 md:h-12 items-center px-4">
         <Link href="/" className="flex items-center group">
           <div className="flex items-center gap-1.5">
             <div className="flex items-center justify-center w-7 h-7 bg-blue-600 rounded-lg shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">

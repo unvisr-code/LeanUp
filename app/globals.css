@@ -285,6 +285,28 @@
     font-size: 16px;
     line-height: 1.6;
   }
+
+  /* 모바일 섹션 간격 축소 */
+  section {
+    scroll-margin-top: 56px; /* 헤더 높이만큼 오프셋 */
+  }
+
+  /* 모바일 터치 피드백 강화 */
+  button:active:not(:disabled),
+  a:active,
+  [role="button"]:active:not(:disabled) {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* 모바일 스크롤 스냅 */
+  .mobile\:scroll-snap {
+    scroll-snap-type: y proximity;
+  }
+
+  .mobile\:scroll-snap > * {
+    scroll-snap-align: start;
+  }
 }
 
 /* Holographic effect */
