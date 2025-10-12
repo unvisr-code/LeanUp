@@ -106,14 +106,6 @@ export default function AdminNotificationEmail({
                 <strong>희망 일정:</strong> {timelineLabels[timeline] || timeline}
               </Text>
             )}
-
-            <Text style={infoItem}>
-              <strong>추가 모듈:</strong>
-            </Text>
-            <ul style={moduleList}>
-              <li>데이터 관리 모듈: {includeDataModule ? '✅ 포함' : '❌ 미포함'}</li>
-              <li>유지보수 모듈: {includeMaintenanceModule ? '✅ 포함' : '❌ 미포함'}</li>
-            </ul>
           </Section>
 
           {requirements && (

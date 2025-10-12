@@ -132,14 +132,6 @@ export async function sendSlackNotification(
               type: 'mrkdwn' as const,
               text: `*희망 일정:*\n${timelineLabels[leadData.timeline] || leadData.timeline}`,
             }] : []),
-            {
-              type: 'mrkdwn',
-              text: `*데이터 관리 모듈:*\n${leadData.include_data_module ? '✅ 포함' : '❌ 미포함'}`,
-            },
-            {
-              type: 'mrkdwn',
-              text: `*유지보수 모듈:*\n${leadData.include_maintenance_module ? '✅ 포함' : '❌ 미포함'}`,
-            },
           ],
         },
         ...(leadData.requirements ? [

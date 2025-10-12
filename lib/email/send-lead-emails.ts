@@ -33,6 +33,8 @@ export async function sendCustomerConfirmationEmail(
   leadData: LeadData
 ): Promise<EmailResult> {
   try {
+    console.log('[Email] Preparing customer confirmation email...');
+
     const emailHtml = await render(
       CustomerConfirmationEmail({
         name: leadData.name,
@@ -52,6 +54,10 @@ export async function sendCustomerConfirmationEmail(
                             process.env.EMAIL_DOMAIN_VERIFIED === 'true';
     const recipientEmail = isDomainVerified ? leadData.email : EMAIL_CONFIG.adminEmail;
 
+    console.log('[Email] Domain verified:', isDomainVerified);
+    console.log('[Email] Recipient:', recipientEmail);
+    console.log('[Email] From:', EMAIL_CONFIG.from);
+
     // Add note if sending to admin instead of customer
     const subjectPrefix = !isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail
       ? `[테스트: ${leadData.email}에게 전송될 내용] `
@@ -65,7 +71,7 @@ export async function sendCustomerConfirmationEmail(
     });
 
     if (error) {
-      console.error('Customer email error:', error);
+      console.error('[Email] Customer email error:', error);
       return {
         success: false,
         error: error.message,
@@ -74,15 +80,16 @@ export async function sendCustomerConfirmationEmail(
 
     // Log if email was redirected to admin
     if (!isDomainVerified && leadData.email !== EMAIL_CONFIG.adminEmail) {
-      console.log(`Customer email redirected to admin (${EMAIL_CONFIG.adminEmail}) - Original recipient: ${leadData.email}`);
+      console.log(`[Email] Customer email redirected to admin (${EMAIL_CONFIG.adminEmail}) - Original recipient: ${leadData.email}`);
     }
 
+    console.log('[Email] Customer email sent successfully, ID:', data?.id);
     return {
       success: true,
       messageId: data?.id,
     };
   } catch (error) {
-    console.error('Send customer email error:', error);
+    console.error('[Email] Send customer email error:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
@@ -97,6 +104,8 @@ export async function sendAdminNotificationEmail(
   leadData: LeadData
 ): Promise<EmailResult> {
   try {
+    console.log('[Email] Preparing admin notification email...');
+
     const emailHtml = await render(
       AdminNotificationEmail({
         leadId: leadData.id,
@@ -115,6 +124,8 @@ export async function sendAdminNotificationEmail(
     );
 
     const resend = getResendClient();
+    console.log('[Email] Admin recipient:', EMAIL_CONFIG.adminEmail);
+
     const { data, error } = await resend.emails.send({
       from: EMAIL_CONFIG.from,
       to: EMAIL_CONFIG.adminEmail,
@@ -123,19 +134,20 @@ export async function sendAdminNotificationEmail(
     });
 
     if (error) {
-      console.error('Admin email error:', error);
+      console.error('[Email] Admin email error:', error);
       return {
         success: false,
         error: error.message,
       };
     }
 
+    console.log('[Email] Admin email sent successfully, ID:', data?.id);
     return {
       success: true,
       messageId: data?.id,
     };
   } catch (error) {
-    console.error('Send admin email error:', error);
+    console.error('[Email] Send admin email error:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
