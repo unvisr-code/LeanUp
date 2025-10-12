@@ -12,11 +12,13 @@ function getResendClient(): Resend {
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
+      console.error('[Resend] RESEND_API_KEY is not configured');
       throw new Error(
         'RESEND_API_KEY is not configured. Please set it in your environment variables.'
       );
     }
 
+    console.log('[Resend] Resend client initialized successfully');
     resendInstance = new Resend(apiKey);
   }
 

@@ -19,7 +19,12 @@ export const leadRouter = createTRPCRouter({
           .or(z.literal(""))
           .transform(val => val === "" ? undefined : val),
         requirements: z.string().optional().transform(val => val === "" ? undefined : val),
-        referenceUrl: z.string().optional().transform(val => val === "" ? undefined : val).pipe(z.string().url().optional()),
+        referenceUrl: z.string().optional()
+          .transform(val => val === "" ? undefined : val)
+          .refine(
+            (val) => !val || z.string().url().safeParse(val).success,
+            { message: "올바른 URL 형식을 입력해주세요" }
+          ),
         industry: z.string().optional().transform(val => val === "" ? undefined : val),
         includeDataModule: z.boolean().default(false),
         includeMaintenanceModule: z.boolean().default(false),
@@ -27,6 +32,12 @@ export const leadRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
+        // Validate environment variables
+        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+          console.error('Missing Supabase configuration');
+          throw new Error('서버 설정 오류가 발생했습니다. 관리자에게 문의해주세요.');
+        }
+
         // Convert input to database format
         const leadData = {
           name: input.name,
@@ -44,6 +55,7 @@ export const leadRouter = createTRPCRouter({
         };
 
         // Save to Supabase
+        console.log('[Lead Creation] Saving to database...');
         const { data: lead, error } = await supabaseAdmin
           .from('leads')
           .insert(leadData)
@@ -51,12 +63,25 @@ export const leadRouter = createTRPCRouter({
           .single();
 
         if (error) {
-          console.error('Database error:', error);
-          throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다.');
+          console.error('[Lead Creation] Database error:', error);
+
+          // Provide specific error messages
+          if (error.code === 'PGRST116') {
+            throw new Error('데이터베이스 테이블을 찾을 수 없습니다. 관리자에게 문의해주세요.');
+          } else if (error.message.includes('permission')) {
+            throw new Error('데이터베이스 권한 오류가 발생했습니다. 관리자에게 문의해주세요.');
+          } else if (error.message.includes('connection')) {
+            throw new Error('데이터베이스 연결 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          }
+
+          throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
+
+        console.log('[Lead Creation] Database save successful, Lead ID:', lead.id);
 
         // Send notifications (emails + Slack)
         // Run in parallel for better performance
+        console.log('[Lead Creation] Sending notifications...');
         const [emailResults, slackResult] = await Promise.all([
           sendLeadEmails(lead),
           sendSlackNotification(lead),
@@ -64,26 +89,28 @@ export const leadRouter = createTRPCRouter({
 
         // Log email results
         if (emailResults.customerEmail.success) {
-          console.log('Customer email sent:', emailResults.customerEmail.messageId);
+          console.log('[Lead Creation] Customer email sent:', emailResults.customerEmail.messageId);
         } else {
-          console.error('Customer email failed:', emailResults.customerEmail.error);
+          console.warn('[Lead Creation] Customer email failed:', emailResults.customerEmail.error);
         }
 
         if (emailResults.adminEmail.success) {
-          console.log('Admin email sent:', emailResults.adminEmail.messageId);
+          console.log('[Lead Creation] Admin email sent:', emailResults.adminEmail.messageId);
         } else {
-          console.error('Admin email failed:', emailResults.adminEmail.error);
+          console.warn('[Lead Creation] Admin email failed:', emailResults.adminEmail.error);
         }
 
         // Log Slack notification result
         if (slackResult.success) {
-          console.log('Slack notification sent successfully');
+          console.log('[Lead Creation] Slack notification sent successfully');
         } else if (slackResult.error) {
-          console.error('Slack notification failed:', slackResult.error);
+          console.warn('[Lead Creation] Slack notification failed:', slackResult.error);
         }
 
         // TODO: CRM API 연동
         // await crm.createLead(lead);
+
+        console.log('[Lead Creation] Process completed successfully');
 
         return {
           success: true,
@@ -96,7 +123,17 @@ export const leadRouter = createTRPCRouter({
           slackSent: slackResult.success,
         };
       } catch (error) {
-        console.error('Lead creation error:', error);
+        console.error('[Lead Creation] Error:', error);
+
+        // Log detailed error in development mode
+        if (process.env.NODE_ENV === 'development') {
+          console.error('[Lead Creation] Detailed error:', {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            stack: error instanceof Error ? error.stack : undefined,
+            input: input,
+          });
+        }
+
         throw new Error(
           error instanceof Error
             ? error.message

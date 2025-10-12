@@ -4,6 +4,24 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
 
+// Validate environment variables
+if (!supabaseUrl) {
+  console.error('[Supabase] NEXT_PUBLIC_SUPABASE_URL is not configured');
+  throw new Error('NEXT_PUBLIC_SUPABASE_URL is required');
+}
+
+if (!supabaseAnonKey) {
+  console.error('[Supabase] NEXT_PUBLIC_SUPABASE_ANON_KEY is not configured');
+  throw new Error('NEXT_PUBLIC_SUPABASE_ANON_KEY is required');
+}
+
+if (!supabaseServiceKey) {
+  console.error('[Supabase] SUPABASE_SERVICE_ROLE_KEY is not configured');
+  throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
+}
+
+console.log('[Supabase] Supabase clients initialized successfully');
+
 // Client-side supabase instance
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 

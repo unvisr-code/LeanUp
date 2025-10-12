@@ -82,6 +82,11 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
     },
     onError: (error: any) => {
       console.error("Lead creation error:", error);
+      console.error("Error details:", {
+        message: error.message,
+        data: error.data,
+        shape: error.shape,
+      });
 
       // Parse Zod validation errors
       if (error.data?.zodError?.fieldErrors) {
@@ -100,10 +105,34 @@ function QuoteModalComponent({ isOpen, onClose }: QuoteModalProps) {
           };
           return nameMap[f] || f;
         });
-        showToast(`❌ 입력 오류: ${fieldNames.join(", ")}를 확인해주세요`, "error");
+
+        // Show first validation error message if available
+        const firstField = fields[0];
+        const firstError = error.data.zodError.fieldErrors[firstField]?.[0];
+        const errorDetail = firstError || `${fieldNames.join(", ")}를 확인해주세요`;
+
+        showToast(`❌ 입력 오류\n${errorDetail}`, "error");
       } else {
-        const errorMessage = error.message || "견적 요청 중 오류가 발생했습니다";
-        showToast(`❌ ${errorMessage}\n다시 시도해주세요.`, "error");
+        // Extract user-friendly error message
+        let errorMessage = "견적 요청 중 오류가 발생했습니다";
+
+        if (error.message) {
+          // Use the server error message if available
+          errorMessage = error.message;
+        } else if (error.data?.httpStatus === 500) {
+          errorMessage = "서버 오류가 발생했습니다";
+        } else if (error.data?.httpStatus === 401) {
+          errorMessage = "인증 오류가 발생했습니다";
+        } else if (error.data?.httpStatus === 403) {
+          errorMessage = "권한 오류가 발생했습니다";
+        }
+
+        // Add retry suggestion for recoverable errors
+        const retryHint = errorMessage.includes("연결") || errorMessage.includes("네트워크")
+          ? "\n잠시 후 다시 시도해주세요."
+          : "\n문제가 지속되면 관리자에게 문의해주세요.";
+
+        showToast(`❌ ${errorMessage}${retryHint}`, "error");
       }
     }
   });
