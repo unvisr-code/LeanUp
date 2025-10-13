@@ -50,12 +50,12 @@ export default function CustomerConfirmationEmail({
   return (
     <Html>
       <Head />
-      <Preview>LeanUp 문의 접수 완료 - {name}님의 문의가 접수되었습니다</Preview>
+      <Preview>LEANUP 문의 접수 완료 - {name}님의 문의가 접수되었습니다</Preview>
       <Body style={main}>
         {/* Gradient Header */}
         <Section style={headerSection}>
           <Container style={headerContainer}>
-            <Text style={logoText}>LeanUp</Text>
+            <Text style={logoText}>LEANUP</Text>
           </Container>
         </Section>
 
@@ -77,7 +77,7 @@ export default function CustomerConfirmationEmail({
               안녕하세요, <span style={highlightName}>{name}</span>님!
             </Text>
             <Text style={text}>
-              LeanUp에 문의해 주셔서 감사합니다. 전문 담당자가 신속하게 검토하여 최적의 솔루션을 제안해 드리겠습니다.
+              LEANUP에 문의해 주셔서 감사합니다. 전문 담당자가 신속하게 검토하여 최적의 솔루션을 제안해 드리겠습니다.
             </Text>
           </Section>
 
@@ -182,7 +182,7 @@ export default function CustomerConfirmationEmail({
 
           {/* Footer */}
           <Section style={footerSection}>
-            <Text style={footerBrand}>LeanUp</Text>
+            <Text style={footerBrand}>LEANUP</Text>
             <Text style={footer}>
               웹사이트 제작 + 데이터 추적 + 온보딩까지
             </Text>

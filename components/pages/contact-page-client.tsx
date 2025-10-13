@@ -144,7 +144,7 @@ export default function ContactPageClient() {
         </motion.section>
 
 
-        {/* Why LeanUp */}
+        {/* Why LEANUP */}
         <motion.section
           className="py-12"
           initial={{ opacity: 0 }}
@@ -161,7 +161,7 @@ export default function ContactPageClient() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                왜 LeanUp인가요?
+                왜 LEANUP인가요?
               </motion.h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[

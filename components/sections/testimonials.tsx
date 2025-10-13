@@ -14,7 +14,7 @@ const testimonials: Testimonial[] = [
   {
     type: "스타트업",
     emoji: "🧑‍💼",
-    content: `"처음엔 예산 때문에 전문 웹사이트는 엄두도 못 냈어요. LeanUp 덕분에 합리적인 가격에 전문가 수준의 웹사이트를 만들 수 있었죠."`,
+    content: `"처음엔 예산 때문에 전문 웹사이트는 엄두도 못 냈어요. LEANUP 덕분에 합리적인 가격에 전문가 수준의 웹사이트를 만들 수 있었죠."`,
     author: "스타트업 대표",
   },
   {
@@ -66,7 +66,7 @@ export function TestimonialsSection() {
         {/* 섹션 타이틀 */}
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            고객이 직접 말하는 LeanUp 경험 ✨
+            고객이 직접 말하는 LEANUP 경험 ✨
           </h2>
         </div>
 

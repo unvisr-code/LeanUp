@@ -202,7 +202,7 @@ export function HeroSection() {
           >
             전문가 퀄리티 · 스타트업 속도 · 합리적 비용
             <br />
-            <span className="text-gray-400">LeanUp과 함께 성장의 첫걸음을 시작하세요</span>
+            <span className="text-gray-400">LEANUP과 함께 성장의 첫걸음을 시작하세요</span>
           </motion.p>
 
           {/* CTA buttons with liquid effect */}

@@ -28,7 +28,7 @@ function getResendClient(): Resend {
 // Email configuration
 export const EMAIL_CONFIG = {
   // Use verified domain for all emails
-  from: 'LeanUp <noreply@leanup.kr>',
+  from: 'LEANUP <noreply@leanup.kr>',
   adminEmail: (process.env.ADMIN_EMAIL || 'contact@leanup.kr').trim(),
 } as const;
 

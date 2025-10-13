@@ -132,7 +132,7 @@ export function HeroSection() {
             className="mb-8 text-lg text-white/90 md:text-xl"
           >
             전문가 퀄리티, 스타트업 속도, 합리적인 비용<br />
-            LeanUp에서 모두 경험하세요
+            LEANUP에서 모두 경험하세요
           </motion.p>
 
           {/* CTA Buttons */}

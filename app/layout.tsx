@@ -13,14 +13,14 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://leanup.kr'),
   title: {
-    default: "LeanUp - 웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지",
-    template: '%s | LeanUp'
+    default: "LEANUP - 웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지",
+    template: '%s | LEANUP'
   },
   description: "빠른 납기, 저렴한 가격으로 웹사이트 제작부터 데이터 추적 셋업, 온보딩, 유지보수까지 한 번에 해결하세요.",
   keywords: "웹사이트 제작, 데이터 추적, GA4, GTM, 온보딩, 유지보수, 스타트업, 웹 개발",
-  authors: [{ name: "LeanUp" }],
-  creator: "LeanUp",
-  publisher: "LeanUp",
+  authors: [{ name: "LEANUP" }],
+  creator: "LEANUP",
+  publisher: "LEANUP",
   formatDetection: {
     email: false,
     address: false,
@@ -30,16 +30,16 @@ export const metadata: Metadata = {
     canonical: 'https://leanup.kr',
   },
   openGraph: {
-    title: "LeanUp - 웹사이트 제작 + 데이터 + 온보딩",
+    title: "LEANUP - 웹사이트 제작 + 데이터 + 온보딩",
     description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
     url: 'https://leanup.kr',
-    siteName: "LeanUp",
+    siteName: "LEANUP",
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'LeanUp - 웹사이트 제작부터 데이터 추적까지',
+        alt: 'LEANUP - 웹사이트 제작부터 데이터 추적까지',
       }
     ],
     locale: "ko_KR",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "LeanUp - 웹사이트 제작 + 데이터 + 온보딩",
+    title: "LEANUP - 웹사이트 제작 + 데이터 + 온보딩",
     description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
     images: ['/twitter-image.png'],
     creator: '@leanup',

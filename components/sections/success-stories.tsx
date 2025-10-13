@@ -32,7 +32,7 @@ const successStories: SuccessStory[] = [
     challenge: "제한된 예산으로 전문적인 웹사이트 필요",
     solution: "템플릿 기반 빠른 개발 + 맞춤 커스터마이징",
     result: "2주 만에 MVP 웹사이트 완성, 투자 유치 성공",
-    testimonial: "처음엔 예산 때문에 전문 웹사이트는 엄두도 못 냈어요. LeanUp 덕분에 합리적인 가격에 전문가 수준의 웹사이트를 만들 수 있었죠.",
+    testimonial: "처음엔 예산 때문에 전문 웹사이트는 엄두도 못 냈어요. LEANUP 덕분에 합리적인 가격에 전문가 수준의 웹사이트를 만들 수 있었죠.",
     portfolio: {
       name: "테크 스타트업 랜딩페이지",
       tech: ["Next.js", "TypeScript", "Tailwind CSS"],
@@ -124,7 +124,7 @@ export function SuccessStoriesSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            실제 고객들의 도전 과제와 LeanUp의 솔루션, 그리고 놀라운 결과를 확인하세요
+            실제 고객들의 도전 과제와 LEANUP의 솔루션, 그리고 놀라운 결과를 확인하세요
           </motion.p>
         </div>
 

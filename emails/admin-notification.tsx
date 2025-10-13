@@ -136,7 +136,7 @@ export default function AdminNotificationEmail({
           <Hr style={hr} />
 
           <Text style={footer}>
-            LeanUp Admin System<br />
+            LEANUP Admin System<br />
             자동 발송된 메일입니다.
           </Text>
         </Container>

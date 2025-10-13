@@ -341,7 +341,7 @@ export default function AboutPageClient() {
       {/* Add padding to account for fixed header */}
       <div className="pt-24">
         <PageHeader
-          title="LeanUp 소개"
+          title="LEANUP 소개"
           subtitle="스타트업과 소규모 기업의 성장을 돕는 웹 개발 전문 팀입니다"
         />
 
@@ -521,7 +521,7 @@ export default function AboutPageClient() {
                 우리 팀
               </h2>
               <p className="mb-12 text-lg text-white/70">
-                각 분야의 전문가들이 함께 만들어가는 LeanUp
+                각 분야의 전문가들이 함께 만들어가는 LEANUP
               </p>
             </motion.div>
 
@@ -577,7 +577,7 @@ export default function AboutPageClient() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              LeanUp과 함께 비즈니스의 다음 단계로 나아가세요
+              LEANUP과 함께 비즈니스의 다음 단계로 나아가세요
             </motion.p>
             <motion.button
               onClick={() => setIsQuoteModalOpen(true)}

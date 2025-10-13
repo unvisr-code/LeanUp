@@ -68,7 +68,7 @@ function FooterComponent() {
 
             {/* Copyright - 항상 표시 */}
             <p className="text-[10px] sm:text-xs text-white/40 pt-2 md:pt-3">
-              &copy; 2025 LeanUp. All rights reserved.
+              &copy; 2025 LEANUP. All rights reserved.
             </p>
           </div>
         </div>

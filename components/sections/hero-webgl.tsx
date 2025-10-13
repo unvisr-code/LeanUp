@@ -46,7 +46,7 @@ export function HeroSection() {
                   <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-white opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                 </span>
-                LeanUp Agency
+                LEANUP Agency
               </span>
             </motion.div>
 

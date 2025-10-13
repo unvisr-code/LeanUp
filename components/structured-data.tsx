@@ -2,7 +2,7 @@ export default function StructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "LeanUp",
+    "name": "LEANUP",
     "description": "빠른 납기, 저렴한 가격으로 웹사이트 제작부터 데이터 추적 셋업, 온보딩, 유지보수까지 한 번에 해결하세요.",
     "url": "https://leanup.kr",
     "logo": "https://leanup.kr/icon.png",

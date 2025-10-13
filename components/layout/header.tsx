@@ -82,7 +82,7 @@ export function Header() {
               <Zap className="w-4 h-4 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-base font-bold text-gray-900 tracking-tight group-hover:text-blue-600 transition-colors">
-              LeanUp
+              LEANUP
             </span>
           </div>
         </Link>

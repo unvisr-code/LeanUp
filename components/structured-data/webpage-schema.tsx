@@ -13,7 +13,7 @@ export default function WebPageSchema({ name, description, url }: WebPageSchemaP
     "url": url,
     "isPartOf": {
       "@type": "WebSite",
-      "name": "LeanUp",
+      "name": "LEANUP",
       "url": "https://leanup.kr"
     }
   };
