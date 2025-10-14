@@ -1,7 +1,39 @@
+import { Metadata } from "next";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { BarChart3, Database, Brain, LineChart, PieChart, TrendingUp, Lock, Sparkles } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "데이터 모듈 | LEANUP - GA4, GTM, AI 데이터 도우미",
+  description: "GA4, GTM, UTM, MS Clarity 기본 세팅과 퍼널 대시보드. AI 데이터 도우미(MCP)로 프롬프트만으로 인사이트를 얻으세요. 데이터 기반 의사결정을 위한 완벽한 솔루션",
+  keywords: "데이터 모듈, GA4 설정, GTM 구축, UTM 추적, MS Clarity, 퍼널 대시보드, AI 데이터 분석, 데이터 인사이트",
+  openGraph: {
+    title: "데이터 모듈 | LEANUP - GA4, GTM, AI 데이터 도우미",
+    description: "GA4, GTM 기본 세팅과 AI 데이터 도우미로 프롬프트만으로 인사이트 발견",
+    url: "https://leanup.kr/services/data-module",
+    siteName: "LEANUP",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "LEANUP 데이터 모듈 - AI 기반 데이터 분석",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "데이터 모듈 | LEANUP - GA4, GTM, AI 데이터 도우미",
+    description: "GA4, GTM 기본 세팅과 AI 데이터 도우미로 프롬프트만으로 인사이트 발견",
+    images: ["/twitter-image.png"],
+  },
+  alternates: {
+    canonical: "https://leanup.kr/services/data-module",
+  },
+};
 
 export default function DataModulePage() {
   return (
