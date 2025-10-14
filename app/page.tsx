@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import { HeroSection } from "@/components/sections/hero-with-nav";
@@ -62,8 +59,6 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-
   return (
     <>
       <main className="bg-black">
@@ -72,8 +67,8 @@ export default function HomePage() {
         <PortfolioShowcaseSection />
       </main>
       <QuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={() => setIsQuoteModalOpen(false)}
+        isOpen={false}
+        onClose={() => {}}
       />
       <Footer />
     </>
