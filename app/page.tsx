@@ -27,10 +27,6 @@ const Footer = dynamic(
   }
 );
 
-const QuoteModal = dynamic(
-  () => import("@/components/quote-modal").then(mod => ({ default: mod.QuoteModal })),
-  { ssr: false }
-);
 
 export const metadata: Metadata = {
   title: "홈페이지 제작 | 빠른 AI 제작·전문가 퀄리티·자체 유지보수",
@@ -66,10 +62,6 @@ export default function HomePage() {
         <FeaturesSection />
         <PortfolioShowcaseSection />
       </main>
-      <QuoteModal
-        isOpen={false}
-        onClose={() => {}}
-      />
       <Footer />
     </>
   );
