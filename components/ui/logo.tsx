@@ -31,8 +31,8 @@ export const Logo: React.FC<LogoProps> = ({
           lineHeight: 1
         }}
       >
-        <span style={{ fontWeight: 600 }}>Lean</span>
-        <span style={{ fontWeight: 800 }}>Up</span>
+        <span style={{ fontWeight: 600 }}>LEAN</span>
+        <span style={{ fontWeight: 800 }}>UP</span>
       </span>
     </div>
   );
