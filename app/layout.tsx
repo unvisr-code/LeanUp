@@ -123,6 +123,21 @@ export default function RootLayout({
           ></iframe>
         </noscript>
 
+        {/* Naver Analytics */}
+        <Script
+          src="//wcs.pstatic.net/wcslog.js"
+          strategy="afterInteractive"
+        />
+        <Script id="naver-analytics" strategy="afterInteractive">
+          {`
+            if(!wcs_add) var wcs_add = {};
+            wcs_add["wa"] = "201ed9b20adaa2";
+            if(window.wcs) {
+              wcs_do();
+            }
+          `}
+        </Script>
+
         <TRPCProvider>
           <ToastProvider>
             {children}
