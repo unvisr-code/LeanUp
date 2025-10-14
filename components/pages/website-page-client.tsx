@@ -93,53 +93,137 @@ export default function WebsitePageClient() {
         <section className="py-16 md:py-20">
           <div className="container">
             <motion.div
-              className="text-center mb-12"
+              className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
               <h2 className="mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                2주 MVP 완성 프로세스
+                2주 이내 MVP 완성 프로세스
               </h2>
               <p className="text-lg text-white/70">
                 체계적인 MVP 접근법으로 빠르고 효율적으로 핵심 기능을 구현합니다
               </p>
             </motion.div>
 
-            <div className="max-w-5xl mx-auto">
-              <div className="relative">
-                {/* Timeline Line */}
+            <div className="max-w-7xl mx-auto">
+              {/* Desktop: Horizontal Timeline */}
+              <div className="hidden md:block relative">
+                {/* Connection Line */}
+                <div className="absolute top-[60px] left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-600/50 via-blue-600/50 to-blue-600/50"></div>
+
+                <div className="grid grid-cols-5 gap-4">
+                  {[
+                    {
+                      step: "STEP1",
+                      period: "2-5일",
+                      title: "요구사항 분석\n와이어프레임 설계",
+                      description: "핵심 기능 정의, 사용자 여정 설계,\nMVP 범위 결정",
+                      color: "from-blue-600 to-cyan-600"
+                    },
+                    {
+                      step: "STEP2",
+                      period: "5-10일",
+                      title: "2주 이내 MVP\n핵심 기능 개발",
+                      description: "필수 기능 중심 개발, 반응형 구조 구현,\n기본 UI/UX 적용",
+                      color: "from-blue-600 to-cyan-600"
+                    },
+                    {
+                      step: "STEP3",
+                      period: "14-30일",
+                      title: "최종 소프트웨어 개발\n테스트 & 최적화",
+                      description: "기능 테스트, 성능 최적화,\nSEO 기본 설정, 반응형 점검",
+                      color: "from-blue-600 to-cyan-600"
+                    },
+                    {
+                      step: "STEP4",
+                      period: "30일",
+                      title: "배포 & 런칭",
+                      description: "서버 배포, 도메인 연결, SSL 설정,\n최종 확인",
+                      color: "from-blue-600 to-cyan-600"
+                    },
+                    {
+                      step: "STEP5",
+                      period: "+7일",
+                      title: "7일 하이퍼케어",
+                      description: "런칭 후 집중 모니터링,\n즉시 대응, 사용법 안내",
+                      color: "from-orange-600 to-red-600"
+                    }
+                  ].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="flex flex-col items-center"
+                    >
+                      {/* Step Circle */}
+                      <div className={`relative w-[120px] h-[120px] bg-gradient-to-br ${item.color} rounded-full flex items-center justify-center shadow-lg mb-6 z-10`}>
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
+                        <div className="text-center relative z-10">
+                          <div className="text-white font-bold text-sm mb-1">{item.step}</div>
+                          <div className="text-white/90 text-xs bg-white/20 rounded-full px-3 py-1 inline-block">
+                            {item.period}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Content Card */}
+                      <div className="bg-[#0a1628] border border-white/[0.15] rounded-xl p-6 h-full w-full hover:bg-[#0d1b33] hover:border-white/[0.25] transition-all">
+                        <h3 className="text-white font-semibold text-base mb-3 min-h-[48px] whitespace-pre-line leading-tight">
+                          {item.title}
+                        </h3>
+                        <p className="text-white/60 text-sm whitespace-pre-line leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Mobile: Vertical Timeline */}
+              <div className="md:hidden relative">
                 <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-blue-600/50 to-blue-600/20 z-0"></div>
 
-                {/* Timeline Items */}
                 <div className="space-y-8 relative z-10">
                   {[
                     {
-                      step: "Step1",
-                      title: "요구사항 분석 & 와이어프레임",
-                      description: "핵심 기능 정의, 사용자 여정 설계, MVP 범위 결정 (2-3일)"
+                      step: "STEP1",
+                      period: "2-5일",
+                      title: "요구사항 분석 & 와이어프레임 설계",
+                      description: "핵심 기능 정의, 사용자 여정 설계, MVP 범위 결정",
+                      color: "from-blue-600 to-cyan-600"
                     },
                     {
-                      step: "Step2",
-                      title: "MVP 핵심 기능 개발",
-                      description: "필수 기능 중심 개발, 반응형 구조 구현, 기본 UI/UX 적용 (5-6일)"
+                      step: "STEP2",
+                      period: "5-10일",
+                      title: "2주 이내 MVP 핵심 기능 개발",
+                      description: "필수 기능 중심 개발, 반응형 구조 구현, 기본 UI/UX 적용",
+                      color: "from-blue-600 to-cyan-600"
                     },
                     {
-                      step: "Step3",
-                      title: "테스트 & 최적화",
-                      description: "기능 테스트, 성능 최적화, SEO 기본 설정, 반응형 점검 (2-3일)"
+                      step: "STEP3",
+                      period: "14-30일",
+                      title: "최종 소프트웨어 개발 테스트 & 최적화",
+                      description: "기능 테스트, 성능 최적화, SEO 기본 설정, 반응형 점검",
+                      color: "from-blue-600 to-cyan-600"
                     },
                     {
-                      step: "Step4",
+                      step: "STEP4",
+                      period: "30일",
                       title: "배포 & 런칭",
-                      description: "서버 배포, 도메인 연결, SSL 설정, 최종 확인 (1일)"
+                      description: "서버 배포, 도메인 연결, SSL 설정, 최종 확인",
+                      color: "from-blue-600 to-cyan-600"
                     },
                     {
-                      step: "Step5",
+                      step: "STEP5",
+                      period: "+7일",
                       title: "7일 하이퍼케어",
                       description: "런칭 후 집중 모니터링, 즉시 대응, 사용법 안내",
-                      highlight: true
+                      color: "from-orange-600 to-red-600"
                     }
                   ].map((item, index) => (
                     <motion.div
@@ -150,12 +234,15 @@ export default function WebsitePageClient() {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       className="flex gap-6"
                     >
-                      <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                        {item.step}
+                      <div className={`flex-shrink-0 w-16 h-16 bg-gradient-to-br ${item.color} rounded-full flex items-center justify-center text-white font-bold shadow-lg`}>
+                        <div className="text-center">
+                          <div className="text-[10px] leading-tight">{item.step}</div>
+                          <div className="text-[8px] opacity-80">{item.period}</div>
+                        </div>
                       </div>
-                      <div className={`flex-1 ${item.highlight ? 'bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-blue-500/30' : 'bg-white/[0.08] border-white/[0.15]'} backdrop-blur-xl border rounded-xl p-6`}>
-                        <h3 className="text-xl font-semibold mb-2 text-white">{item.title}</h3>
-                        <p className="text-white/70">{item.description}</p>
+                      <div className="flex-1 bg-[#0a1628] border border-white/[0.15] backdrop-blur-xl rounded-xl p-5">
+                        <h3 className="text-base font-semibold mb-2 text-white">{item.title}</h3>
+                        <p className="text-white/60 text-sm">{item.description}</p>
                       </div>
                     </motion.div>
                   ))}

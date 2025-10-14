@@ -10,12 +10,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const teamMembers = [
-  { name: "개발자", role: "Frontend/Backend 개발", description: "최신 기술 스택으로 빠르고 안정적인 웹사이트 구축" },
-  { name: "디자이너", role: "UI/UX 디자인", description: "사용자 중심의 직관적이고 아름다운 디자인" },
-  { name: "PM", role: "프로젝트 관리", description: "체계적인 프로세스로 일정과 품질 관리" },
-  { name: "데이터분석가", role: "데이터 분석", description: "GA4, GTM 설정 및 데이터 기반 인사이트 제공" },
-  { name: "세일즈 매니저", role: "고객 상담", description: "맞춤형 솔루션 제안 및 지속적인 고객 지원" },
-  { name: "AI전문가", role: "AI 솔루션", description: "AI 기술을 활용한 혁신적인 웹 서비스 개발" },
+  { emoji: "👨‍💼", name: "프로젝트 매니저", description: "전반 설계, 컨설팅, 프로젝트 관리" },
+  { emoji: "💻", name: "프론트엔드 엔지니어", description: "인터랙션 설계, 비즈니스 로직, 배포" },
+  { emoji: "🔧", name: "백엔드 엔지니어", description: "데이터베이스, 스키마 설계, 서버 로직 구현" },
+  { emoji: "🖊️", name: "데이터 보안 엔지니어", description: "보안 설계, 암호 패키 및 관리, 역할 수정" },
+  { emoji: "📊", name: "데이터 엔지니어", description: "태깅, GTM, BigQuery, 리포트" },
+  { emoji: "🎨", name: "디자이너", description: "색상 팔 컨포넌트 제품화, 배너 디자인" },
 ];
 
 const values = [
@@ -529,22 +529,19 @@ export default function AboutPageClient() {
               {teamMembers.map((member, index) => (
                 <motion.div
                   key={index}
-                  className="rounded-xl bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] p-6 transition-all hover:bg-white/[0.12] hover:border-white/[0.25] hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)]"
+                  className="rounded-xl bg-[#1a1a1a] border border-white/[0.1] p-8 transition-all hover:bg-[#222222] hover:border-white/[0.2] hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)]"
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-600 shadow-lg">
-                    <Users className="h-6 w-6 text-white" />
+                  <div className="mb-6 text-6xl">
+                    {member.emoji}
                   </div>
-                  <h3 className="mb-1 text-lg font-semibold text-white">
+                  <h3 className="mb-4 text-xl font-semibold text-white">
                     {member.name}
                   </h3>
-                  <p className="mb-2 text-sm font-medium bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    {member.role}
-                  </p>
-                  <p className="text-sm text-white/60">{member.description}</p>
+                  <p className="text-sm text-white/50 leading-relaxed">{member.description}</p>
                 </motion.div>
               ))}
             </div>
