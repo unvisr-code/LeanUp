@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     process.env.VERCEL_ENV === 'production' ||
     process.env.NEXT_PUBLIC_APP_ENV === 'prod';
 
-  // 개발/프리뷰 환경 차단
+  // 개발/프리뷰 환경 차단.
   if (!isProd) {
     return {
       rules: [{ userAgent: '*', disallow: '/' }],
