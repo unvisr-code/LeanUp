@@ -11,7 +11,7 @@ import { api } from "@/lib/trpc/provider";
 const miniTestimonials = [
   { stars: 5, text: "2주 만에 완성, 정말 만족스럽습니다", author: "스타트업 대표" },
   { stars: 5, text: "합리적인 가격에 전문가 퀄리티", author: "마케팅 담당자" },
-  { stars: 5, text: "매출 200% 증가, 최고의 선택", author: "쇼핑몰 운영자" },
+  { stars: 5, text: "유입 데이터를 쉽게 볼 수 있었어요", author: "홈페이지 운영 담당자" },
 ];
 
 function PortfolioShowcaseSectionComponent() {

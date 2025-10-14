@@ -52,7 +52,7 @@ const features: Array<{
     ),
     keyword: "빠른 납기",
     title: "빠르고 합리적으로 만들어요",
-    description: "1주일 내 MVP 완성. 핵심 기능에 집중합니다.",
+    description: "2주일 내 MVP 완성. 핵심 기능에 집중합니다.",
     align: "left",
   },
   {
