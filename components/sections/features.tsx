@@ -147,6 +147,44 @@ const features: Array<{
     keyword: "유지보수",
     title: "유지보수도 쉽게 할 수 있어요",
     description: "GUI 피드백으로 간단 수정 가능. 소통 비용을 줄입니다.",
+    align: "right",
+  },
+  {
+    // 전문적인 3D 스피드미터 - 블루 톤
+    iconSvg: (
+      <svg viewBox="0 0 100 100" className="w-full h-full">
+        <defs>
+          <linearGradient id="speedometer3d" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#DBEAFE" />
+            <stop offset="50%" stopColor="#93C5FD" />
+            <stop offset="100%" stopColor="#3B82F6" />
+          </linearGradient>
+          <linearGradient id="needle3d" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#60A5FA" />
+            <stop offset="100%" stopColor="#2563EB" />
+          </linearGradient>
+        </defs>
+        <ellipse cx="52" cy="85" rx="25" ry="4" fill="#000000" opacity="0.1" />
+        <circle cx="50" cy="50" r="38" fill="url(#speedometer3d)" opacity="0.2" />
+        <circle cx="50" cy="50" r="35" fill="none" stroke="url(#speedometer3d)" strokeWidth="6" />
+        <path d="M15 50 Q15 20 50 20 Q85 20 85 50" fill="none" stroke="#3B82F6" strokeWidth="4" strokeLinecap="round" />
+        {/* Speed marks */}
+        <line x1="20" y1="50" x2="25" y2="50" stroke="#60A5FA" strokeWidth="2" />
+        <line x1="28" y1="35" x2="32" y2="38" stroke="#60A5FA" strokeWidth="2" />
+        <line x1="42" y1="25" x2="44" y2="30" stroke="#60A5FA" strokeWidth="2" />
+        <line x1="58" y1="25" x2="56" y2="30" stroke="#60A5FA" strokeWidth="2" />
+        <line x1="72" y1="35" x2="68" y2="38" stroke="#60A5FA" strokeWidth="2" />
+        <line x1="80" y1="50" x2="75" y2="50" stroke="#60A5FA" strokeWidth="2" />
+        {/* Needle */}
+        <line x1="50" y1="50" x2="70" y2="38" stroke="url(#needle3d)" strokeWidth="3" strokeLinecap="round" />
+        <circle cx="50" cy="50" r="6" fill="url(#needle3d)" />
+        <circle cx="50" cy="50" r="3" fill="#DBEAFE" />
+        <circle cx="48" cy="48" r="1.5" fill="#FFFFFF" opacity="0.6" />
+      </svg>
+    ),
+    keyword: "빠른 성능",
+    title: "빠른 속도와 안정성을 보장해요",
+    description: "최신 기술로 빠른 로딩과 안정적인 서비스를 제공합니다.",
     align: "left",
   },
 ];
@@ -170,11 +208,11 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // 모바일에서 더 빠른 애니메이션 (100ms 딜레이)
-          setTimeout(() => setIsVisible(true), index * 100);
+          // 빠른 애니메이션 (50ms 딜레이)
+          setTimeout(() => setIsVisible(true), index * 50);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
 
     if (ref.current) {
@@ -191,20 +229,20 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
       <div
         className={`flex flex-col ${
           isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-        } items-center justify-center gap-4 md:gap-6 py-6 md:py-10 transition-all duration-700 active:scale-[0.98] touch-manipulation ${
+        } items-center justify-center gap-3 md:gap-5 py-4 md:py-8 transition-all duration-500 active:scale-[0.98] touch-manipulation ${
           isVisible
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-12"
+            : "opacity-0 translate-y-8"
         }`}
       >
-        {/* 아이콘 섹션 - 모바일 크기 확대 */}
+        {/* 아이콘 섹션 - 모바일 크기 축소 */}
         <div className="flex-shrink-0">
           <div
-            className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 transition-all duration-700 ${
+            className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 transition-all duration-500 ${
               isVisible ? "scale-100" : "scale-75"
             }`}
             style={{
-              filter: "drop-shadow(0 8px 24px rgba(96, 165, 250, 0.25))",
+              filter: "drop-shadow(0 6px 20px rgba(96, 165, 250, 0.2))",
             }}
           >
             {feature.iconSvg}
@@ -212,21 +250,21 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
         </div>
 
         {/* 텍스트 섹션 - 모바일 가독성 향상 */}
-        <div className="flex-1 text-center lg:text-left max-w-md px-4">
+        <div className="flex-1 text-center lg:text-left max-w-md px-3">
           {/* 둥근 키워드 - 글래스모피즘 스타일 */}
-          <div className="mb-3 sm:mb-3 md:mb-4">
-            <span className="inline-flex items-center px-4 py-2 md:px-4 md:py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm sm:text-sm font-semibold">
+          <div className="mb-2 sm:mb-2 md:mb-3">
+            <span className="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-xs sm:text-sm font-semibold">
               {feature.keyword}
             </span>
           </div>
 
-          {/* 메인 카피 - 모바일 크기 증가 */}
-          <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-3 leading-tight">
+          {/* 메인 카피 - 모바일 크기 조정 */}
+          <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-2 leading-tight">
             {feature.title}
           </h3>
 
           {/* 서브 카피 - 모바일 가독성 향상 */}
-          <p className="text-sm sm:text-sm md:text-base text-white/70 leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -238,11 +276,11 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 function FeaturesSectionComponent() {
   return (
     <motion.section
-      className="relative py-16 sm:py-20 md:py-24 overflow-hidden"
-      initial={{ opacity: 0, y: 50 }}
+      className="relative py-12 sm:py-16 md:py-20 overflow-hidden"
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       aria-label="특별한 서비스 기능"
     >
       {/* 장식용 그라데이션 원들 - 어두운 톤 */}
@@ -252,7 +290,7 @@ function FeaturesSectionComponent() {
 
       <div className="container relative z-10 px-4 sm:px-6">
         {/* 헤더 - 모바일 최적화 */}
-        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+        <div className="text-center mb-6 sm:mb-8 md:mb-10">
           <h2 className="mb-2 sm:mb-3 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
             이런 점이 특별해요
           </h2>
@@ -261,16 +299,16 @@ function FeaturesSectionComponent() {
           </p>
         </div>
 
-        {/* 특징 목록 - 가운데 정렬, 모바일에서도 모든 항목 표시 */}
-        <div className="flex flex-col items-center space-y-4 md:space-y-6">
+        {/* 특징 목록 - 모바일 2x2 그리드, 데스크톱 세로 배치 */}
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:flex md:flex-col md:items-center md:space-y-4">
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-              className="w-full"
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.3, delay: index * 0.05, ease: "easeOut" }}
+              className="w-full md:max-w-5xl"
             >
               <FeatureItem feature={feature} index={index} />
             </motion.div>

@@ -225,9 +225,9 @@ function HeroSectionComponent() {
         <div className="absolute inset-0 z-[50]">
           {/* Glassmorphism Navigation Bar - Fixed/Sticky with highest z-index */}
           <motion.nav
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
             className="fixed top-0 left-0 right-0 z-[9999] flex justify-center p-2 sm:p-3"
           >
             <div className="w-full max-w-4xl px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-black/50 backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.3)] flex items-center justify-between gap-3 sm:gap-6 hover:bg-black/60 transition-all duration-300">
@@ -439,12 +439,12 @@ function HeroSectionComponent() {
             <div className="max-w-5xl text-center">
               {/* Badge */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="mb-8"
+                transition={{ duration: 0.4, delay: 0.15 }}
+                className="mb-6 sm:mb-8"
               >
-                <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm font-medium">
+                <span className="inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-xs sm:text-sm font-medium">
                   <span className="flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-white opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
@@ -453,12 +453,12 @@ function HeroSectionComponent() {
                 </span>
               </motion.div>
 
-              {/* Main Title - 모바일 크기 증가 */}
+              {/* Main Title - 모바일 최적화 */}
               <motion.h1
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight px-4"
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-5 tracking-tight leading-tight px-4"
               >
                 빠르고 전문적인
                 <br />
@@ -486,12 +486,12 @@ function HeroSectionComponent() {
                 )}
               </motion.h1>
 
-              {/* Subtitle - 모바일 크기 증가 */}
+              {/* Subtitle - 모바일 최적화 */}
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-base sm:text-lg md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto px-6 leading-relaxed"
+                transition={{ duration: 0.5, delay: 0.35 }}
+                className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-5 sm:mb-7 md:mb-9 max-w-2xl mx-auto px-6 leading-relaxed"
               >
                 전문가 퀄리티 · 스타트업 속도 · 합리적 비용
                 <br className="hidden sm:block" />
@@ -501,9 +501,9 @@ function HeroSectionComponent() {
 
               {/* CTA Buttons - 터치 영역 및 반응성 개선 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.7 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-6 w-full sm:w-auto"
               >
                 <button
@@ -525,16 +525,16 @@ function HeroSectionComponent() {
 
             {/* Scroll Indicator - 터치 영역 개선 */}
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: 0.7,
-                delay: 1,
+                duration: 0.5,
+                delay: 0.7,
                 repeat: Infinity,
                 repeatType: "reverse",
-                repeatDelay: 0.5
+                repeatDelay: 0.4
               }}
-              className="flex absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer p-3 min-w-[48px] min-h-[48px] items-center justify-center touch-manipulation"
+              className="flex absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 cursor-pointer p-2 sm:p-3 min-w-[44px] min-h-[44px] items-center justify-center touch-manipulation"
               onClick={() => {
                 // 다음 섹션으로 정확히 스크롤
                 const nextSection = document.querySelector('section:nth-of-type(2)');

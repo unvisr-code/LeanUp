@@ -51,7 +51,8 @@ const navItems = [
 export function DarkHeader() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("");
@@ -77,12 +78,20 @@ export function DarkHeader() {
     };
   }, [isMobileMenuOpen]);
 
+  // 모바일 메뉴가 닫힐 때 서비스 드롭다운도 초기화
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setIsMobileServicesOpen(false);
+    }
+  }, [isMobileMenuOpen]);
+
   const handleServiceClick = (item: typeof serviceItems[0], e: React.MouseEvent) => {
     if (item.status === "development" || item.status === "coming-soon") {
       e.preventDefault();
       setSelectedService(item.label);
       setIsNotificationModalOpen(true);
-      setIsServicesOpen(false);
+      setIsDesktopServicesOpen(false);
+      setIsMobileServicesOpen(false);
     }
   };
 
@@ -106,8 +115,8 @@ export function DarkHeader() {
               <div
                 key={item.href}
                 className="relative group"
-                onMouseEnter={() => setIsServicesOpen(true)}
-                onMouseLeave={() => setIsServicesOpen(false)}
+                onMouseEnter={() => setIsDesktopServicesOpen(true)}
+                onMouseLeave={() => setIsDesktopServicesOpen(false)}
               >
                 <button className={cn(
                   "flex items-center justify-center text-[13px] font-medium transition-all px-2.5 py-1 rounded-full",
@@ -116,14 +125,14 @@ export function DarkHeader() {
                     : "text-white/80 hover:text-white hover:bg-white/[0.08]"
                 )}>
                   {item.label}
-                  <ChevronDown className="ml-0.5 h-3 w-3" />
+                  <ChevronDown className={cn("ml-0.5 h-3 w-3 transition-transform", isDesktopServicesOpen && "rotate-180")} />
                 </button>
 
                 {/* Dropdown Menu */}
                 <div
                   className={cn(
                     "absolute top-full left-0 mt-1 w-56 rounded-lg bg-black/90 backdrop-blur-xl border border-white/[0.25] shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-200",
-                    isServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                    isDesktopServicesOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
                   )}
                 >
                   {item.dropdown.map((subItem) => (
@@ -193,36 +202,101 @@ export function DarkHeader() {
         </button>
       </div>
 
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-[9997] bg-black/40 backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden fixed top-20 left-4 right-4 z-[9998] p-4 rounded-xl bg-black/90 backdrop-blur-2xl border border-white/[0.15] shadow-xl max-h-[calc(100vh-140px)] overflow-y-auto"
+          className="md:hidden fixed top-20 left-4 right-4 z-[9998] bg-white/[0.08] backdrop-blur-2xl border border-white/[0.15] shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-2xl p-4 max-h-[calc(100vh-120px)] overflow-y-auto mobile:hide-scrollbar"
         >
           <nav className="space-y-2">
             {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={cn(
-                  "block px-3 py-2 rounded-lg transition-all",
-                  pathname === item.href
-                    ? "bg-white/[0.15] text-white"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
-                )}
-              >
-                {item.label}
-              </Link>
+              item.dropdown ? (
+                <div key={item.href}>
+                  <button
+                    onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                    className={cn(
+                      "flex items-center justify-between w-full px-4 py-3 min-h-[48px] rounded-lg transition-all touch-manipulation",
+                      isMobileServicesOpen
+                        ? "bg-white/[0.15] text-white"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                    )}
+                    aria-expanded={isMobileServicesOpen}
+                  >
+                    {item.label}
+                    <ChevronDown className={cn("h-4 w-4 transition-transform duration-200", isMobileServicesOpen && "rotate-180")} />
+                  </button>
+                  {isMobileServicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="pl-2 mt-2 space-y-1 overflow-hidden"
+                    >
+                      {item.dropdown.map((subItem) => (
+                        subItem.status === "available" ? (
+                          <Link
+                            key={subItem.href}
+                            href={subItem.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center justify-between px-4 py-3 min-h-[48px] text-sm rounded-lg transition-colors touch-manipulation border-l-2 border-blue-400/50 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20"
+                          >
+                            <span className="font-medium">{subItem.label}</span>
+                            <div className="w-2 h-2 bg-blue-400 rounded-full shadow-sm shadow-blue-400/50"></div>
+                          </Link>
+                        ) : (
+                          <div
+                            key={subItem.href}
+                            onClick={(e) => {
+                              handleServiceClick(subItem, e);
+                              setIsMobileMenuOpen(false);
+                            }}
+                            className="flex items-center justify-between px-4 py-3 min-h-[48px] text-sm rounded-lg cursor-pointer transition-colors touch-manipulation border-l-2 border-gray-500/30 bg-gray-500/5 hover:bg-gray-500/10"
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-gray-400">{subItem.label}</span>
+                              <Lock className="h-3 w-3 text-gray-500" />
+                            </div>
+                            <Bell className="h-3 w-3 text-gray-500" />
+                          </div>
+                        )
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "block px-4 py-3 min-h-[48px] rounded-lg transition-all touch-manipulation",
+                    pathname === item.href
+                      ? "bg-white/[0.15] text-white"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
             <button
               onClick={() => {
                 setIsMobileMenuOpen(false);
                 setIsQuoteModalOpen(true);
               }}
-              className="w-full px-3 py-2 bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200"
+              className="w-full px-4 py-3 min-h-[48px] bg-white/[0.15] backdrop-blur-xl border border-white/[0.2] rounded-lg text-white font-medium hover:bg-white/[0.25] transition-all duration-200 active:scale-95 touch-manipulation"
             >
               견적 문의
             </button>
