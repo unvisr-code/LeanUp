@@ -453,12 +453,12 @@ function HeroSectionComponent() {
                 </span>
               </motion.div>
 
-              {/* Main Title - 모바일 반응형 개선 */}
+              {/* Main Title - 모바일 크기 증가 */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight px-4"
+                className="text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight px-4"
               >
                 빠르고 전문적인
                 <br />
@@ -486,12 +486,12 @@ function HeroSectionComponent() {
                 )}
               </motion.h1>
 
-              {/* Subtitle - 모바일 가독성 개선 */}
+              {/* Subtitle - 모바일 크기 증가 */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.5 }}
-                className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto px-6 leading-relaxed"
+                className="text-base sm:text-lg md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto px-6 leading-relaxed"
               >
                 전문가 퀄리티 · 스타트업 속도 · 합리적 비용
                 <br className="hidden sm:block" />

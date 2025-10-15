@@ -49,6 +49,7 @@ function PortfolioShowcaseSectionComponent() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8 }}
+      aria-label="포트폴리오 및 고객 후기"
     >
       {/* 배경 장식 */}
       <div className="absolute top-1/2 left-1/3 w-80 h-80 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl" />
@@ -71,9 +72,9 @@ function PortfolioShowcaseSectionComponent() {
           </p>
         </motion.div>
 
-        {/* 포트폴리오 그리드 - 모바일 2열 */}
+        {/* 포트폴리오 그리드 - 모바일 2열, 간격 개선 */}
         <motion.div
-          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 sm:mb-8 md:mb-10 px-4"
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 mb-8 sm:mb-10 md:mb-12 px-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -87,7 +88,7 @@ function PortfolioShowcaseSectionComponent() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-white/[0.08] border border-white/[0.15] hover:border-white/[0.25] transition-all duration-300 active:scale-95 touch-manipulation"
+                className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-white/[0.08] border border-white/[0.15] hover:border-white/[0.25] transition-all duration-300 active:scale-[0.96] touch-manipulation shadow-sm hover:shadow-lg hover:shadow-white/[0.1]"
               >
                 {item.thumbnail ? (
                   <Image
@@ -106,14 +107,14 @@ function PortfolioShowcaseSectionComponent() {
                   </div>
                 )}
 
-                {/* 호버 오버레이 - 모바일에서는 항상 표시 */}
+                {/* 호버 오버레이 - 모바일에서는 항상 표시, 텍스트 크기 증가 */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-2 md:p-3">
-                    <h3 className="text-white font-medium text-xs sm:text-sm truncate">
+                  <div className="absolute bottom-0 left-0 right-0 p-3 md:p-3">
+                    <h3 className="text-white font-medium text-sm sm:text-sm truncate">
                       {item.name}
                     </h3>
                     {item.serviceLink && (
-                      <ExternalLink className="h-2.5 w-2.5 md:h-3 md:w-3 text-white/60 mt-0.5 md:mt-1" />
+                      <ExternalLink className="h-3 w-3 md:h-3 md:w-3 text-white/60 mt-1 md:mt-1" />
                     )}
                   </div>
                 </div>
@@ -141,19 +142,19 @@ function PortfolioShowcaseSectionComponent() {
           )}
         </motion.div>
 
-        {/* 미니 고객 후기 - 모바일에서 1개만 표시 (슬라이더 효과) */}
+        {/* 미니 고객 후기 - 모바일에서도 모든 후기 표시 */}
         <motion.div
-          className="mb-6 sm:mb-8 md:mb-10 py-4 sm:py-6 md:py-8 border-y border-white/[0.1] px-4"
+          className="mb-8 sm:mb-10 md:mb-12 py-6 sm:py-6 md:py-8 border-y border-white/[0.1] px-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-6 md:gap-8">
             {miniTestimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className={`flex items-center justify-center text-center ${index > 0 ? 'hidden md:flex' : ''}`}
+                className="flex items-center justify-center text-center"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -161,20 +162,20 @@ function PortfolioShowcaseSectionComponent() {
               >
                 <div>
                   {/* 별점 */}
-                  <div className="flex justify-center gap-0.5 mb-1.5 md:mb-2">
+                  <div className="flex justify-center gap-0.5 mb-2 md:mb-2">
                     {[...Array(testimonial.stars)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-3 h-3 md:w-3.5 md:h-3.5 fill-yellow-400 text-yellow-400"
+                        className="w-3.5 h-3.5 md:w-3.5 md:h-3.5 fill-yellow-400 text-yellow-400"
                       />
                     ))}
                   </div>
                   {/* 후기 텍스트 */}
-                  <p className="text-xs sm:text-sm text-white/70 mb-0.5 md:mb-1">
+                  <p className="text-sm sm:text-sm text-white/70 mb-1 md:mb-1">
                     &ldquo;{testimonial.text}&rdquo;
                   </p>
                   {/* 작성자 */}
-                  <p className="text-[10px] sm:text-xs text-white/50">
+                  <p className="text-xs sm:text-xs text-white/50">
                     - {testimonial.author}
                   </p>
                 </div>

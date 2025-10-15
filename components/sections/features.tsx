@@ -9,7 +9,6 @@ const features: Array<{
   title: string;
   description: string;
   align: "left" | "right";
-  hideMobile?: boolean;
 }> = [
   {
     // 전문적인 3D 로켓 - 블루 톤
@@ -149,7 +148,6 @@ const features: Array<{
     title: "유지보수도 쉽게 할 수 있어요",
     description: "GUI 피드백으로 간단 수정 가능. 소통 비용을 줄입니다.",
     align: "left",
-    hideMobile: true,
   },
 ];
 
@@ -172,10 +170,11 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), index * 200);
+          // 모바일에서 더 빠른 애니메이션 (100ms 딜레이)
+          setTimeout(() => setIsVisible(true), index * 100);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
 
     if (ref.current) {
@@ -192,16 +191,16 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
       <div
         className={`flex flex-col ${
           isLeft ? "lg:flex-row" : "lg:flex-row-reverse"
-        } items-center justify-center gap-4 md:gap-6 py-6 md:py-10 transition-all duration-700 ${
+        } items-center justify-center gap-4 md:gap-6 py-6 md:py-10 transition-all duration-700 active:scale-[0.98] touch-manipulation ${
           isVisible
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-12"
         }`}
       >
-        {/* 아이콘 섹션 - 모바일 크기 축소 */}
+        {/* 아이콘 섹션 - 모바일 크기 확대 */}
         <div className="flex-shrink-0">
           <div
-            className={`w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 transition-all duration-700 ${
+            className={`w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-36 lg:h-36 transition-all duration-700 ${
               isVisible ? "scale-100" : "scale-75"
             }`}
             style={{
@@ -212,22 +211,22 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
           </div>
         </div>
 
-        {/* 텍스트 섹션 - 모바일 가독성 개선 */}
+        {/* 텍스트 섹션 - 모바일 가독성 향상 */}
         <div className="flex-1 text-center lg:text-left max-w-md px-4">
           {/* 둥근 키워드 - 글래스모피즘 스타일 */}
-          <div className="mb-2 sm:mb-3 md:mb-4">
-            <span className="inline-flex items-center px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-xs sm:text-sm font-semibold">
+          <div className="mb-3 sm:mb-3 md:mb-4">
+            <span className="inline-flex items-center px-4 py-2 md:px-4 md:py-2 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/[0.15] text-white text-sm sm:text-sm font-semibold">
               {feature.keyword}
             </span>
           </div>
 
-          {/* 메인 카피 - 반응형 크기 개선 */}
-          <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-2 sm:mb-3 leading-tight">
+          {/* 메인 카피 - 모바일 크기 증가 */}
+          <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-white mb-3 sm:mb-3 leading-tight">
             {feature.title}
           </h3>
 
-          {/* 서브 카피 - 모바일 가독성 개선 */}
-          <p className="text-xs sm:text-sm md:text-base text-white/70 leading-relaxed">
+          {/* 서브 카피 - 모바일 가독성 향상 */}
+          <p className="text-sm sm:text-sm md:text-base text-white/70 leading-relaxed">
             {feature.description}
           </p>
         </div>
@@ -239,11 +238,12 @@ function FeatureItem({ feature, index }: FeatureItemProps) {
 function FeaturesSectionComponent() {
   return (
     <motion.section
-      className="relative py-12 sm:py-16 md:py-24 overflow-hidden"
+      className="relative py-16 sm:py-20 md:py-24 overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: "easeOut" }}
+      aria-label="특별한 서비스 기능"
     >
       {/* 장식용 그라데이션 원들 - 어두운 톤 */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-blue-600/10 to-blue-500/5 rounded-full blur-3xl"></div>
@@ -261,16 +261,16 @@ function FeaturesSectionComponent() {
           </p>
         </div>
 
-        {/* 특징 목록 - 가운데 정렬, 모바일에서 3번째 항목 숨김 */}
-        <div className="flex flex-col items-center space-y-2 md:space-y-4">
+        {/* 특징 목록 - 가운데 정렬, 모바일에서도 모든 항목 표시 */}
+        <div className="flex flex-col items-center space-y-4 md:space-y-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-              className={feature.hideMobile ? 'hidden lg:block w-full' : 'w-full'}
+              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+              className="w-full"
             >
               <FeatureItem feature={feature} index={index} />
             </motion.div>

@@ -307,6 +307,24 @@
   .mobile\:scroll-snap > * {
     scroll-snap-align: start;
   }
+
+  /* 모바일 애니메이션 최적화 - 복잡한 애니메이션 단순화 */
+  * {
+    will-change: auto !important;
+  }
+
+  /* 모바일 레이아웃 최적화 */
+  .mobile\:optimize-layout {
+    contain: layout style paint;
+    content-visibility: auto;
+  }
+
+  /* 모바일 성능 향상 - GPU 가속 */
+  .mobile\:gpu-boost {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
 }
 
 /* Holographic effect */
