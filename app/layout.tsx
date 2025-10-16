@@ -13,10 +13,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://leanup.kr'),
   title: {
-    default: "LEANUP - 웹사이트에 추가로 데이터 추적 셋업 + 온보딩까지",
+    default: "홈페이지 제작 | 빠른 AI 제작·전문가 퀄리티·자체 유지보수",
     template: '%s | LEANUP'
   },
-  description: "빠른 납기, 저렴한 가격으로 웹사이트 제작부터 데이터 추적 셋업, 온보딩, 유지보수까지 한 번에 해결하세요.",
+  description: "홈페이지 제작·웹사이트 제작·랜딩페이지 제작을 AI로 빠르게. 합리적 견적과 클라이언트 자체 유지보수 제공.",
   keywords: "웹사이트 제작, 데이터 추적, GA4, GTM, 온보딩, 유지보수, 스타트업, 웹 개발",
   authors: [{ name: "LEANUP" }],
   creator: "LEANUP",
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     canonical: 'https://leanup.kr',
   },
   openGraph: {
-    title: "LEANUP - 웹사이트 제작 + 데이터 + 온보딩",
-    description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
+    title: "홈페이지 제작 | 빠른 AI 제작·전문가 퀄리티·자체 유지보수",
+    description: "홈페이지 제작·웹사이트 제작·랜딩페이지 제작을 AI로 빠르게. 합리적 견적과 클라이언트 자체 유지보수 제공.",
     url: 'https://leanup.kr',
     siteName: "LEANUP",
     images: [
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "LEANUP - 웹사이트 제작 + 데이터 + 온보딩",
-    description: "빠른 납기와 합리적인 가격으로 웹사이트를 제작하고 데이터 기반 의사결정을 시작하세요.",
+    title: "홈페이지 제작 | 빠른 AI 제작·전문가 퀄리티·자체 유지보수",
+    description: "홈페이지 제작·웹사이트 제작·랜딩페이지 제작을 AI로 빠르게. 합리적 견적과 클라이언트 자체 유지보수 제공.",
     images: ['/twitter-image.png'],
     creator: '@leanup',
   },
