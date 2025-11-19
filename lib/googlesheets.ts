@@ -77,11 +77,20 @@ const HEADERS = [
 async function getGoogleSheetDoc() {
   const SPREADSHEET_ID = getEnvVar('GOOGLE_SHEETS_SPREADSHEET_ID');
   const SERVICE_ACCOUNT_EMAIL = getEnvVar('GOOGLE_SERVICE_ACCOUNT_EMAIL');
-  const PRIVATE_KEY = getEnvVar('GOOGLE_PRIVATE_KEY');
+  let PRIVATE_KEY = getEnvVar('GOOGLE_PRIVATE_KEY');
+
+  // Check if private key is base64 encoded (doesn't start with -----)
+  if (!PRIVATE_KEY.startsWith('-----BEGIN')) {
+    // Decode from base64
+    PRIVATE_KEY = Buffer.from(PRIVATE_KEY, 'base64').toString('utf-8');
+  } else {
+    // Replace escaped newlines with actual newlines
+    PRIVATE_KEY = PRIVATE_KEY.replace(/\\n/g, '\n');
+  }
 
   const serviceAccountAuth = new JWT({
     email: SERVICE_ACCOUNT_EMAIL,
-    key: PRIVATE_KEY.replace(/\\n/g, '\n'),
+    key: PRIVATE_KEY,
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
 
