@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { supabaseAdmin } from "@/lib/supabase";
+import { createLead, getAllLeads, getLeadById, updateLeadStatus } from "@/lib/googlesheets";
 import { sendLeadEmails } from "@/lib/email/send-lead-emails";
 import { sendSlackNotification } from "@/lib/slack/send-slack-notification";
 
@@ -38,8 +38,8 @@ export const leadRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         // Validate environment variables
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-          console.error('Missing Supabase configuration');
+        if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID || !process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL) {
+          console.error('Missing Google Sheets configuration');
           throw new Error('서버 설정 오류가 발생했습니다. 관리자에게 문의해주세요.');
         }
 
@@ -59,30 +59,16 @@ export const leadRouter = createTRPCRouter({
           status: 'pending' as const,
         };
 
-        // Save to Supabase
-        console.log('[Lead Creation] Saving to database...');
-        const { data: lead, error } = await supabaseAdmin
-          .from('leads')
-          .insert(leadData)
-          .select()
-          .single();
+        // Save to Google Sheets
+        console.log('[Lead Creation] Saving to Google Sheets...');
+        const lead = await createLead(leadData);
 
-        if (error) {
-          console.error('[Lead Creation] Database error:', error);
-
-          // Provide specific error messages
-          if (error.code === 'PGRST116') {
-            throw new Error('데이터베이스 테이블을 찾을 수 없습니다. 관리자에게 문의해주세요.');
-          } else if (error.message.includes('permission')) {
-            throw new Error('데이터베이스 권한 오류가 발생했습니다. 관리자에게 문의해주세요.');
-          } else if (error.message.includes('connection')) {
-            throw new Error('데이터베이스 연결 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-          }
-
-          throw new Error('데이터베이스에 저장하는 중 오류가 발생했습니다. 다시 시도해주세요.');
+        if (!lead) {
+          console.error('[Lead Creation] Google Sheets error: No lead returned');
+          throw new Error('Google Sheets에 저장하는 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
 
-        console.log('[Lead Creation] Database save successful, Lead ID:', lead.id);
+        console.log('[Lead Creation] Google Sheets save successful, Lead ID:', lead.id);
 
         // Send notifications (emails + Slack)
         // Run in parallel for better performance
@@ -151,17 +137,14 @@ export const leadRouter = createTRPCRouter({
   getAll: publicProcedure
     .query(async () => {
       try {
-        const { data: leads, error } = await supabaseAdmin
-          .from('leads')
-          .select('*')
-          .order('created_at', { ascending: false });
+        const leads = await getAllLeads();
 
-        if (error) {
-          console.error('Database error:', error);
-          throw new Error('리드 목록을 가져오는 중 오류가 발생했습니다.');
-        }
+        // Sort by created_at descending (most recent first)
+        const sortedLeads = leads.sort((a, b) => {
+          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
 
-        return leads;
+        return sortedLeads;
       } catch (error) {
         console.error('Get leads error:', error);
         throw new Error(
@@ -177,14 +160,9 @@ export const leadRouter = createTRPCRouter({
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
       try {
-        const { data: lead, error } = await supabaseAdmin
-          .from('leads')
-          .select('*')
-          .eq('id', input.id)
-          .single();
+        const lead = await getLeadById(input.id);
 
-        if (error) {
-          console.error('Database error:', error);
+        if (!lead) {
           throw new Error('리드를 찾을 수 없습니다.');
         }
 
@@ -209,15 +187,10 @@ export const leadRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       try {
-        const { data: lead, error } = await supabaseAdmin
-          .from('leads')
-          .update({ status: input.status })
-          .eq('id', input.id)
-          .select()
-          .single();
+        const lead = await updateLeadStatus(input.id, input.status);
 
-        if (error) {
-          console.error('Database error:', error);
+        if (!lead) {
+          console.error('Google Sheets error: Lead not found');
           throw new Error('리드 상태 업데이트 중 오류가 발생했습니다.');
         }
 
