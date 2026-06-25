@@ -95,8 +95,9 @@ const nextConfig = {
       };
     }
 
-    // 프로덕션 최적화
-    if (!dev) {
+    // 프로덕션 최적화 — 클라이언트 번들에만 적용
+    // (server/edge 번들에 적용하면 npm.* 청크가 self 참조 → "self is not defined" 빌드 실패)
+    if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
         minimize: true,

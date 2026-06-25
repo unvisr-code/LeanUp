@@ -1,8 +1,19 @@
+import dynamic from "next/dynamic";
 import { Metadata } from "next";
-import { Maintenance } from "@/components/maintenance";
 
 // 홈페이지 재정비 중 — 기존 랜딩(HeroSection 등)은 git history에 보존.
-// 복구하려면 이전 커밋의 page.tsx로 되돌리고 middleware.ts를 삭제하세요.
+// framer-motion 등 클라이언트 전용 코드의 SSR("self is not defined") 회피를 위해 ssr:false 로드
+// (기존 page.tsx의 FeaturesSection 등과 동일 패턴).
+const Maintenance = dynamic(
+  () => import("@/components/maintenance").then((m) => ({ default: m.Maintenance })),
+  {
+    ssr: false,
+    loading: () => (
+      <div style={{ minHeight: "100dvh", background: "#0a0a0b" }} />
+    ),
+  },
+);
+
 export const metadata: Metadata = {
   title: "홈페이지 재정비 중",
   description:
