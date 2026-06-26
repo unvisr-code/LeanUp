@@ -4,7 +4,6 @@ import Script from "next/script";
 import "./globals.css";
 import { TRPCProvider } from "@/lib/trpc/provider";
 import { ToastProvider } from "@/components/ui/toast";
-import ChannelTalk from "@/components/ChannelTalk";
 import StructuredData from "@/components/structured-data";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -144,7 +143,6 @@ export default function RootLayout({
           </ToastProvider>
         </TRPCProvider>
         <SpeedInsights />
-        <ChannelTalk />
       </body>
     </html>
   );
