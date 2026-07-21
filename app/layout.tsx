@@ -67,6 +67,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'verification-code', // Google Search Console 인증 코드 추가 필요
   },
+  other: {
+    'google-adsense-account': 'ca-pub-9648089140595518',
+  },
 };
 
 export default function RootLayout({
@@ -136,6 +139,15 @@ export default function RootLayout({
             }
           `}
         </Script>
+
+        {/* Google AdSense */}
+        <Script
+          id="google-adsense"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9648089140595518"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          async
+        />
 
         <TRPCProvider>
           <ToastProvider>
